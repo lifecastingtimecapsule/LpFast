@@ -33,36 +33,48 @@ export function Layout({ children }: LayoutProps) {
   };
 
   const navLinks = [
-    { name: "LifeCasting™とは", path: "/about" },
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
     { name: "Plan & Gallery", path: "/plan-gallery" },
-    { name: "スタッフ", path: "/#team" }, // Hash link for home section
-    { name: "FAQ", path: "/about#faq" }, // Hash link for about section
+    { name: "FAQ", path: "/about#faq" }, 
   ];
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col relative overflow-x-hidden selection:bg-[#C4A962] selection:text-white">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap&display=swap');
-        
-        .font-serif {
-          font-family: 'Noto Serif JP', serif;
-        }
-        body {
-          font-family: 'Noto Sans JP', sans-serif;
-        }
-        /* Noise Texture */
-        .bg-noise {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          pointer-events: none;
-          z-index: 50;
-          opacity: 0.03;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-      `}</style>
+  /* Google Fontsから3種類のフォントを読み込み */
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+  
+  :root {
+    /* 英語見出し用: 繊細でエレガント */
+    --font-en-serif: 'Cormorant Garamond', serif;
+    /* 日本語見出し用: 知的 */
+    --font-jp-serif: 'Noto Serif JP', serif;
+    /* 本文用: 清潔感 */
+    --font-body: 'Noto Sans JP', sans-serif;
+  }
+
+  /* 基本の文字設定 */
+  body {
+    font-family: var(--font-body);
+    color: #4A4A4A;      /* 真っ黒ではなくダークグレーで上品に */
+    letter-spacing: 0.05em; /* 本文も少しだけ文字間を広げる */
+  }
+
+  /* * クラス定義のアップデート 
+   * 英語と日本語でフォントを使い分けるためのクラスを作ります
+   */
+  
+  /* 英語のメインタイトル用 (例: amorétto, Gallery) */
+  .font-en-serif {
+    font-family: var(--font-en-serif);
+  }
+
+  /* 日本語のキャッチコピー用 (例: 愛おしい瞬間を、永遠に。) */
+  .font-jp-serif {
+    font-family: var(--font-jp-serif);
+  }
+`}</style>
       
       {/* Noise Overlay */}
       <div className="bg-noise"></div>
@@ -207,7 +219,7 @@ export function Layout({ children }: LayoutProps) {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="relative py-16 md:py-24 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden">
+      <footer className="relative py-10 md:py-16 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden">
         {/* Footer Design Accents */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C4A962]/50 to-transparent"></div>
         
@@ -218,42 +230,45 @@ export function Layout({ children }: LayoutProps) {
              viewport={{ once: true }}
              className="flex flex-col items-center"
           >
-            <div className="mb-8">
+            {/* ロゴ周りをコンパクトに */}
+            <div className="mb-6">
               <img 
                 src={logoImage} 
                 alt="amorétto" 
-                className="h-10 md:h-12 w-auto opacity-90 mix-blend-multiply"
+                className="h-8 md:h-10 w-auto opacity-90 mix-blend-multiply"
               />
             </div>
             
-            <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-[#999999] mb-8">
+            <p className="text-[0.65rem] md:text-xs tracking-[0.3em] uppercase text-[#999999] mb-6">
               LifeCasting™ Studio Japan
             </p>
 
-            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-10 text-sm text-[#666666]">
+            {/* 住所情報: 文字サイズを小さくしてスッキリさせる */}
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-10 mb-8 text-xs text-[#666666]">
               <div className="flex items-center gap-2">
-                 <MapPin size={16} className="text-[#C4A962]" />
+                 <MapPin size={14} className="text-[#C4A962]" />
                  <span>愛知県豊川市門前町１５</span>
               </div>
               <div className="flex items-center gap-2">
-                 <span className="px-2 py-0.5 border border-[#666666]/30 text-xs rounded-full">完全予約制</span>
+                 <span className="px-2 py-0.5 border border-[#666666]/30 text-[10px] rounded-full">完全予約制</span>
                  <span>豊川稲荷より徒歩3分</span>
               </div>
             </div>
 
-            <div className="flex justify-center gap-8 mb-10">
-              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <Instagram size={20} />
+            {/* アイコンサイズも少し控えめに */}
+            <div className="flex justify-center gap-6 mb-8">
+              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
+                <Instagram size={18} />
               </a>
-              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <MessageCircle size={20} />
+              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
+                <MessageCircle size={18} />
               </a>
-              <a href="tel:0533569494" className="p-3 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <Phone size={20} />
+              <a href="tel:0533569494" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
+                <Phone size={18} />
               </a>
             </div>
 
-            <p className="text-[0.65rem] text-[#AAAAAA] tracking-wider">
+            <p className="text-[0.6rem] text-[#AAAAAA] tracking-wider">
               © {new Date().getFullYear()} amorétto. All rights reserved.
             </p>
           </motion.div>
