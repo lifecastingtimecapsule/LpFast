@@ -5,6 +5,7 @@ import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { PlanGallery } from "./pages/PlanGallery";
+import { School } from "./pages/School";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -80,6 +81,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/plan-gallery" element={<PlanGallery />} />
+            <Route path="/school" element={<School />} />
           </Routes>
         </Layout>
       </BrowserRouter>

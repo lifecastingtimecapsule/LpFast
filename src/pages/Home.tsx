@@ -28,7 +28,7 @@ export function Home() {
         <title>amorétto | LifeCasting® Studio</title>
         <meta name="description" content="日本初のLifeCasting®専門スタジオ。一瞬の感動を、永遠の形に。" />
         {/* Cormorant Garamond フォントの読み込み推奨（Layout.tsxに追加済みなら不要） */}
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" crossOrigin="anonymous" />
       </Helmet>
 
       {/* --- Hero Section: ノイズを減らし、タイポグラフィで魅せる --- */}
@@ -66,13 +66,15 @@ export function Home() {
             </p>
             
             {/* ボタンではなく「リンク」として配置し、上品に */}
-            <Link 
-              to="/about"
+            <a 
+              href="https://lifecastingtimecapsule.com/reservation"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative inline-flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors"
             >
-              <span className="text-xs tracking-[0.3em] uppercase">View Concept</span>
+              <span className="text-xs tracking-[0.3em] uppercase">予約する</span>
               <span className="w-8 h-px bg-white/50 group-hover:w-16 transition-all duration-500"></span>
-            </Link>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -159,13 +161,6 @@ export function Home() {
                 </p>
               </div>
 
-              <Link 
-                to="/about" 
-                className="group inline-flex items-center gap-3 text-[#2C2C2C] border-b border-[#2C2C2C] pb-1 hover:text-[#C4A962] hover:border-[#C4A962] transition-colors tracking-widest text-sm"
-              >
-                READ MORE
-                <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />
-              </Link>
             </motion.div>
           </div>
         </div>

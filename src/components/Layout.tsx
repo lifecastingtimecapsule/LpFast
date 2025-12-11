@@ -36,7 +36,7 @@ export function Layout({ children }: LayoutProps) {
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Plan & Gallery", path: "/plan-gallery" },
-    { name: "FAQ", path: "/about#faq" }, 
+    { name: "School", path: "/school" },       
   ];
 
   return (
@@ -239,7 +239,7 @@ export function Layout({ children }: LayoutProps) {
             </div>
             
             <p className="text-[0.65rem] md:text-xs tracking-[0.3em] uppercase text-[#999999] mb-6">
-              LifeCasting™ Studio Japan
+              LifeCasting™ Studio 
             </p>
 
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-10 mb-8 text-xs text-[#666666]">
