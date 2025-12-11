@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
-import { Calendar, ArrowRight, ArrowUp } from "lucide-react";
+import { ArrowRight, ArrowUp } from "lucide-react"; // Calendar削除
 import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png";
 
 interface LayoutProps {
@@ -28,6 +28,18 @@ export function Layout({ children }: LayoutProps) {
     setMobileMenuOpen(false);
   }, [location]);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   const handleNavClick = () => {
     setMobileMenuOpen(false);
   };
@@ -42,39 +54,23 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col relative overflow-x-hidden selection:bg-[#C4A962] selection:text-white">
       <style>{`
-  /* Google Fontsから3種類のフォントを読み込み */
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap');
-  
-  :root {
-    /* 英語見出し用: 繊細でエレガント */
-    --font-en-serif: 'Cormorant Garamond', serif;
-    /* 日本語見出し用: 知的 */
-    --font-jp-serif: 'Noto Serif JP', serif;
-    /* 本文用: 清潔感 */
-    --font-body: 'Noto Sans JP', sans-serif;
-  }
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+        
+        :root {
+          --font-en-serif: 'Cormorant Garamond', serif;
+          --font-jp-serif: 'Noto Serif JP', serif;
+          --font-body: 'Noto Sans JP', sans-serif;
+        }
 
-  /* 基本の文字設定 */
-  body {
-    font-family: var(--font-body);
-    color: #4A4A4A;      /* 真っ黒ではなくダークグレーで上品に */
-    letter-spacing: 0.05em; /* 本文も少しだけ文字間を広げる */
-  }
-
-  /* * クラス定義のアップデート 
-   * 英語と日本語でフォントを使い分けるためのクラスを作ります
-   */
-  
-  /* 英語のメインタイトル用 (例: amorétto, Gallery) */
-  .font-en-serif {
-    font-family: var(--font-en-serif);
-  }
-
-  /* 日本語のキャッチコピー用 (例: 愛おしい瞬間を、永遠に。) */
-  .font-jp-serif {
-    font-family: var(--font-jp-serif);
-  }
-`}</style>
+        body {
+          font-family: var(--font-body);
+          color: #4A4A4A;
+          letter-spacing: 0.05em;
+        }
+        
+        .font-en-serif { font-family: var(--font-en-serif); }
+        .font-jp-serif { font-family: var(--font-jp-serif); }
+      `}</style>
       
       {/* Noise Overlay */}
       <div className="bg-noise"></div>
@@ -86,8 +82,8 @@ export function Layout({ children }: LayoutProps) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b ${
           scrolled 
-            ? "bg-[#FAFAF8]/80 backdrop-blur-md border-[#E5E0D8]/60 py-3 md:py-4 shadow-sm" 
-            : "bg-transparent border-transparent py-5 md:py-6"
+            ? "bg-[#FAFAF8]/90 backdrop-blur-md border-[#E5E0D8]/60 py-3 shadow-sm" 
+            : "bg-transparent border-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -95,7 +91,7 @@ export function Layout({ children }: LayoutProps) {
             <img
               src={logoImage}
               alt="amoretto"
-              className={`transition-all duration-300 ${scrolled ? "h-7 md:h-9" : "h-8 md:h-10"}`}
+              className={`transition-all duration-300 ${scrolled ? "h-6 md:h-9" : "h-7 md:h-10"}`}
             />
           </Link>
 
@@ -104,18 +100,8 @@ export function Layout({ children }: LayoutProps) {
             {navLinks.map((link) => (
               <div key={link.name} className="relative group">
                 <Link 
-                  to={link.path.startsWith("/#") ? "/" : link.path}
-                  onClick={(e) => {
-                    if (link.path.startsWith("/#")) {
-                      e.preventDefault();
-                      const element = document.getElementById(link.path.replace("/#", ""));
-                      if(element) element.scrollIntoView({ behavior: 'smooth' });
-                      else window.location.href = link.path;
-                    } else if (link.path.includes("#")) {
-                      // Handle /about#faq etc
-                    }
-                  }}
-                  className="text-[#666666] group-hover:text-[#C4A962] transition-colors py-2"
+                  to={link.path}
+                  className="text-[#666666] group-hover:text-[#C4A962] transition-colors py-2 font-en-serif text-lg"
                 >
                   {link.name}
                 </Link>
@@ -129,7 +115,7 @@ export function Layout({ children }: LayoutProps) {
               rel="noopener noreferrer"
               className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
             >
-              <span className="relative z-10 flex items-center gap-2 tracking-wider text-sm">
+              <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium">
                 予約する <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
@@ -139,10 +125,10 @@ export function Layout({ children }: LayoutProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden relative z-[101] p-2 text-[#2C2C2C] hover:bg-black/5 rounded-full transition-colors"
+            className="md:hidden relative z-[101] p-2 text-[#2C2C2C] active:scale-95 transition-transform"
             aria-label="Menu"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
           </button>
         </div>
       </motion.header>
@@ -154,57 +140,64 @@ export function Layout({ children }: LayoutProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[90] bg-[#FAFAF8]/95 backdrop-blur-xl md:hidden flex flex-col justify-center items-center"
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="fixed inset-0 z-[90] bg-[#FAFAF8] flex flex-col md:hidden"
           >
-             <nav className="flex flex-col items-center gap-8 p-6 w-full max-w-sm">
-               {navLinks.map((link, i) => (
-                 <motion.div
-                   key={link.name}
-                   initial={{ opacity: 0, y: 20 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: 0.1 + i * 0.1 }}
-                   className="w-full text-center"
-                 >
-                   <Link 
-                    to={link.path.startsWith("/#") ? "/" : link.path}
-                    onClick={(e) => {
-                      handleNavClick();
-                      if (link.path.startsWith("/#")) {
-                        setTimeout(() => {
-                           const element = document.getElementById(link.path.replace("/#", ""));
-                           if(element) element.scrollIntoView({ behavior: 'smooth' });
-                        }, 300);
-                      }
-                    }}
-                    className="font-serif text-2xl text-[#2C2C2C] hover:text-[#C4A962] transition-colors block py-2"
+             {/* Decorative Background */}
+             <div className="absolute inset-0 opacity-30 pointer-events-none">
+                <div className="absolute top-[-10%] right-[-10%] w-[50vh] h-[50vh] rounded-full bg-[#C4A962]/5 blur-3xl"></div>
+                <div className="absolute bottom-[-10%] left-[-10%] w-[50vh] h-[50vh] rounded-full bg-[#C4A962]/5 blur-3xl"></div>
+             </div>
+
+             <div className="flex-1 flex flex-col justify-center items-center px-6 relative z-10">
+               <div className="mb-12 opacity-80">
+                  <img src={logoImage} alt="amoretto" className="h-8 w-auto mix-blend-multiply" />
+               </div>
+
+               <nav className="flex flex-col items-center gap-8 w-full">
+                 {navLinks.map((link, i) => (
+                   <motion.div
+                     key={link.name}
+                     initial={{ opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
                    >
-                     {link.name}
-                   </Link>
-                 </motion.div>
-               ))}
+                     <Link 
+                      to={link.path}
+                      onClick={handleNavClick}
+                      className="font-en-serif text-4xl text-[#2C2C2C] hover:text-[#C4A962] transition-colors block py-1 italic tracking-wide"
+                     >
+                       {link.name}
+                     </Link>
+                   </motion.div>
+                 ))}
+               </nav>
                
                <motion.div
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.5 }}
-                 className="mt-8 w-full"
+                 transition={{ delay: 0.6 }}
+                 className="mt-16 w-full max-w-xs"
                >
                  <a
                     href="https://lifecastingtimecapsule.com/reservation"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full block py-4 bg-[#C4A962] text-white text-center text-lg tracking-widest shadow-lg shadow-[#C4A962]/20"
+                    className="block w-full py-4 border border-[#C4A962] text-[#C4A962] text-center text-sm tracking-[0.2em] uppercase hover:bg-[#C4A962] hover:text-white transition-all duration-300"
                  >
-                    予約する
+                    Reservation
                  </a>
+                 <div className="flex justify-center gap-8 mt-10 text-[#C4A962]">
+                    <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer"><Instagram size={24} strokeWidth={1.5} /></a>
+                    <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer"><MessageCircle size={24} strokeWidth={1.5} /></a>
+                 </div>
                </motion.div>
-             </nav>
+             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Content with Page Transition */}
+      {/* Main Content */}
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
@@ -212,17 +205,14 @@ export function Layout({ children }: LayoutProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="flex-grow pt-[80px] md:pt-[100px]"
+          className="flex-grow pt-[0px] md:pt-[0px]" // ヘッダー分のパディングは各ページ側で調整または透過ヘッダーなら0
         >
           {children}
         </motion.main>
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="relative py-10 md:py-16 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden">
-        {/* Footer Design Accents */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C4A962]/50 to-transparent"></div>
-        
+      <footer className="relative py-12 md:py-20 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden border-t border-[#E5E0D8]">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div 
              initial={{ opacity: 0, y: 20 }}
@@ -230,77 +220,55 @@ export function Layout({ children }: LayoutProps) {
              viewport={{ once: true }}
              className="flex flex-col items-center"
           >
-            <div className="mb-6">
+            <div className="mb-8">
               <img 
                 src={logoImage} 
                 alt="amorétto" 
-                className="h-8 md:h-10 w-auto opacity-90 mix-blend-multiply" 
+                className="h-6 md:h-8 w-auto opacity-80 mix-blend-multiply" 
               />
             </div>
             
-            <p className="text-[0.65rem] md:text-xs tracking-[0.3em] uppercase text-[#999999] mb-6">
-              LifeCasting™ Studio 
-            </p>
-
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-10 mb-8 text-xs text-[#666666]">
+            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-8 mb-10 text-[11px] md:text-xs text-[#666666] tracking-wider font-light">
               <div className="flex items-center gap-2">
-                 <MapPin size={14} className="text-[#C4A962]" />
+                 <MapPin size={12} className="text-[#C4A962]" />
                  <span>愛知県豊川市門前町１５</span>
               </div>
-              <div className="flex items-center gap-2">
-                 <span className="px-2 py-0.5 border border-[#666666]/30 text-[10px] rounded-full">完全予約制</span>
-                 <span>豊川稲荷より徒歩3分</span>
-              </div>
+              <span className="hidden md:inline text-[#E5E0D8]">|</span>
+              <div>豊川稲荷より徒歩3分</div>
+              <span className="hidden md:inline text-[#E5E0D8]">|</span>
+              <div>完全予約制</div>
             </div>
 
-            <div className="flex justify-center gap-6 mb-8">
-              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <Instagram size={18} />
+            <div className="flex justify-center gap-8 mb-10">
+              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors">
+                <Instagram size={20} strokeWidth={1.5} />
               </a>
-              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <MessageCircle size={18} />
+              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors">
+                <MessageCircle size={20} strokeWidth={1.5} />
               </a>
-              <a href="tel:0533569494" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <Phone size={18} />
+              <a href="tel:0533569494" className="text-[#999999] hover:text-[#C4A962] transition-colors">
+                <Phone size={20} strokeWidth={1.5} />
               </a>
             </div>
 
-            <p className="text-[0.6rem] text-[#AAAAAA] tracking-wider">
+            <p className="text-[10px] text-[#AAAAAA] tracking-[0.1em] font-light">
               © {new Date().getFullYear()} amorétto. All rights reserved.
             </p>
           </motion.div>
         </div>
       </footer>
 
-      {/* Floating Bottom Action Bar (Mobile Only) */}
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: scrolled ? 0 : 100 }}
-        className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white/95 backdrop-blur-md border-t border-[#E5E0D8] p-4 pb-safe shadow-[0_-5px_20px_rgba(0,0,0,0.05)]"
-      >
-        <a
-          href="https://lifecastingtimecapsule.com/reservation"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-3 bg-[#C4A962] text-white rounded-sm font-medium tracking-wider shadow-md active:scale-[0.98] transition-transform"
-        >
-          <Calendar size={18} />
-          予約・空き状況を確認
-        </a>
-      </motion.div>
-
-      {/* Scroll to Top Button (Desktop) */}
+      {/* Scroll to Top Button (Desktop only to keep mobile clean) */}
       <AnimatePresence>
         {scrolled && (
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="hidden md:flex fixed bottom-8 right-8 p-4 bg-white text-[#C4A962] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 z-40 border border-[#E5E0D8]"
+            className="hidden md:flex fixed bottom-8 right-8 p-3 bg-white text-[#C4A962] rounded-full shadow-lg border border-[#E5E0D8] z-40 hover:-translate-y-1 transition-transform"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.1 }}
           >
-            <ArrowUp size={20} />
+            <ArrowUp size={20} strokeWidth={1.5} />
           </motion.button>
         )}
       </AnimatePresence>

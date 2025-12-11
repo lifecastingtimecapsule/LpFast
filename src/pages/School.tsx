@@ -16,7 +16,7 @@ export function School() {
       </Helmet>
 
       {/* --- Hero Section --- */}
-      <section className="relative h-[80vh] w-full overflow-hidden bg-[#2C2C2C]">
+      <section className="relative h-[70vh] md:h-[80vh] w-full overflow-hidden bg-[#2C2C2C]">
         <div className="absolute inset-0 z-0">
           <motion.img 
             initial={{ scale: 1.1, opacity: 0.6 }}
@@ -35,23 +35,23 @@ export function School() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            <span className="inline-block py-1 px-4 border border-white/30 text-xs tracking-[0.4em] uppercase mb-8 text-white/80 backdrop-blur-sm">
+            <span className="inline-block py-1 px-4 border border-white/30 text-[10px] md:text-xs tracking-[0.4em] uppercase mb-6 md:mb-8 text-white/80 backdrop-blur-sm">
               LifeCasting™ School
             </span>
-            <h1 className="text-5xl md:text-8xl italic font-light tracking-wide mb-6" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+            <h1 className="text-4xl md:text-8xl italic font-light tracking-wide mb-4 md:mb-6 font-en-serif">
               Become an Artist.
             </h1>
-            <p className="font-serif text-lg md:text-xl tracking-[0.2em] font-light opacity-90">
+            <p className="font-jp-serif text-base md:text-xl tracking-[0.2em] font-light opacity-90">
               技術を、受け継ぐ。
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* --- Message: Why we teach --- */}
-      <section className="py-32 md:py-48 bg-white">
+      {/* --- Message --- */}
+      <section className="py-24 md:py-48 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
-          <div className="flex flex-col md:flex-row items-center gap-16 md:gap-32">
+          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-32">
             
             <motion.div 
               className="md:w-1/2 order-2 md:order-1"
@@ -60,12 +60,12 @@ export function School() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="font-serif text-3xl md:text-4xl text-[#2C2C2C] leading-relaxed mb-10">
+              <h2 className="font-jp-serif text-2xl md:text-4xl text-[#2C2C2C] leading-relaxed mb-8 md:mb-10">
                 私たちが教えるのは、<br/>
                 単なる「型取り」ではありません。
               </h2>
               
-              <div className="space-y-8 text-[#4A4A4A] leading-[2.4] tracking-wide font-light text-[0.95rem] md:text-base">
+              <div className="space-y-6 md:space-y-8 text-[#4A4A4A] leading-[2] md:leading-[2.4] tracking-wide font-light text-[0.9rem] md:text-base">
                 <p>
                   amoréttoが育成したいのは、型取り屋ではなく、<br/>
                   <strong className="font-medium text-[#2C2C2C]">「時間」と「物語」を届けるアーティスト</strong>です。
@@ -80,10 +80,6 @@ export function School() {
                   技術の習得は、あくまでスタートライン。<br/>
                   最も大切なのは、家族の空気を整え、<br/>
                   幸せな「体験」を提供するプロとしての責任感です。
-                </p>
-                <p>
-                  この理念に共鳴し、ライフキャスティングの価値を<br/>
-                  共に高めていける方をお待ちしています。
                 </p>
               </div>
             </motion.div>
@@ -109,44 +105,44 @@ export function School() {
       </section>
 
       {/* --- Curriculum --- */}
-      <section className="py-32 md:py-48 bg-[#FAFAF8]">
+      <section className="py-24 md:py-48 bg-[#FAFAF8]">
         <div className="container mx-auto px-6 max-w-5xl">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-6xl text-[#2C2C2C] italic font-light mb-6" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+          <div className="text-center mb-16 md:mb-24">
+            <h2 className="text-3xl md:text-6xl text-[#2C2C2C] italic font-light mb-4 md:mb-6 font-en-serif">
               Curriculum
             </h2>
-            <p className="font-serif text-sm text-[#666666] tracking-widest">
+            <p className="font-jp-serif text-xs md:text-sm text-[#666666] tracking-widest">
               完全初心者から、プロフェッショナルへ
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
             
             {/* Step 1 */}
-            <div className="bg-white p-10 shadow-sm border-t-4 border-[#C4A962] group hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-              <span className="text-[#C4A962] text-5xl font-serif opacity-20 mb-6 block group-hover:opacity-100 transition-opacity">01</span>
-              <h3 className="font-serif text-xl text-[#2C2C2C] mb-4">基礎・入門</h3>
-              <p className="text-sm text-[#666666] font-light leading-[2.2] flex-grow">
+            <div className="bg-white p-6 md:p-10 shadow-sm border-t-4 border-[#C4A962] flex flex-col h-full">
+              <span className="text-[#C4A962] text-4xl md:text-5xl font-serif opacity-20 mb-4 md:mb-6 block">01</span>
+              <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">基礎・入門</h3>
+              <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
                 まずは足形の型取りから。<br/>
                 素材の扱い方や、赤ちゃんの安全管理など、アーティストとしての土台となる基礎技術を習得します。
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-white p-10 shadow-sm border-t-4 border-[#2C2C2C] group hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-              <span className="text-[#2C2C2C] text-5xl font-serif opacity-20 mb-6 block group-hover:opacity-100 transition-opacity">02</span>
-              <h3 className="font-serif text-xl text-[#2C2C2C] mb-4">実践・理念</h3>
-              <p className="text-sm text-[#666666] font-light leading-[2.2] flex-grow">
+            <div className="bg-white p-6 md:p-10 shadow-sm border-t-4 border-[#2C2C2C] flex flex-col h-full">
+              <span className="text-[#2C2C2C] text-4xl md:text-5xl font-serif opacity-20 mb-4 md:mb-6 block">02</span>
+              <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">実践・理念</h3>
+              <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
                 難易度の高い「手」の型取りや、独自素材の活用法をマスター。<br/>
                 さらに、助産師監修の知識やブランド理念を学び、技術に「心」を吹き込みます。
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-white p-10 shadow-sm border-t-4 border-[#C4A962] group hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full">
-              <span className="text-[#C4A962] text-5xl font-serif opacity-20 mb-6 block group-hover:opacity-100 transition-opacity">03</span>
-              <h3 className="font-serif text-xl text-[#2C2C2C] mb-4">プロ認定</h3>
-              <p className="text-sm text-[#666666] font-light leading-[2.2] flex-grow">
+            <div className="bg-white p-6 md:p-10 shadow-sm border-t-4 border-[#C4A962] flex flex-col h-full">
+              <span className="text-[#C4A962] text-4xl md:text-5xl font-serif opacity-20 mb-4 md:mb-6 block">03</span>
+              <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">プロ認定</h3>
+              <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
                 実店舗での現場研修と実技テスト。<br/>
                 実際の空気を肌で感じ、お客様に感動を届けるプロフェッショナルとしての最終仕上げを行います。
               </p>
@@ -156,38 +152,38 @@ export function School() {
         </div>
       </section>
 
-      {/* --- Support (Modified: Removed Certification, Centered Support) --- */}
-      <section className="py-32 md:py-48 bg-white">
+      {/* --- Support --- */}
+      <section className="py-24 md:py-48 bg-white">
         <div className="container mx-auto px-6 max-w-4xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl text-[#2C2C2C] italic font-light mb-6" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="text-3xl md:text-5xl text-[#2C2C2C] italic font-light mb-4 md:mb-6 font-en-serif">
               Support
             </h2>
-            <p className="font-serif text-sm text-[#666666] tracking-widest">
+            <p className="font-jp-serif text-xs md:text-sm text-[#666666] tracking-widest">
               卒業後の活動支援
             </p>
           </div>
 
-          <div className="bg-[#FAFAF8] border border-[#E5E0D8] p-8 md:p-16">
+          <div className="bg-[#FAFAF8] border border-[#E5E0D8] p-6 md:p-16">
             <div className="max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-3 mb-8">
-                  <Star size={24} className="text-[#C4A962]" />
-                  <h3 className="font-serif text-2xl text-[#2C2C2C]">活動支援</h3>
+                  <Star size={20} className="text-[#C4A962]" />
+                  <h3 className="font-jp-serif text-xl md:text-2xl text-[#2C2C2C]">活動支援</h3>
                 </div>
-                <ul className="space-y-6 text-sm text-[#666666] font-light leading-relaxed">
-                  <li className="flex items-start gap-4">
+                <ul className="space-y-4 md:space-y-6 text-[0.85rem] md:text-sm text-[#666666] font-light leading-relaxed">
+                  <li className="flex items-start gap-3 md:gap-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
-                    <span>商標<strong>「ライフキャスティング®」</strong>の使用権</span>
+                    <span>商標<strong>「ライフキャスティング™」</strong>の使用権</span>
                   </li>
-                  <li className="flex items-start gap-4">
+                  <li className="flex items-start gap-3 md:gap-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
                     <span><strong>独自開発素材</strong>を<span className="text-[#C4A962] font-medium">スクール生特別価格（卸値）</span>で購入可能</span>
                   </li>
-                  <li className="flex items-start gap-4">
+                  <li className="flex items-start gap-3 md:gap-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
                     <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支援</span>
                   </li>
-                  <li className="flex items-start gap-4">
+                  <li className="flex items-start gap-3 md:gap-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
                     <span>認定アーティスト限定コミュニティ・勉強会への参加</span>
                   </li>
@@ -196,15 +192,15 @@ export function School() {
           </div>
 
           {/* CTA */}
-          <div className="mt-24 text-center">
-            <p className="text-sm text-[#666666] mb-8 tracking-widest">
+          <div className="mt-16 md:mt-24 text-center">
+            <p className="text-xs md:text-sm text-[#666666] mb-6 md:mb-8 tracking-widest">
               まずは無料相談会へお越しください。
             </p>
             <a
               href="https://lin.ee/siRIzsZ" 
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-12 py-4 bg-[#2C2C2C] text-white tracking-[0.2em] shadow-xl hover:bg-[#444] hover:-translate-y-1 transition-all duration-300 text-xs uppercase font-medium"
+              className="inline-block px-10 py-3 md:px-12 md:py-4 bg-[#2C2C2C] text-white tracking-[0.2em] shadow-xl hover:bg-[#444] hover:-translate-y-1 transition-all duration-300 text-[10px] md:text-xs uppercase font-medium"
             >
               Contact Us
             </a>
