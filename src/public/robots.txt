@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lifecastingstudio-amoretto.com/sitemap.xml
