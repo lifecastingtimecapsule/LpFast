@@ -38,9 +38,10 @@ export function Home() {
             transition={{ duration: 2.5, ease: "easeOut" }}
             src={IMG_HERO} 
             alt="Newborn holding finger" 
-            className="w-full h-full object-cover" // フィルタを外し、写真本来の美しさを活かす
+            className="w-full h-full object-cover" 
           />
-          <div className="absolute inset-0 bg-black/10" /> {/* オーバーレイを極限まで薄く */}
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-white via-white/40 to-transparent" />
         </div>
 
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-6">
@@ -50,8 +51,12 @@ export function Home() {
             transition={{ duration: 1, delay: 0.3 }}
             className="flex flex-col items-center"
           >
-            <h1 className="font-serif italic text-7xl md:text-9xl mb-6 tracking-wide font-light" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-              amorétto
+            <h1 className="mb-8">
+              <img 
+                src={logoImage} 
+                alt="amorétto" 
+                className="h-20 md:h-32 w-auto mx-auto brightness-0 invert opacity-90" 
+              />
             </h1>
             
             <p className="font-serif text-base md:text-xl tracking-[0.3em] mb-16 text-white/90 font-light">
@@ -107,71 +112,8 @@ export function Home() {
         </div>
       </section>
 
-      {/* --- Feature 1: Material (左:文字, 右:写真 / ストーリーテリング) --- */}
+      {/* --- Feature 1: Art (作品) --- */}
       <section className="py-24 md:py-40 bg-[#FAFAF8]">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="flex flex-col md:flex-row items-center gap-16 md:gap-32">
-            
-            <motion.div 
-              className="md:w-1/2 order-2 md:order-1"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="block text-[#C4A962] text-3xl md:text-5xl font-light italic mb-6 opacity-40" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-                01. Material
-              </span>
-
-              <h3 className="font-serif text-2xl md:text-3xl text-[#2C2C2C] mb-8 leading-relaxed">
-                「早さ」は、<br/>
-                赤ちゃんへの優しさです。
-              </h3>
-
-              <div className="space-y-6 text-[#666666] leading-[2.2] tracking-wide font-light mb-12 text-sm md:text-base">
-                <p>
-                  じっとしていられない赤ちゃんにとって、<br/>
-                  型取りの時間は少しでも短いほうがいい。
-                </p>
-                <p>
-                  その想いから、私たちは<strong className="font-medium text-[#555555]">独自に研究し開発した素材</strong>を採用しました。<br/>
-                  <span className="text-xs text-[#999999] tracking-wider block mt-2">（※特許申請中）</span>
-                </p>
-                <p>
-                  硬化にかかる時間は、わずか90秒。<br/>
-                  お母さんとお話している間に、魔法のように完了します。
-                </p>
-              </div>
-
-              <div className="flex gap-12 border-t border-[#E5E0D8] pt-8">
-                <div>
-                  <p className="text-[10px] text-[#999999] uppercase tracking-widest mb-1">Time</p>
-                  <p className="text-3xl text-[#2C2C2C]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>90 <span className="text-sm">sec</span></p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-[#999999] uppercase tracking-widest mb-1">Safety</p>
-                  <p className="text-3xl text-[#2C2C2C]" style={{ fontFamily: '"Cormorant Garamond", serif' }}>Medical Grade</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="md:w-1/2 order-1 md:order-2"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="relative aspect-[4/5] bg-white p-4 shadow-xl rotate-1">
-                 <img src={image_a0354f462dd60a54ee83d6d005b657d7607d28c2} alt="Safe material" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- Feature 2: Art (左:写真, 右:文字) --- */}
-      <section className="py-24 md:py-40 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="flex flex-col md:flex-row items-center gap-16 md:gap-32">
             
@@ -195,7 +137,7 @@ export function Home() {
                transition={{ duration: 0.8 }}
             >
               <span className="block text-[#C4A962] text-3xl md:text-5xl font-light italic mb-6 opacity-40" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-                02. Art Piece
+                01. Art Piece
               </span>
 
               <h3 className="font-serif text-2xl md:text-3xl text-[#2C2C2C] mb-8 leading-relaxed">
@@ -209,9 +151,9 @@ export function Home() {
                   「LifeCasting®」が切り取るのは、二度と戻らない一瞬のリアルです。
                 </p>
                 <p>
-                  仕上げを行うのは、<strong className="font-medium text-[#555555]">美術教員免許を持つ専任アーティスト</strong>。<br />
-                  アートのプロフェッショナルによる厳格な監修のもと、<br />
-                  単なる記録を超えた「美術品」として、丁寧に磨き上げます。
+                  すべての作品は、<strong className="font-medium text-[#555555]">美術教員免許を持つプロフェッショナルが監修</strong>。<br />
+                  美術品レベルの厳格な品質基準のもと、専任アーティストが丁寧に磨き上げます。<br />
+                  美しさへの執着ともいえるその「こだわり」が、作品に命を吹き込みます。
                 </p>
               </div>
 
@@ -222,6 +164,60 @@ export function Home() {
                 READ MORE
                 <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />
               </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Feature 2: Material (素材) --- */}
+      <section className="py-24 md:py-40 bg-white">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="flex flex-col md:flex-row items-center gap-16 md:gap-32">
+            
+            <motion.div 
+              className="md:w-1/2 order-2 md:order-1"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="block text-[#C4A962] text-3xl md:text-5xl font-light italic mb-6 opacity-40" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+                02. Material
+              </span>
+
+              <h3 className="font-serif text-2xl md:text-3xl text-[#2C2C2C] mb-8 leading-relaxed">
+                「早さ」は、<br/>
+                赤ちゃんへの優しさです。
+              </h3>
+
+              <div className="space-y-6 text-[#666666] leading-[2.2] tracking-wide font-light mb-12 text-sm md:text-base">
+                <p>
+                  じっとしていられない赤ちゃんにとって、<br/>
+                  型取りの時間は少しでも短いほうがいい。
+                </p>
+                <p>
+                  その想いから、私たちは<strong className="font-medium text-[#555555]">独自に研究し開発した素材</strong>を採用しました。<br/>
+                  <span className="text-xs text-[#999999] tracking-wider block mt-2">（※特許申請中）</span>
+                </p>
+                <p>
+                  硬化にかかる時間は、わずか90秒。<br/>
+                  お母さんとお話している間に、魔法のように完了します。
+                </p>
+              </div>
+
+
+            </motion.div>
+
+            <motion.div 
+              className="md:w-1/2 order-1 md:order-2"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="relative aspect-[4/5] bg-white p-4 shadow-xl rotate-1">
+                 <img src={image_a0354f462dd60a54ee83d6d005b657d7607d28c2} alt="Safe material" className="w-full h-full object-cover" />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -268,7 +264,7 @@ export function Home() {
 
             {/* Staff 2 (少し位置をずらすなどの変化をつけても良い) */}
             <motion.div 
-              className="flex flex-col group md:mt-12" // ★ポイント: 2人目だけ少し下げることでリズムを生む
+              className="flex flex-col group md:mt-12" // ★ポイン��: 2人目だけ少し下げることでリズムを生む
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -303,7 +299,7 @@ export function Home() {
                 <h3 className="font-serif text-xl text-[#2C2C2C] mb-1">仕上げ担当</h3>
                 <p className="text-sm font-light text-[#999999] mb-4 tracking-wider">Yayoi</p>
                 <p className="text-sm leading-loose text-[#666666] font-light">
-                  「わぁ、きれい」その言葉が聞きたくて。美術教員免許を持つ確かな技術で、世界一の仕上がりを目指しています。
+                  「わぁ、きれい」その言葉が聞きたくて。美術教員免許を持つ確か���技術で、世界一の仕上がりを目指しています。
                 </p>
               </div>
             </motion.div>
