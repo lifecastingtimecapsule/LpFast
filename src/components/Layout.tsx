@@ -45,10 +45,10 @@ export function Layout({ children }: LayoutProps) {
   };
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Plan & Gallery", path: "/plan-gallery" },
-    { name: "School", path: "/school" },       
+    { name: "Home", path: "/", ariaLabel: "amorétto トップページ" },
+    { name: "About", path: "/about", ariaLabel: "amoréttoのコンセプト・想いについて" },
+    { name: "Plan & Gallery", path: "/plan-gallery", ariaLabel: "撮影プランと作品ギャラリー" },
+    { name: "School", path: "/school", ariaLabel: "ライフキャスティングスクールについて" },       
   ];
 
   return (
@@ -101,6 +101,7 @@ export function Layout({ children }: LayoutProps) {
               <div key={link.name} className="relative group">
                 <Link 
                   to={link.path}
+                  aria-label={link.ariaLabel}
                   className="text-[#666666] group-hover:text-[#C4A962] transition-colors py-2 font-en-serif text-lg"
                 >
                   {link.name}
@@ -113,6 +114,7 @@ export function Layout({ children }: LayoutProps) {
               href="https://lifecastingtimecapsule.com/reservation"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="予約する"
               className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
             >
               <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium">
@@ -126,7 +128,7 @@ export function Layout({ children }: LayoutProps) {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden relative z-[101] p-2 text-[#2C2C2C] active:scale-95 transition-transform"
-            aria-label="Menu"
+            aria-label="メニューを開閉する"
           >
             {mobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
           </button>
@@ -165,6 +167,7 @@ export function Layout({ children }: LayoutProps) {
                      <Link 
                       to={link.path}
                       onClick={handleNavClick}
+                      aria-label={link.ariaLabel}
                       className="font-en-serif text-4xl text-[#2C2C2C] hover:text-[#C4A962] transition-colors block py-1 italic tracking-wide"
                      >
                        {link.name}
@@ -183,6 +186,7 @@ export function Layout({ children }: LayoutProps) {
                     href="https://lifecastingtimecapsule.com/reservation"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="予約する"
                     className="block w-full py-4 border border-[#C4A962] text-[#C4A962] text-center text-sm tracking-[0.2em] uppercase hover:bg-[#C4A962] hover:text-white transition-all duration-300"
                  >
                     Reservation
@@ -240,13 +244,13 @@ export function Layout({ children }: LayoutProps) {
             </div>
 
             <div className="flex justify-center gap-8 mb-10">
-              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors">
+              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-[#999999] hover:text-[#C4A962] transition-colors">
                 <Instagram size={20} strokeWidth={1.5} />
               </a>
-              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors">
+              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" aria-label="LINE公式アカウント" className="text-[#999999] hover:text-[#C4A962] transition-colors">
                 <MessageCircle size={20} strokeWidth={1.5} />
               </a>
-              <a href="tel:0533569494" className="text-[#999999] hover:text-[#C4A962] transition-colors">
+              <a href="tel:0533569494" aria-label="電話をかける" className="text-[#999999] hover:text-[#C4A962] transition-colors">
                 <Phone size={20} strokeWidth={1.5} />
               </a>
             </div>

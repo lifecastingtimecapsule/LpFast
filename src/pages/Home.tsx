@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import image_a0354f462dd60a54ee83d6d005b657d7607d28c2 from 'figma:asset/a0354f462dd60a54ee83d6d005b657d7607d28c2.png';
 import image_1dcb22b059fada42ca8857edd6c73aa35756f226 from 'figma:asset/1dcb22b059fada42ca8857edd6c73aa35756f226.png';
 import image_1cacdfafa29eecceb028f649eacdf3b80807891d from 'figma:asset/1cacdfafa29eecceb028f649eacdf3b80807891d.png';
@@ -20,7 +21,48 @@ export function Home() {
     <>
       <Helmet>
         <title>amorétto | LifeCasting® Studio</title>
-        <meta name="description" content="日本初のLifeCasting®専門スタジオ。一瞬の感動を、永遠の形に。" />
+        <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。90秒で型取り可能な特許素材を使用。美術教員免許保持者が制作。" />
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "amorétto (アモレット)",
+              "image": "https://lifecastingtimecapsule.com/assets/hero-image.jpg",
+              "description": "愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アート制作。",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "門前町15",
+                "addressLocality": "豊川市",
+                "addressRegion": "愛知県",
+                "postalCode": "442-0037",
+                "addressCountry": "JP"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 34.825,
+                "longitude": 137.39
+              },
+              "url": "https://lifecastingtimecapsule.com/",
+              "telephone": "+81-533-56-9494",
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ],
+                "opens": "10:00",
+                "closes": "18:00"
+              },
+              "priceRange": "¥35,000〜"
+            }
+          `}
+        </script>
       </Helmet>
 
       {/* --- Hero Section --- */}
@@ -31,7 +73,7 @@ export function Home() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 2.5, ease: "easeOut" }}
             src={IMG_HERO} 
-            alt="Newborn holding finger" 
+            alt="赤ちゃんの小さな手を握る母親の立体手形アート" 
             className="w-full h-full object-cover" 
           />
           <div className="absolute inset-0 bg-black/20" />
@@ -101,7 +143,7 @@ export function Home() {
               <p>
                 amoréttoは、その一瞬の「物語」を<br />
                 アートとして未来へ届ける<br />
-                日本初のライフキャスティングスタジオです。
+                日本初のライフキャスティング（立体手形）専門スタジオです。
               </p>
             </div>
           </motion.div>
@@ -121,7 +163,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
             >
                <div className="aspect-[4/5] shadow-xl relative">
-                  <img src={IMG_CONCEPT} alt="Plaster Art" className="w-full h-full object-cover grayscale-[5%]" />
+                  <img src={IMG_CONCEPT} alt="ライフキャスティングによる精巧な足形・産後ギフト" className="w-full h-full object-cover grayscale-[5%]" />
                </div>
             </motion.div>
 
@@ -202,7 +244,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
             >
               <div className="relative aspect-[4/5] bg-white p-3 shadow-lg">
-                 <img src={image_a0354f462dd60a54ee83d6d005b657d7607d28c2} alt="Safe material" className="w-full h-full object-cover" />
+                 <img src={image_a0354f462dd60a54ee83d6d005b657d7607d28c2} alt="90秒で固まる赤ちゃんに優しい独自の型取り素材" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           </div>
@@ -290,6 +332,36 @@ export function Home() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* --- Gift / CTA Section --- */}
+      <section className="py-24 md:py-32 bg-[#FAFAF8] relative overflow-hidden">
+        <div className="container mx-auto px-6 max-w-4xl text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="font-jp-serif text-2xl md:text-3xl text-[#2C2C2C] mb-6">
+              最高の「産後ギフト」を、<br className="md:hidden" />
+              新しい家族へ。
+            </h2>
+            <p className="text-[#666666] leading-loose tracking-wide font-light text-[0.9rem] md:text-base mb-12">
+              amoréttoの立体手形アートは、<br className="md:hidden" />
+              出産祝いとしても選ばれています。<br />
+              「おめでとう」の気持ちを、<br className="md:hidden" />
+              色褪せないカタチにして贈りませんか？
+            </p>
+            
+            <Link 
+              to="/plan-gallery"
+              className="inline-block px-12 py-4 bg-[#C4A962] text-white tracking-[0.2em] shadow-xl hover:bg-[#B39952] hover:-translate-y-1 transition-all duration-300 text-xs md:text-sm font-medium"
+            >
+              プラン・ギフトを見る
+            </Link>
+          </motion.div>
         </div>
       </section>
     </>

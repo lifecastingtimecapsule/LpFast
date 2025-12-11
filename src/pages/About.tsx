@@ -155,6 +155,7 @@ export function About() {
                  
                  <Link 
                    to="/plan-gallery" 
+                   aria-label="撮影プランと作品ギャラリーを見る"
                    className="inline-block px-10 py-3 md:px-12 md:py-4 bg-[#2C2C2C] text-white tracking-[0.2em] hover:bg-[#444] transition-colors text-[10px] md:text-xs uppercase"
                  >
                    View Plans

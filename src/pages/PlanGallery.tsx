@@ -45,11 +45,11 @@ export function PlanGallery() {
               Plan & Gift
             </h1>
             <p className="text-[10px] md:text-sm text-[#999999] tracking-[0.3em] uppercase mb-12 md:mb-16">
-              プラン・料金・ギャラリー
+              立体手形プラン・産後ギフト
             </p>
             
             <p className="text-[0.9rem] md:text-[1.1rem] leading-loose text-[#666666] tracking-wide max-w-2xl mx-auto">
-              かけがえのない瞬間を、最適なカタチで。<br />
+              かけがえのない瞬間を、立体手形という最適なカタチで。<br />
               写真は「姿」を、私たちは「存在」を残します。
             </p>
           </motion.div>
@@ -98,7 +98,7 @@ export function PlanGallery() {
                     ゴールドまたはシルバーの繊細な塗装仕上げで、インテリアに上品な輝きを添えます。
                   </p>
                   <p className="text-[10px] md:text-xs text-[#999999] tracking-wider bg-[#FAFAF8] p-3 border-l-2 border-[#E5E0D8]">
-                    <strong>【写真なしタイプ】</strong> 手足のキャストのみを額装するプランです。<br/>
+                    <strong>【写真なしタイプ】</strong> 手足の立体手形（キャスト）のみを額装するプランです。<br/>
                     純粋に「形」のアートを楽しみたい方におすすめです。
                   </p>
                 </div>
@@ -152,9 +152,9 @@ export function PlanGallery() {
                 
                 <div className="text-[#666666] leading-loose mb-10 text-[0.85rem] md:text-sm font-light">
                   <p className="mb-6">
-                    お気に入りの一枚を、キャストと一緒に額装できるプランです。<br/>
+                    お気に入りの一枚を、立体手形（キャスト）と一緒に額装できるプランです。<br/>
                     重厚感のある特注フレームに、お子様のお名前や生年月日を刻印。<br/>
-                    世界にひとつの「家宝」としてお仕立てします。
+                    出産祝いなどの「家宝」としてお仕立てします。
                   </p>
                   
                   {/* 通常価格 */}

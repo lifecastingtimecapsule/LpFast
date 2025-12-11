@@ -181,7 +181,7 @@ export function School() {
                   </li>
                   <li className="flex items-start gap-3 md:gap-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
-                    <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支援</span>
+                    <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支��</span>
                   </li>
                   <li className="flex items-start gap-3 md:gap-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
@@ -200,6 +200,7 @@ export function School() {
               href="https://lin.ee/siRIzsZ" 
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="無料相談会・お問い合わせ"
               className="inline-block px-10 py-3 md:px-12 md:py-4 bg-[#2C2C2C] text-white tracking-[0.2em] shadow-xl hover:bg-[#444] hover:-translate-y-1 transition-all duration-300 text-[10px] md:text-xs uppercase font-medium"
             >
               Contact Us
