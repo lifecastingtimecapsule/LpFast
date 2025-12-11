@@ -48,9 +48,10 @@ function MetaPixel() {
         t.src = v;
         s = b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t, s);
+        
+        n('init', '1848008302481267');
       })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', null, null, null);
 
-      (window as any).fbq('init', '1848008302481267');
       (window as any).fbq('track', 'PageView');
     }
   }, []);

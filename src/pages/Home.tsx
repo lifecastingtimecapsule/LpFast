@@ -2,6 +2,7 @@ import image_a0354f462dd60a54ee83d6d005b657d7607d28c2 from 'figma:asset/a0354f46
 import image_4f29fd2cd0dcbbe2868733df8ea47200f371e7a2 from 'figma:asset/4f29fd2cd0dcbbe2868733df8ea47200f371e7a2.png';
 import image_1dcb22b059fada42ca8857edd6c73aa35756f226 from 'figma:asset/1dcb22b059fada42ca8857edd6c73aa35756f226.png';
 import image_1cacdfafa29eecceb028f649eacdf3b80807891d from 'figma:asset/1cacdfafa29eecceb028f649eacdf3b80807891d.png';
+import image_exterior from 'figma:asset/88d78594627298de202a95b666ce87d1601717bf.png';
 import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png";
 import heroImage from 'figma:asset/1b1cb659ea81541dabf0f51e56339db5d8c92811.png';
 import plasterArtImage from 'figma:asset/49bf243a67012d811aa34bfe11f3d464e8fc5388.png';
@@ -14,6 +15,7 @@ import { Helmet } from 'react-helmet-async';
 const IMG_HERO = heroImage;
 const IMG_CONCEPT = plasterArtImage;
 const IMG_INTERIOR = "https://images.unsplash.com/photo-1611596189148-a74728c484ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
+const IMG_EXTERIOR = image_exterior;
 // スタッフ画像（Figmaからのインポートを割り当て）
 const IMG_STAFF_1 = image_1cacdfafa29eecceb028f649eacdf3b80807891d; // Renan
 const IMG_STAFF_2 = image_1dcb22b059fada42ca8857edd6c73aa35756f226; // Mari
@@ -249,7 +251,7 @@ export function Home() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
             >
-              <div className="w-full aspect-[3/4] mb-8 overflow-hidden bg-white">
+              <div className="w-full aspect-[3/4] mb-8 overflow-hidden bg-white border border-[#E5E0D8]">
                 <img src={IMG_STAFF_1} alt="Renan" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
               </div>
               <div className="pr-4 border-t border-[#E5E0D8] pt-6">
@@ -270,7 +272,7 @@ export function Home() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <div className="w-full aspect-[3/4] mb-8 overflow-hidden bg-white">
+              <div className="w-full aspect-[3/4] mb-8 overflow-hidden bg-white border border-[#E5E0D8]">
                 <img src={IMG_STAFF_2} alt="Mari" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
               </div>
               <div className="pr-4 border-t border-[#E5E0D8] pt-6">
@@ -291,7 +293,7 @@ export function Home() {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <div className="w-full aspect-[3/4] mb-8 overflow-hidden bg-white">
+              <div className="w-full aspect-[3/4] mb-8 overflow-hidden bg-white border border-[#E5E0D8]">
                 <img src={IMG_STAFF_3} alt="Yayoi" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
               </div>
               <div className="pr-4 border-t border-[#E5E0D8] pt-6">
@@ -299,7 +301,7 @@ export function Home() {
                 <h3 className="font-serif text-xl text-[#2C2C2C] mb-1">仕上げ担当</h3>
                 <p className="text-sm font-light text-[#999999] mb-4 tracking-wider">Yayoi</p>
                 <p className="text-sm leading-loose text-[#666666] font-light">
-                  「わぁ、きれい」その言葉が聞きたくて。美術教員免許を持つ確か���技術で、世界一の仕上がりを目指しています。
+                  「わぁ、きれい」その言葉が聞きたくて。美術教員免許を持つ確かな技術で、世界一の仕上がりを目指しています。
                 </p>
               </div>
             </motion.div>
@@ -307,49 +309,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* --- CTA: シンプルかつ美しく --- */}
-      <section className="relative py-32 md:py-48 bg-cover bg-center" style={{ backgroundImage: `url(${IMG_INTERIOR})` }}>
-        <div className="absolute inset-0 bg-white/90" />
-        
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <motion.div
-             initial={{ opacity: 0, scale: 0.95 }}
-             whileInView={{ opacity: 1, scale: 1 }}
-             viewport={{ once: true }}
-             className="max-w-3xl mx-auto"
-          >
-            <h2 className="text-5xl md:text-7xl text-[#2C2C2C] italic tracking-wide font-light mb-8" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-              The Timeless Gift.
-            </h2>
 
-            <p className="font-serif text-[1rem] md:text-[1.1rem] text-[#4A4A4A] leading-[2.4] tracking-wider mb-16">
-              その小さな手は、明日にはもう大きくなっているから。<br />
-              「今」しかない感動を、未来への贈り物に。
-            </p>
-
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-               <a 
-                 href="https://lifecastingtimecapsule.com/reservation" 
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 className="w-full md:w-auto min-w-[260px] px-10 py-4 bg-[#C4A962] text-white tracking-[0.2em] hover:bg-[#B39952] transition-all shadow-xl hover:shadow-2xl text-xs uppercase"
-               >
-                 Reserve Now
-               </a>
-               <Link 
-                 to="/about" 
-                 className="w-full md:w-auto min-w-[260px] px-10 py-4 border border-[#C4A962] text-[#C4A962] tracking-[0.2em] hover:bg-[#C4A962]/5 transition-colors text-xs uppercase bg-white/50 backdrop-blur-sm"
-               >
-                 Our Story
-               </Link>
-            </div>
-            
-            <p className="mt-8 text-[10px] text-[#999999] tracking-widest">
-              ※ 現在、多くのご予約をいただいております。<br className="md:hidden"/>お早めの確認をおすすめいたします。
-            </p>
-          </motion.div>
-        </div>
-      </section>
     </>
   );
 }

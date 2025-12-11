@@ -219,7 +219,7 @@ export function Layout({ children }: LayoutProps) {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="relative py-16 md:py-24 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden">
+      <footer className="relative py-10 md:py-16 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden">
         {/* Footer Design Accents */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C4A962]/50 to-transparent"></div>
         
@@ -230,42 +230,42 @@ export function Layout({ children }: LayoutProps) {
              viewport={{ once: true }}
              className="flex flex-col items-center"
           >
-            <div className="mb-8">
+            <div className="mb-6">
               <img 
                 src={logoImage} 
                 alt="amorétto" 
-                className="h-10 md:h-12 w-auto opacity-90 mix-blend-multiply"
+                className="h-8 md:h-10 w-auto opacity-90 mix-blend-multiply" 
               />
             </div>
             
-            <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-[#999999] mb-8">
+            <p className="text-[0.65rem] md:text-xs tracking-[0.3em] uppercase text-[#999999] mb-6">
               LifeCasting™ Studio Japan
             </p>
 
-            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-10 text-sm text-[#666666]">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-10 mb-8 text-xs text-[#666666]">
               <div className="flex items-center gap-2">
-                 <MapPin size={16} className="text-[#C4A962]" />
+                 <MapPin size={14} className="text-[#C4A962]" />
                  <span>愛知県豊川市門前町１５</span>
               </div>
               <div className="flex items-center gap-2">
-                 <span className="px-2 py-0.5 border border-[#666666]/30 text-xs rounded-full">完全予約制</span>
+                 <span className="px-2 py-0.5 border border-[#666666]/30 text-[10px] rounded-full">完全予約制</span>
                  <span>豊川稲荷より徒歩3分</span>
               </div>
             </div>
 
-            <div className="flex justify-center gap-8 mb-10">
-              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <Instagram size={20} />
+            <div className="flex justify-center gap-6 mb-8">
+              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
+                <Instagram size={18} />
               </a>
-              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" className="p-3 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <MessageCircle size={20} />
+              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
+                <MessageCircle size={18} />
               </a>
-              <a href="tel:0533569494" className="p-3 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
-                <Phone size={20} />
+              <a href="tel:0533569494" className="p-2.5 bg-white rounded-full shadow-sm text-[#2C2C2C] hover:text-[#C4A962] hover:shadow-md transition-all">
+                <Phone size={18} />
               </a>
             </div>
 
-            <p className="text-[0.65rem] text-[#AAAAAA] tracking-wider">
+            <p className="text-[0.6rem] text-[#AAAAAA] tracking-wider">
               © {new Date().getFullYear()} amorétto. All rights reserved.
             </p>
           </motion.div>
