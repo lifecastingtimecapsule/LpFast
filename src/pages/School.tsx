@@ -42,7 +42,7 @@ export function School() {
               Become an Artist.
             </h1>
             <p className="font-jp-serif text-base md:text-xl tracking-[0.2em] font-light opacity-90">
-              技術を、受け継ぐ。
+              技術を、受け継ぐ
             </p>
           </motion.div>
         </div>
@@ -127,7 +127,7 @@ export function School() {
                 <div>
                   <h3 className="font-jp-serif text-lg md:text-xl mb-3 text-[#2C2C2C]">市場の8割は「無断使用」です。</h3>
                   <p className="text-[0.9rem] md:text-base text-[#666666] leading-[2.2] font-light">
-                    現在、SNS等で「ライフキャスティング」とタグ付けされている投稿の多くは、残念ながら商標権を無視した無断使用であるのが実情です。<br/>
+                    現在、SNS等で「ライフキャスティング®」とタグ付けされている投稿の多くは、残念ながら商標権を無視した無断使用であるのが実情です。<br/>
                     それらは技術や素材の安全基準が不透明なものも多く、お客様にとってもリスクとなり得ます。
                   </p>
                 </div>
@@ -217,20 +217,20 @@ export function School() {
                   <h3 className="font-jp-serif text-xl md:text-2xl text-[#2C2C2C]">活動支援</h3>
                 </div>
                 <ul className="space-y-4 md:space-y-6 text-[0.85rem] md:text-sm text-[#666666] font-light leading-relaxed">
-                  <li className="flex items-start gap-3 md:gap-4">
-                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
+                  <li className="flex items-center justify-center gap-3 md:gap-4">
+                    <Check size={18} className="text-[#C4A962] shrink-0" />
                     <span>商標<strong>「ライフキャスティング®」</strong>の公式使用権</span>
                   </li>
-                  <li className="flex items-start gap-3 md:gap-4">
-                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
+                  <li className="flex items-center justify-center gap-3 md:gap-4">
+                    <Check size={18} className="text-[#C4A962] shrink-0" />
                     <span><strong>独自開発素材</strong>を<span className="text-[#C4A962] font-medium">スクール生特別価格（卸値）</span>で購入可能</span>
                   </li>
-                  <li className="flex items-start gap-3 md:gap-4">
-                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
+                  <li className="flex items-center justify-center gap-3 md:gap-4">
+                    <Check size={18} className="text-[#C4A962] shrink-0" />
                     <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支援</span>
                   </li>
-                  <li className="flex items-start gap-3 md:gap-4">
-                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
+                  <li className="flex items-center justify-center gap-3 md:gap-4">
+                    <Check size={18} className="text-[#C4A962] shrink-0" />
                     <span>認定アーティスト限定コミュニティ・勉強会への参加</span>
                   </li>
                 </ul>
@@ -240,7 +240,7 @@ export function School() {
           {/* CTA */}
           <div className="mt-16 md:mt-24 text-center">
             <p className="text-xs md:text-sm text-[#666666] mb-6 md:mb-8 tracking-widest">
-              まずは無料相談会へお越しください。
+              お問い合わせはこちらから
             </p>
             <a
               href="https://lin.ee/siRIzsZ" 

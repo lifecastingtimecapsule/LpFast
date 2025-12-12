@@ -122,7 +122,7 @@ export function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="block text-[#C4A962] text-[10px] md:text-xs tracking-[0.3em] uppercase mb-8 opacity-80">Philosophy</span>
+            
 
             <h2 className="font-jp-serif text-2xl md:text-4xl text-[#2C2C2C] leading-loose mb-12 md:mb-16">
               私たちが売っているのは、<br />
@@ -227,7 +227,7 @@ export function Home() {
                 </p>
                 <p>
                   その想いから、私たちは<strong className="font-medium text-[#555555]">独自に研究し開発した素材</strong>を採用しました。<br/>
-                  <span className="text-[11px] text-[#999999] tracking-wider block mt-1">（※特許申請中）</span>
+                  <span className="text-[13px] text-[#999999] tracking-wider block mt-1">（※特許申請中）</span>
                 </p>
                 <p>
                   硬化にかかる時間は、わずか<span className="text-xl md:text-2xl mx-1 font-bold text-[32px]">90秒</span>。<br/>

@@ -76,7 +76,7 @@ export function PlanGallery() {
                       alt="Standard Plan" 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                    />
-                   <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full">
+                   <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full bg-[rgba(255,255,255,0.9)]">
                       No Photo
                    </div>
                 </div>
@@ -132,7 +132,7 @@ export function PlanGallery() {
                          alt="Luxury Frame" 
                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                       />
-                      <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full">
+                      <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full bg-[rgba(255,255,255,0.9)]">
                         With Photo
                       </div>
                    </div>
@@ -292,7 +292,7 @@ export function PlanGallery() {
 
       {/* --- FAQ Section --- */}
       <section id="faq" className="py-20 md:py-32 bg-[#FAFAF8]">
-        <div className="container mx-auto px-6 max-w-3xl">
+        <div className="container mx-auto px-6 max-w-3xl pb-12 md:pb-20">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl text-[#2C2C2C] italic font-light mb-4 font-en-serif">
               Q&A
@@ -307,7 +307,7 @@ export function PlanGallery() {
                { q: "肌荒れが心配です。", a: "歯科医療で使用される、海藻由来の安全な素材を使用しています。水で簡単に洗い流せ、肌への刺激は極めて少ないものです。ご心配な方はパッチテストも可能です。" },
                { q: "駐車場はありますか？", a: "専用駐車場はございませんが、近隣に提携駐車場がございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。" }
              ].map((item, i) => (
-               <AccordionItem key={i} value={`item-${i}`} className="border border-[#E5E0D8] rounded-lg px-4 md:px-6 bg-white">
+               <AccordionItem key={i} value={`item-${i}`} className="border border-[#E5E0D8] rounded-lg px-4 md:px-6 bg-white last:border-b">
                  <AccordionTrigger className="text-[0.9rem] md:text-[0.95rem] text-[#2C2C2C] font-medium py-4 md:py-5 hover:no-underline hover:text-[#C4A962] transition-colors text-left">
                    <span className="text-[#C4A962] mr-3 md:mr-4 font-serif italic">Q.</span>
                    {item.q}

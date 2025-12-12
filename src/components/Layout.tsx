@@ -116,7 +116,7 @@ export function Layout({ children }: LayoutProps) {
               className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
             >
               <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium">
-                RESERVATION <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                予約する <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </a>
