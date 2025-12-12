@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
-import { ArrowRight, ArrowUp } from "lucide-react"; // Calendar削除
+import { ArrowRight, ArrowUp, Calendar } from "lucide-react"; // Calendarアイコンを復活
 import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png";
 
 interface LayoutProps {
@@ -45,10 +45,10 @@ export function Layout({ children }: LayoutProps) {
   };
 
   const navLinks = [
-    { name: "Home", path: "/", ariaLabel: "amorétto トップページ" },
-    { name: "About", path: "/about", ariaLabel: "amoréttoのコンセプト・想いについて" },
-    { name: "Plan & Gallery", path: "/plan-gallery", ariaLabel: "撮影プランと作品ギャラリー" },
-    { name: "School", path: "/school", ariaLabel: "ライフキャスティングスクールについて" },       
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Plan & Gallery", path: "/plan-gallery" },
+    { name: "School", path: "/school" },       
   ];
 
   return (
@@ -101,7 +101,6 @@ export function Layout({ children }: LayoutProps) {
               <div key={link.name} className="relative group">
                 <Link 
                   to={link.path}
-                  aria-label={link.ariaLabel}
                   className="text-[#666666] group-hover:text-[#C4A962] transition-colors py-2 font-en-serif text-lg"
                 >
                   {link.name}
@@ -114,11 +113,10 @@ export function Layout({ children }: LayoutProps) {
               href="https://lifecastingtimecapsule.com/reservation"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="予約する"
               className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
             >
               <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium">
-                予約する <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                RESERVATION <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </a>
@@ -128,7 +126,7 @@ export function Layout({ children }: LayoutProps) {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden relative z-[101] p-2 text-[#2C2C2C] active:scale-95 transition-transform"
-            aria-label="メニューを開閉する"
+            aria-label="Menu"
           >
             {mobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
           </button>
@@ -167,7 +165,6 @@ export function Layout({ children }: LayoutProps) {
                      <Link 
                       to={link.path}
                       onClick={handleNavClick}
-                      aria-label={link.ariaLabel}
                       className="font-en-serif text-4xl text-[#2C2C2C] hover:text-[#C4A962] transition-colors block py-1 italic tracking-wide"
                      >
                        {link.name}
@@ -180,21 +177,26 @@ export function Layout({ children }: LayoutProps) {
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.6 }}
-                 className="mt-16 w-full max-w-xs"
+                 className="mt-16 w-full max-w-xs space-y-4"
                >
                  <a
                     href="https://lifecastingtimecapsule.com/reservation"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="予約する"
-                    className="block w-full py-4 border border-[#C4A962] text-[#C4A962] text-center text-sm tracking-[0.2em] uppercase hover:bg-[#C4A962] hover:text-white transition-all duration-300"
+                    className="flex items-center justify-center gap-2 w-full py-4 bg-[#C4A962] text-white text-sm font-medium tracking-wide shadow-lg hover:bg-[#B39952] transition-all"
                  >
-                    Reservation
+                    <Calendar size={18} strokeWidth={1.5} />
+                    Web予約・空き状況
                  </a>
-                 <div className="flex justify-center gap-8 mt-10 text-[#C4A962]">
-                    <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer"><Instagram size={24} strokeWidth={1.5} /></a>
-                    <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer"><MessageCircle size={24} strokeWidth={1.5} /></a>
-                 </div>
+                 <a
+                    href="https://lin.ee/nf4Ayfy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-4 bg-[#06C755] text-white text-sm font-medium tracking-wide hover:bg-[#05b34c] transition-colors shadow-md"
+                 >
+                    <MessageCircle size={18} strokeWidth={2} />
+                    LINEで相談・予約
+                 </a>
                </motion.div>
              </div>
           </motion.div>
@@ -209,32 +211,86 @@ export function Layout({ children }: LayoutProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="flex-grow pt-[0px] md:pt-[0px]" // ヘッダー分のパディングは各ページ側で調整または透過ヘッダーなら0
+          className="flex-grow pt-[0px] md:pt-[0px]"
         >
           {children}
         </motion.main>
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="relative py-12 md:py-20 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden border-t border-[#E5E0D8]">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+      <footer className="relative py-16 md:py-24 px-6 bg-[#F5F3EF] text-[#2C2C2C] overflow-hidden border-t border-[#E5E0D8]">
+        <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div 
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
              className="flex flex-col items-center"
           >
-            <div className="mb-8">
+            {/* ★★★ 相談・予約エリア（3つのボタン） ★★★ */}
+            <div className="w-full bg-white/60 border border-[#C4A962]/20 p-8 md:p-12 mb-16 rounded-sm backdrop-blur-sm shadow-sm">
+              <h3 className="font-en-serif text-2xl md:text-3xl italic text-[#2C2C2C] mb-3">Contact & Reservation</h3>
+              <p className="text-xs md:text-sm text-[#666666] mb-10 font-light tracking-wide">
+                ご予約はWebサイトから24時間受け付けております。<br />
+                制作のご相談やご質問は、LINEまたはお電話にてお気軽にお問い合わせください。
+              </p>
+
+              <div className="flex flex-col lg:flex-row gap-4 justify-center items-center">
+                
+                {/* 1. Web Reservation (Gold / Main) */}
+                <a 
+                  href="https://lifecastingtimecapsule.com/reservation" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-[#C4A962] text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  <Calendar size={20} strokeWidth={1.5} />
+                  <div className="flex flex-col items-start leading-none text-left">
+                    <span className="text-[10px] tracking-wider mb-1 opacity-90">24時間受付</span>
+                    <span className="text-sm font-medium tracking-wide">Webで空き状況を見る</span>
+                  </div>
+                  <ArrowRight size={16} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+                </a>
+
+                {/* 2. LINE (Green) */}
+                <a 
+                  href="https://lin.ee/nf4Ayfy" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-[#06C755] text-white hover:bg-[#05b34c] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  <MessageCircle size={20} strokeWidth={2} />
+                  <div className="flex flex-col items-start leading-none text-left">
+                    <span className="text-[10px] tracking-wider mb-1 opacity-90">気軽に質問・相談</span>
+                    <span className="text-sm font-medium tracking-wide">LINEで問い合わせる</span>
+                  </div>
+                </a>
+
+                {/* 3. Phone (White) */}
+                <a 
+                  href="tel:0533569494" 
+                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#E5E0D8] text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962] transition-all shadow-sm hover:shadow-md"
+                >
+                  <Phone size={18} strokeWidth={1.5} />
+                  <div className="flex flex-col items-start leading-none text-left">
+                    <span className="text-[10px] text-[#999999] tracking-wider mb-1">お電話で相談する</span>
+                    <span className="text-sm font-medium tracking-widest">0533-56-9494</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            {/* ロゴ・住所など（既存情報） */}
+            <div className="mb-8 opacity-80">
               <img 
                 src={logoImage} 
                 alt="amorétto" 
-                className="h-6 md:h-8 w-auto opacity-80 mix-blend-multiply" 
+                className="h-6 md:h-8 w-auto mix-blend-multiply" 
               />
             </div>
             
-            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-8 mb-10 text-[11px] md:text-xs text-[#666666] tracking-wider font-light">
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-8 mb-10 text-[11px] md:text-xs text-[#666666] tracking-wider font-light">
               <div className="flex items-center gap-2">
-                 <MapPin size={12} className="text-[#C4A962]" />
+                 <MapPin size={14} className="text-[#C4A962]" />
                  <span>愛知県豊川市門前町１５</span>
               </div>
               <span className="hidden md:inline text-[#E5E0D8]">|</span>
@@ -243,15 +299,10 @@ export function Layout({ children }: LayoutProps) {
               <div>完全予約制</div>
             </div>
 
+            {/* SNS Links (Bottom) */}
             <div className="flex justify-center gap-8 mb-10">
-              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-[#999999] hover:text-[#C4A962] transition-colors">
+              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors p-2">
                 <Instagram size={20} strokeWidth={1.5} />
-              </a>
-              <a href="https://lin.ee/nf4Ayfy" target="_blank" rel="noopener noreferrer" aria-label="LINE公式アカウント" className="text-[#999999] hover:text-[#C4A962] transition-colors">
-                <MessageCircle size={20} strokeWidth={1.5} />
-              </a>
-              <a href="tel:0533569494" aria-label="電話をかける" className="text-[#999999] hover:text-[#C4A962] transition-colors">
-                <Phone size={20} strokeWidth={1.5} />
               </a>
             </div>
 
@@ -262,7 +313,7 @@ export function Layout({ children }: LayoutProps) {
         </div>
       </footer>
 
-      {/* Scroll to Top Button (Desktop only to keep mobile clean) */}
+      {/* Scroll to Top Button (Desktop only) */}
       <AnimatePresence>
         {scrolled && (
           <motion.button

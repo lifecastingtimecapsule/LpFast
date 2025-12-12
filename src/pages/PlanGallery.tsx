@@ -49,7 +49,7 @@ export function PlanGallery() {
             </p>
             
             <p className="text-[0.9rem] md:text-[1.1rem] leading-loose text-[#666666] tracking-wide max-w-2xl mx-auto">
-              かけがえのない瞬間を、立体手形という最適なカタチで。<br />
+              かけがえのない瞬間を、立体手形/立体足型という最適なカタチで。<br />
               写真は「姿」を、私たちは「存在」を残します。
             </p>
           </motion.div>
@@ -152,7 +152,7 @@ export function PlanGallery() {
                 
                 <div className="text-[#666666] leading-loose mb-10 text-[0.85rem] md:text-sm font-light">
                   <p className="mb-6">
-                    お気に入りの一枚を、立体手形（キャスト）と一緒に額装できるプランです。<br/>
+                    お気に入りの一枚を、立体手形/立体足型（キャスト）と一緒に額装できるプランです。<br/>
                     重厚感のある特注フレームに、お子様のお名前や生年月日を刻印。<br/>
                     出産祝いなどの「家宝」としてお仕立てします。
                   </p>
@@ -321,42 +321,7 @@ export function PlanGallery() {
         </div>
       </section>
 
-      {/* --- Testimonials & CTA --- */}
-      <section className="py-20 md:py-32 px-6 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="font-jp-serif text-2xl md:text-3xl text-[#2C2C2C] mb-10 md:mb-12">
-              お客様の声
-            </h2>
 
-            <div className="space-y-6 md:space-y-8 mb-16 md:mb-20 text-left">
-              <TestimonialCard
-                quote="小さな手足がそのまま残っていて泣きそうになりました"
-                author="M.K様"
-                context="お子様3カ月"
-              />
-              <TestimonialCard
-                quote="不安だったけど、思っていたより短時間で終わり、楽しく安心して任せられました。"
-                author="Y.S様"
-                context="20代ママ"
-              />
-            </div>
-
-            <a
-              href="https://lifecastingtimecapsule.com/reservation"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-3 md:px-12 md:py-4 bg-[#C4A962] text-white tracking-[0.2em] shadow-xl hover:bg-[#B39952] hover:-translate-y-1 transition-all duration-300 text-[10px] md:text-sm font-medium"
-            >
-              予約枠を確認する
-            </a>
-          </motion.div>
-        </div>
-      </section>
     </>
   );
 }

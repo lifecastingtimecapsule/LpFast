@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
-import { Check, Star, Users, Shield } from "lucide-react";
+import { Check, Star, Shield, AlertTriangle } from "lucide-react";
 import heroImage from 'figma:asset/88d78594627298de202a95b666ce87d1601717bf.png';
 
 // Images
@@ -12,7 +12,7 @@ export function School() {
     <>
       <Helmet>
         <title>School | amorétto</title>
-        <meta name="description" content="amorétto認定ライフキャスティングスクール。技術だけでなく、時間と物語を届けるアーティストを育成します。" />
+        <meta name="description" content="日本唯一のLifeCasting®認定講座。商標権を持つ公式アーティストとして、本物の技術を学びませんか。" />
       </Helmet>
 
       {/* --- Hero Section --- */}
@@ -104,8 +104,54 @@ export function School() {
         </div>
       </section>
 
+      {/* --- ★修正: License & Warning (白背景で上品に) --- */}
+      <section className="py-24 md:py-32 bg-[#FAFAF8] relative overflow-hidden">
+        <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+
+            <h2 className="font-jp-serif text-2xl md:text-4xl leading-relaxed mb-10 md:mb-12 text-[#2C2C2C]">
+              日本で唯一。<br/>
+              <span className="text-[#C4A962]">「LifeCasting®」</span>の商標を持つ<br className="md:hidden"/>認定講座。
+            </h2>
+
+            {/* 白背景のカードデザインに変更 */}
+            <div className="text-left bg-white border border-[#E5E0D8] p-8 md:p-12 shadow-sm rounded-sm">
+              <div className="flex items-start gap-5 mb-8">
+                <div className="shrink-0 p-3 bg-[#F5F3EF] rounded-full text-[#C4A962]">
+                  <AlertTriangle size={24} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h3 className="font-jp-serif text-lg md:text-xl mb-3 text-[#2C2C2C]">市場の8割は「無断使用」です。</h3>
+                  <p className="text-[0.9rem] md:text-base text-[#666666] leading-[2.2] font-light">
+                    現在、SNS等で「ライフキャスティング」とタグ付けされている投稿の多くは、残念ながら商標権を無視した無断使用であるのが実情です。<br/>
+                    それらは技術や素材の安全基準が不透明なものも多く、お客様にとってもリスクとなり得ます。
+                  </p>
+                </div>
+              </div>
+              
+              <div className="h-px w-full bg-[#E5E0D8] my-8"></div>
+
+              <div className="space-y-4">
+                 <h3 className="font-jp-serif text-lg md:text-xl text-center md:text-left mb-4 text-[#2C2C2C]">だからこそ、<span className="text-[#C4A962]">「本物」</span>であることに価値がある。</h3>
+                 <p className="text-[0.9rem] md:text-base text-[#666666] leading-[2.2] font-light">
+                   amoréttoは、日本における「LifeCasting®」の商標を正式に取得している唯一のブランドです。<br/>
+                   当スクールを修了し、認定を受けたアーティストだけが、<br className="hidden md:block"/>
+                   堂々とこの名称を掲げ、法的に守られた状態で活動することができます。<br/>
+                   <br/>
+                   偽物に埋もれない、選ばれる理由とプライドを、あなたに。
+                 </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* --- Curriculum --- */}
-      <section className="py-24 md:py-48 bg-[#FAFAF8]">
+      <section className="py-24 md:py-48 bg-white">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-16 md:mb-24">
             <h2 className="text-3xl md:text-6xl text-[#2C2C2C] italic font-light mb-4 md:mb-6 font-en-serif">
@@ -119,7 +165,7 @@ export function School() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
             
             {/* Step 1 */}
-            <div className="bg-white p-6 md:p-10 shadow-sm border-t-4 border-[#C4A962] flex flex-col h-full">
+            <div className="bg-[#FAFAF8] p-6 md:p-10 border-t-4 border-[#C4A962] flex flex-col h-full hover:-translate-y-1 transition-transform duration-300">
               <span className="text-[#C4A962] text-4xl md:text-5xl font-serif opacity-20 mb-4 md:mb-6 block">01</span>
               <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">基礎・入門</h3>
               <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
@@ -129,7 +175,7 @@ export function School() {
             </div>
 
             {/* Step 2 */}
-            <div className="bg-white p-6 md:p-10 shadow-sm border-t-4 border-[#2C2C2C] flex flex-col h-full">
+            <div className="bg-[#FAFAF8] p-6 md:p-10 border-t-4 border-[#2C2C2C] flex flex-col h-full hover:-translate-y-1 transition-transform duration-300">
               <span className="text-[#2C2C2C] text-4xl md:text-5xl font-serif opacity-20 mb-4 md:mb-6 block">02</span>
               <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">実践・理念</h3>
               <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
@@ -139,7 +185,7 @@ export function School() {
             </div>
 
             {/* Step 3 */}
-            <div className="bg-white p-6 md:p-10 shadow-sm border-t-4 border-[#C4A962] flex flex-col h-full">
+            <div className="bg-[#FAFAF8] p-6 md:p-10 border-t-4 border-[#C4A962] flex flex-col h-full hover:-translate-y-1 transition-transform duration-300">
               <span className="text-[#C4A962] text-4xl md:text-5xl font-serif opacity-20 mb-4 md:mb-6 block">03</span>
               <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">プロ認定</h3>
               <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
@@ -153,7 +199,7 @@ export function School() {
       </section>
 
       {/* --- Support --- */}
-      <section className="py-24 md:py-48 bg-white">
+      <section className="py-24 md:py-48 bg-[#FAFAF8]">
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="text-center mb-16 md:mb-20">
             <h2 className="text-3xl md:text-5xl text-[#2C2C2C] italic font-light mb-4 md:mb-6 font-en-serif">
@@ -164,7 +210,7 @@ export function School() {
             </p>
           </div>
 
-          <div className="bg-[#FAFAF8] border border-[#E5E0D8] p-6 md:p-16">
+          <div className="bg-white border border-[#E5E0D8] p-6 md:p-16">
             <div className="max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-3 mb-8">
                   <Star size={20} className="text-[#C4A962]" />
@@ -172,19 +218,19 @@ export function School() {
                 </div>
                 <ul className="space-y-4 md:space-y-6 text-[0.85rem] md:text-sm text-[#666666] font-light leading-relaxed">
                   <li className="flex items-start gap-3 md:gap-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
-                    <span>商標<strong>「ライフキャスティング™」</strong>の使用権</span>
+                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
+                    <span>商標<strong>「ライフキャスティング®」</strong>の公式使用権</span>
                   </li>
                   <li className="flex items-start gap-3 md:gap-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
+                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
                     <span><strong>独自開発素材</strong>を<span className="text-[#C4A962] font-medium">スクール生特別価格（卸値）</span>で購入可能</span>
                   </li>
                   <li className="flex items-start gap-3 md:gap-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
-                    <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支��</span>
+                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
+                    <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支援</span>
                   </li>
                   <li className="flex items-start gap-3 md:gap-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C4A962] mt-2 shrink-0"></span>
+                    <Check size={18} className="text-[#C4A962] shrink-0 mt-0.5" />
                     <span>認定アーティスト限定コミュニティ・勉強会への参加</span>
                   </li>
                 </ul>
@@ -200,7 +246,6 @@ export function School() {
               href="https://lin.ee/siRIzsZ" 
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="無料相談会・お問い合わせ"
               className="inline-block px-10 py-3 md:px-12 md:py-4 bg-[#2C2C2C] text-white tracking-[0.2em] shadow-xl hover:bg-[#444] hover:-translate-y-1 transition-all duration-300 text-[10px] md:text-xs uppercase font-medium"
             >
               Contact Us

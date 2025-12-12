@@ -143,7 +143,7 @@ export function Home() {
               <p>
                 amoréttoは、その一瞬の「物語」を<br />
                 アートとして未来へ届ける<br />
-                日本初のライフキャスティング（立体手形）専門スタジオです。
+                日本初のライフキャスティング®（立体手形）専門スタジオです。
               </p>
             </div>
           </motion.div>
@@ -227,10 +227,10 @@ export function Home() {
                 </p>
                 <p>
                   その想いから、私たちは<strong className="font-medium text-[#555555]">独自に研究し開発した素材</strong>を採用しました。<br/>
-                  <span className="text-[10px] text-[#999999] tracking-wider block mt-1">（※特許申請中）</span>
+                  <span className="text-[11px] text-[#999999] tracking-wider block mt-1">（※特許申請中）</span>
                 </p>
                 <p>
-                  硬化にかかる時間は、わずか90秒。<br/>
+                  硬化にかかる時間は、わずか<span className="text-xl md:text-2xl mx-1 font-bold text-[32px]">90秒</span>。<br/>
                   お母さんとお話している間に、魔法のように完了します。
                 </p>
               </div>
