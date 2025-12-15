@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
-import { ArrowRight, ArrowUp, Calendar } from "lucide-react"; // Calendarアイコンを復活
+import { ArrowRight, ArrowUp, Calendar } from "lucide-react";
 import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png";
 
 interface LayoutProps {
@@ -14,7 +14,7 @@ export function Layout({ children }: LayoutProps) {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Scroll detection for header style
+  // Scroll detection
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -48,7 +48,8 @@ export function Layout({ children }: LayoutProps) {
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Plan & Gallery", path: "/plan-gallery" },
-    { name: "School", path: "/school" },       
+    { name: "School", path: "/school" },
+    { name: "Access", path: "/access" },       
   ];
 
   return (
@@ -116,7 +117,7 @@ export function Layout({ children }: LayoutProps) {
               className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
             >
               <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium">
-                予約する <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                RESERVATION <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </a>
@@ -189,7 +190,7 @@ export function Layout({ children }: LayoutProps) {
                     Web予約・空き状況
                  </a>
                  <a
-                    href="https://lin.ee/nf4Ayfy"
+                    href="https://lin.ee/siRIzsZ"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full py-4 bg-[#06C755] text-white text-sm font-medium tracking-wide hover:bg-[#05b34c] transition-colors shadow-md"
@@ -226,7 +227,7 @@ export function Layout({ children }: LayoutProps) {
              viewport={{ once: true }}
              className="flex flex-col items-center"
           >
-            {/* ★★★ 相談・予約エリア（3つのボタン） ★★★ */}
+            {/* Contact & Reservation Section */}
             <div className="w-full bg-white/60 border border-[#C4A962]/20 p-8 md:p-12 mb-16 rounded-sm backdrop-blur-sm shadow-sm">
               <h3 className="font-en-serif text-2xl md:text-3xl italic text-[#2C2C2C] mb-3">Contact & Reservation</h3>
               <p className="text-xs md:text-sm text-[#666666] mb-10 font-light tracking-wide">
@@ -236,7 +237,7 @@ export function Layout({ children }: LayoutProps) {
 
               <div className="flex flex-col lg:flex-row gap-4 justify-center items-center">
                 
-                {/* 1. Web Reservation (Gold / Main) */}
+                {/* 1. Web Reservation (Gold) */}
                 <a 
                   href="https://lifecastingtimecapsule.com/reservation" 
                   target="_blank" 
@@ -253,10 +254,10 @@ export function Layout({ children }: LayoutProps) {
 
                 {/* 2. LINE (Green) */}
                 <a 
-                  href="https://lin.ee/nf4Ayfy" 
+                  href="https://lin.ee/siRIzsZ" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-[#06C755] text-white hover:bg-[#05b34c] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#06C755] text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
                 >
                   <MessageCircle size={20} strokeWidth={2} />
                   <div className="flex flex-col items-start leading-none text-left">
@@ -279,7 +280,7 @@ export function Layout({ children }: LayoutProps) {
               </div>
             </div>
 
-            {/* ロゴ・住所など（既存情報） */}
+            {/* Logo */}
             <div className="mb-8 opacity-80">
               <img 
                 src={logoImage} 
@@ -288,6 +289,7 @@ export function Layout({ children }: LayoutProps) {
               />
             </div>
             
+            {/* Address Info */}
             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-8 mb-10 text-[11px] md:text-xs text-[#666666] tracking-wider font-light">
               <div className="flex items-center gap-2">
                  <MapPin size={14} className="text-[#C4A962]" />
@@ -299,10 +301,13 @@ export function Layout({ children }: LayoutProps) {
               <div>完全予約制</div>
             </div>
 
-            {/* SNS Links (Bottom) */}
+            {/* SNS Links (Bottom) - Instagram & LINE */}
             <div className="flex justify-center gap-8 mb-10">
-              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors p-2">
+              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors p-2" aria-label="Instagram">
                 <Instagram size={20} strokeWidth={1.5} />
+              </a>
+              <a href="https://lin.ee/siRIzsZ" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#06C755] transition-colors p-2" aria-label="LINE">
+                <MessageCircle size={20} strokeWidth={1.5} />
               </a>
             </div>
 

@@ -104,7 +104,7 @@ export function School() {
         </div>
       </section>
 
-      {/* --- ★修正: License & Warning (白背景で上品に) --- */}
+      {/* --- License & Warning --- */}
       <section className="py-24 md:py-32 bg-[#FAFAF8] relative overflow-hidden">
         <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
           <motion.div
@@ -118,7 +118,6 @@ export function School() {
               <span className="text-[#C4A962]">「LifeCasting®」</span>の商標を持つ<br className="md:hidden"/>認定講座。
             </h2>
 
-            {/* 白背景のカードデザインに変更 */}
             <div className="text-left bg-white border border-[#E5E0D8] p-8 md:p-12 shadow-sm rounded-sm">
               <div className="flex items-start gap-5 mb-8">
                 <div className="shrink-0 p-3 bg-[#F5F3EF] rounded-full text-[#C4A962]">
@@ -127,7 +126,7 @@ export function School() {
                 <div>
                   <h3 className="font-jp-serif text-lg md:text-xl mb-3 text-[#2C2C2C]">市場の8割は「無断使用」です。</h3>
                   <p className="text-[0.9rem] md:text-base text-[#666666] leading-[2.2] font-light">
-                    現在、SNS等で「ライフキャスティング®」とタグ付けされている投稿の多くは、残念ながら商標権を無視した無断使用であるのが実情です。<br/>
+                    現在、SNS等で「ライフキャスティング」とタグ付けされている投稿の多くは、残念ながら商標権を無視した無断使用であるのが実情です。<br/>
                     それらは技術や素材の安全基準が不透明なものも多く、お客様にとってもリスクとなり得ます。
                   </p>
                 </div>
@@ -180,7 +179,7 @@ export function School() {
               <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">実践・理念</h3>
               <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
                 難易度の高い「手」の型取りや、独自素材の活用法をマスター。<br/>
-                さらに、助産師監修の知識やブランド理念を学び、技術に「心」を吹き込みます。
+                さらに、助���師監修の知識やブランド理念を学び、技術に「心」を吹き込みます。
               </p>
             </div>
 
@@ -240,7 +239,7 @@ export function School() {
           {/* CTA */}
           <div className="mt-16 md:mt-24 text-center">
             <p className="text-xs md:text-sm text-[#666666] mb-6 md:mb-8 tracking-widest">
-              お問い合わせはこちらから
+              まずは無料相談会へお越しください。
             </p>
             <a
               href="https://lin.ee/siRIzsZ" 
