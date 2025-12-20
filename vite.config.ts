@@ -16,7 +16,7 @@ export default defineConfig({
       'next-themes@0.4.6': 'next-themes',
       'input-otp@1.4.2': 'input-otp',
       
-      // 画像エイリアス設定（重複を削除し、ファビコンを追加した完全版）
+      // 画像エイリアス設定
       'figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png': path.resolve(__dirname, './src/assets/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png'),
       'figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.png': path.resolve(__dirname, './src/assets/b249142c3b0afcc8d91208afed6a8e291cdb4144.png'),
       'figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png': path.resolve(__dirname, './src/assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png'),
@@ -61,7 +61,7 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    outDir: 'build',
+    outDir: 'dist', // ★ここを 'build' から 'dist' に変更しました
   },
   server: {
     port: 3000,
