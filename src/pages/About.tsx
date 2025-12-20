@@ -12,8 +12,66 @@ export function About() {
   return (
     <>
       <Helmet>
-        <title>Our Story | amorétto</title>
-        <meta name="description" content="amoréttoのブランドストーリー。私たちが大切にしている想いと約束。" />
+        <title>About | amorétto - 私たちの想い</title>
+        <meta name="description" content="amoréttoのブランドストーリー。愛知・豊川のLifeCasting®専門スタジオが大切にしている想いと、立体手形・産後ギフト制作への情熱をご紹介します。" />
+        <link rel="canonical" href="https://lifecastingtimecapsule.com/about" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="About | amorétto - 私たちの想い" />
+        <meta property="og:description" content="amoréttoのブランドストーリー。記憶を形にする、立体手形アートへの想い。" />
+        <meta property="og:url" content="https://lifecastingtimecapsule.com/about" />
+        
+        {/* 構造化データ: BreadcrumbList */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ホーム",
+                  "item": "https://lifecastingtimecapsule.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "About",
+                  "item": "https://lifecastingtimecapsule.com/about"
+                }
+              ]
+            }
+          `}
+        </script>
+        
+        {/* 構造化データ: AboutPage */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "AboutPage",
+              "name": "About amorétto",
+              "description": "amoréttoのブランドストーリー。赤ちゃんの「今」を立体手形・足形アートとして残し、産後ギフトとして家族の大切な記憶を形にする想いをご紹介。",
+              "url": "https://lifecastingtimecapsule.com/about",
+              "mainEntity": {
+                "@type": "Organization",
+                "name": "amorétto",
+                "url": "https://lifecastingtimecapsule.com/",
+                "logo": "https://lifecastingtimecapsule.com/og-image.jpg",
+                "description": "愛知・豊川のLifeCasting®専門スタジオ。立体手形・足形アート制作。",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "門前町15",
+                  "addressLocality": "豊川市",
+                  "addressRegion": "愛知県",
+                  "postalCode": "442-0037",
+                  "addressCountry": "JP"
+                }
+              }
+            }
+          `}
+        </script>
       </Helmet>
 
       <div className="bg-white">

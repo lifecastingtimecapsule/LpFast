@@ -11,8 +11,92 @@ export function School() {
   return (
     <>
       <Helmet>
-        <title>School | amorétto</title>
-        <meta name="description" content="日本唯一のLifeCasting®認定講座。商標権を持つ公式アーティストとして、本物の技術を学びませんか。" />
+        <title>School | amorétto - LifeCasting®認定講座</title>
+        <meta name="description" content="愛知・豊川の日本唯一のLifeCasting®認定講座。立体手形・足形アート制作技術を学び、公式アーティストとして活動できます。商標権を持つ本格的な技術指導と開業サポート付き。\" />
+        <link rel="canonical" href="https://lifecastingtimecapsule.com/school" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="School | amorétto - LifeCasting®認定講座" />
+        <meta property="og:description" content="日本唯一のLifeCasting®認定講座。立体手形アート制作技術を学び、公式アーティストとして活動できます。" />
+        <meta property="og:url" content="https://lifecastingtimecapsule.com/school" />
+        
+        {/* 構造化データ: BreadcrumbList */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ホーム",
+                  "item": "https://lifecastingtimecapsule.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "School",
+                  "item": "https://lifecastingtimecapsule.com/school"
+                }
+              ]
+            }
+          `}
+        </script>
+        
+        {/* 構造化データ: EducationalOrganization & Course */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              "name": "amorétto LifeCasting® School",
+              "description": "日本唯一のLifeCasting®認定講座。立体手形・足形アート制作技術を学び、公式認定アーティストとして活動できます。",
+              "url": "https://lifecastingtimecapsule.com/school",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "門前町15",
+                "addressLocality": "豊川市",
+                "addressRegion": "愛知県",
+                "postalCode": "442-0037",
+                "addressCountry": "JP"
+              },
+              "telephone": "0533-56-9494",
+              "email": "lifecasting.timecapsule@gmail.com",
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "LifeCasting®認定講座",
+                "itemListElement": [
+                  {
+                    "@type": "Course",
+                    "name": "LifeCasting®認定アーティスト養成講座",
+                    "description": "立体手形・足形アート制作の全技術を習得し、商標使用権を得て公式アーティストとして活動できる認定講座。",
+                    "provider": {
+                      "@type": "Organization",
+                      "name": "amorétto"
+                    },
+                    "coursePrerequisites": "なし（初心者歓迎）",
+                    "educationalCredentialAwarded": "LifeCasting®認定アーティスト",
+                    "hasCourseInstance": {
+                      "@type": "CourseInstance",
+                      "courseMode": "in-person",
+                      "location": {
+                        "@type": "Place",
+                        "name": "amorétto Studio",
+                        "address": {
+                          "@type": "PostalAddress",
+                          "addressLocality": "豊川市",
+                          "addressRegion": "愛知県",
+                          "addressCountry": "JP"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          `}
+        </script>
       </Helmet>
 
       {/* --- Hero Section --- */}
@@ -179,7 +263,7 @@ export function School() {
               <h3 className="font-jp-serif text-lg md:text-xl text-[#2C2C2C] mb-4">実践・理念</h3>
               <p className="text-[0.85rem] md:text-sm text-[#666666] font-light leading-[2] flex-grow">
                 難易度の高い「手」の型取りや、独自素材の活用法をマスター。<br/>
-                さらに、助���師監修の知識やブランド理念を学び、技術に「心」を吹き込みます。
+                さらに、助師監修の知識やブランド理念を学び、技術に「心」を吹き込みます。
               </p>
             </div>
 

@@ -7,8 +7,111 @@ export function Access() {
   return (
     <>
       <Helmet>
-        <title>Access | amorétto</title>
-        <meta name="description" content="amorétto（アモレット）へのアクセス、営業時間、お問い合わせについて。愛知県豊川市門前町。" />
+        <title>Access | amorétto - 店舗情報・アクセス</title>
+        <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto（アモレット）へのアクセス。豊川稲荷より徒歩3分。立体手形・産後ギフトのご予約・お問い合わせはこちら。電話: 0533-56-9494" />
+        <link rel="canonical" href="https://lifecastingtimecapsule.com/access" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Access | amorétto - 店舗情報・アクセス" />
+        <meta property="og:description" content="愛知・豊川の立体手形アート専門スタジオへのアクセス。豊川稲荷より徒歩3分。" />
+        <meta property="og:url" content="https://lifecastingtimecapsule.com/access" />
+        
+        {/* 構造化データ: BreadcrumbList */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ホーム",
+                  "item": "https://lifecastingtimecapsule.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Access",
+                  "item": "https://lifecastingtimecapsule.com/access"
+                }
+              ]
+            }
+          `}
+        </script>
+        
+        {/* 構造化データ: Place（場所情報） */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Place",
+              "name": "amorétto (アモレット)",
+              "description": "愛知・豊川のLifeCasting®専門スタジオ。立体手形・足形アート制作。",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "門前町15",
+                "addressLocality": "豊川市",
+                "addressRegion": "愛知県",
+                "postalCode": "442-0037",
+                "addressCountry": "JP"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 34.825,
+                "longitude": 137.39
+              },
+              "telephone": "+81-533-56-9494",
+              "email": "lifecasting.timecapsule@gmail.com",
+              "url": "https://lifecastingtimecapsule.com/",
+              "hasMap": "https://maps.google.com/maps?q=愛知県豊川市門前町15",
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Tuesday", "Wednesday"],
+                  "opens": "09:00",
+                  "closes": "17:00"
+                }
+              ]
+            }
+          `}
+        </script>
+        
+        {/* 構造化データ: FAQPage */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "火曜・水曜以外の日でも予約できますか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "はい、可能です。基本の営業日は火・水となっておりますが、ご予約枠に空きがあれば他の曜日や時間帯でも柔軟に対応させていただきます。まずはWeb予約の空き状況をご確認いただくか、LINE・お電話にてお気軽にご相談ください。"
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "駐車場はありますか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "専用駐車場はございませんが、近隣に提携コインパーキングがございます。ご予約の際に詳細な場所をご案内いたしますので、お車でお越しの際はお申し付けください。"
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "予約時間に遅れそうな場合はどうすればいいですか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ご予約時間に遅れる場合は、お早めにお電話（0533-56-9494）にてご連絡ください。可能な範囲で対応させていただきますが、後のご予約状況によっては時間の短縮や日程変更をお願いする場合がございます。"
+                  }
+                }
+              ]
+            }
+          `}
+        </script>
       </Helmet>
 
       {/* --- Hero Section --- */}
@@ -58,7 +161,7 @@ export function Access() {
                         〒442-0037<br />
                         愛知県豊川市門前町１５
                       </p>
-                      <p className="text-[#999999] text-xs mt-2">���豊川稲荷より徒歩3分</p>
+                      <p className="text-[#999999] text-xs mt-2">豊川稲荷より徒歩3分</p>
                     </div>
                   </div>
 

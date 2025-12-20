@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lifecastingstudio-amoretto.com/sitemap.xml
+# 主要ページ
+Allow: /about
+Allow: /plan-gallery
+Allow: /school
+Allow: /access
+
+# Sitemap
+Sitemap: https://lifecastingtimecapsule.com/sitemap.xml
+
+# クロール速度の制御（オプション）
+Crawl-delay: 1

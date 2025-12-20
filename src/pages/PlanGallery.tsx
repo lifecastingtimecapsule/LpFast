@@ -29,8 +29,101 @@ export function PlanGallery() {
   return (
     <>
       <Helmet>
-        <title>Plan & Gallery | amorétto</title>
-        <meta name="description" content="料金プラン、作品ギャラリー、制作の流れについて。" />
+        <title>Plan & Gallery | amorétto - 立体手形プラン・産後ギフト</title>
+        <meta name="description" content="愛知・豊川のamoréttoの立体手形・足形アート料金プランと作品ギャラリー。出産祝いや産後ギフトに最適な、写真付き・写真なしの2プランをご用意。美術教員免許保持者が丁寧に制作します。" />
+        <link rel="canonical" href="https://lifecastingtimecapsule.com/plan-gallery" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Plan & Gallery | amorétto - 立体手形プラン" />
+        <meta property="og:description" content="立体手形・足形アートの料金プランと作品ギャラリー。写真付き・写真なしの2プランから選べます。" />
+        <meta property="og:url" content="https://lifecastingtimecapsule.com/plan-gallery" />
+        
+        {/* 構造化データ: BreadcrumbList */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ホーム",
+                  "item": "https://lifecastingtimecapsule.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Plan & Gallery",
+                  "item": "https://lifecastingtimecapsule.com/plan-gallery"
+                }
+              ]
+            }
+          `}
+        </script>
+        
+        {/* 構造化データ: 商品情報（amorétto Collection） */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": "amorétto Collection - 立体手形アート（写真なし）",
+              "image": "https://lifecastingtimecapsule.com/assets/plan-basic.jpg",
+              "description": "シンプルだからこそ、その造形の美しさが際立つスタンダードモデル。ゴールドまたはシルバーの繊細な塗装仕上げで、インテリアに上品な輝きを添えます。出産祝いや産後ギフトに最適です。",
+              "brand": {
+                "@type": "Brand",
+                "name": "amorétto"
+              },
+              "offers": [
+                {
+                  "@type": "Offer",
+                  "name": "2 pieces (手足2点)",
+                  "price": "38500",
+                  "priceCurrency": "JPY",
+                  "availability": "https://schema.org/InStock",
+                  "url": "https://lifecastingtimecapsule.com/plan-gallery"
+                },
+                {
+                  "@type": "Offer",
+                  "name": "4 pieces (手足4点)",
+                  "price": "49500",
+                  "priceCurrency": "JPY",
+                  "availability": "https://schema.org/InStock",
+                  "url": "https://lifecastingtimecapsule.com/plan-gallery"
+                }
+              ],
+              "category": "立体手形・立体足型アート"
+            }
+          `}
+        </script>
+        
+        {/* 構造化データ: 商品情報（Premium Foto Collection） */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": "Premium Foto Collection - 立体手形アート（写真付き）",
+              "image": "https://lifecastingtimecapsule.com/assets/plan-premium.jpg",
+              "description": "お気に入りの一枚を、立体手形・立体足型と一緒に額装できるプラン。重厚感のある特注フレームに、お子様のお名前や生年月日を刻印。出産祝いや家宝として最適な産後ギフトです。",
+              "brand": {
+                "@type": "Brand",
+                "name": "amorétto"
+              },
+              "offers": {
+                "@type": "Offer",
+                "name": "Complete set",
+                "price": "52800",
+                "priceCurrency": "JPY",
+                "availability": "https://schema.org/InStock",
+                "url": "https://lifecastingtimecapsule.com/plan-gallery",
+                "priceValidUntil": "2026-12-31"
+              },
+              "category": "立体手形・立体足型アート"
+            }
+          `}
+        </script>
       </Helmet>
 
       {/* --- Hero / Intro --- */}

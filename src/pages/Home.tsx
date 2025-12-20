@@ -20,16 +20,24 @@ export function Home() {
   return (
     <>
       <Helmet>
-        <title>amorétto | LifeCasting® Studio</title>
+        <title>amorétto | LifeCasting® Studio - 愛知・豊川の立体手形アート</title>
         <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。90秒で型取り可能な特許素材を使用。美術教員免許保持者が制作。" />
+        <link rel="canonical" href="https://lifecastingtimecapsule.com/" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="amorétto | LifeCasting® Studio - 立体手形・産後ギフト" />
+        <meta property="og:description" content="愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。" />
+        <meta property="og:url" content="https://lifecastingtimecapsule.com/" />
+        
+        {/* 構造化データ: LocalBusiness */}
         <script type="application/ld+json">
           {`
             {
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "amorétto (アモレット)",
-              "image": "https://lifecastingtimecapsule.com/assets/hero-image.jpg",
-              "description": "愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アート制作。",
+              "image": "https://lifecastingtimecapsule.com/og-image.jpg",
+              "description": "愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アート制作。出産祝いや産後ギフトに最適です。",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "門前町15",
@@ -45,21 +53,43 @@ export function Home() {
               },
               "url": "https://lifecastingtimecapsule.com/",
               "telephone": "+81-533-56-9494",
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                  "Sunday"
-                ],
-                "opens": "10:00",
-                "closes": "18:00"
-              },
-              "priceRange": "¥35,000〜"
+              "email": "lifecasting.timecapsule@gmail.com",
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Tuesday", "Wednesday"],
+                  "opens": "09:00",
+                  "closes": "17:00"
+                }
+              ],
+              "priceRange": "¥35,000〜",
+              "areaServed": {
+                "@type": "GeoCircle",
+                "geoMidpoint": {
+                  "@type": "GeoCoordinates",
+                  "latitude": 34.825,
+                  "longitude": 137.39
+                },
+                "geoRadius": "50000"
+              }
+            }
+          `}
+        </script>
+        
+        {/* 構造化データ: BreadcrumbList */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ホーム",
+                  "item": "https://lifecastingtimecapsule.com/"
+                }
+              ]
             }
           `}
         </script>
