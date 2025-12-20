@@ -1,9 +1,11 @@
 import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
 import { ArrowRight, ArrowUp, Calendar } from "lucide-react";
 import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png";
+import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png';
 
 interface LayoutProps {
   children: ReactNode;
@@ -54,6 +56,11 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col relative overflow-x-hidden selection:bg-[#C4A962] selection:text-white">
+      <Helmet>
+        <link rel="icon" type="image/png" href={faviconImage} />
+        <link rel="apple-touch-icon" href={faviconImage} />
+      </Helmet>
+      
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap');
         

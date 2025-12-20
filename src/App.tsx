@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { PlanGallery } from "./pages/PlanGallery";
 import { School } from "./pages/School";
 import { Access } from "./pages/Access"; 
+import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
