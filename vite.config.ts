@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 export default defineConfig({
-  // ★追加：これで src/public フォルダが公開用フォルダとして認識されます
+  // src/public フォルダを公開用として認識させる設定
   publicDir: 'src/public',
 
   plugins: [react()],
@@ -15,6 +15,7 @@ export default defineConfig({
       'react-hook-form@7.55.0': 'react-hook-form',
       'next-themes@0.4.6': 'next-themes',
       'input-otp@1.4.2': 'input-otp',
+      // 画像エイリアス設定
       'figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png': path.resolve(__dirname, './src/assets/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png'),
       'figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.png': path.resolve(__dirname, './src/assets/b249142c3b0afcc8d91208afed6a8e291cdb4144.png'),
       'figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png': path.resolve(__dirname, './src/assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png'),
@@ -33,25 +34,9 @@ export default defineConfig({
       'figma:asset/1cacdfafa29eecceb028f649eacdf3b80807891d.png': path.resolve(__dirname, './src/assets/1cacdfafa29eecceb028f649eacdf3b80807891d.png'),
       'figma:asset/1b1cb659ea81541dabf0f51e56339db5d8c92811.png': path.resolve(__dirname, './src/assets/1b1cb659ea81541dabf0f51e56339db5d8c92811.png'),
       'figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.png': path.resolve(__dirname, './src/assets/1986fa6511a700ac3e4eeb46a728feea3d8ff040.png'),
-      'class-variance-authority@0.7.1': 'class-variance-authority',
-      '@radix-ui/react-tooltip@1.1.8': '@radix-ui/react-tooltip',
-      '@radix-ui/react-toggle@1.1.2': '@radix-ui/react-toggle',
-      '@radix-ui/react-toggle-group@1.1.2': '@radix-ui/react-toggle-group',
-      '@radix-ui/react-tabs@1.1.3': '@radix-ui/react-tabs',
-      '@radix-ui/react-switch@1.1.3': '@radix-ui/react-switch',
-      '@radix-ui/react-slot@1.1.2': '@radix-ui/react-slot',
-      '@radix-ui/react-slider@1.2.3': '@radix-ui/react-slider',
-      '@radix-ui/react-separator@1.1.2': '@radix-ui/react-separator',
-      '@radix-ui/react-select@2.1.6': '@radix-ui/react-select',
-      '@radix-ui/react-scroll-area@1.2.3': '@radix-ui/react-scroll-area',
-      '@radix-ui/react-radio-group@1.2.3': '@radix-ui/react-radio-group',
-      '@radix-ui/react-progress@1.1.2': '@radix-ui/react-progress',
-      '@radix-ui/react-popover@1.1.6': '@radix-ui/react-popover',
-      '@radix-ui/react-navigation-menu@1.2.5': '@radix-ui/react-navigation-menu',
-      '@radix-ui/react-menubar@1.1.6': '@radix-ui/react-menubar',
-      '@radix-ui/react-label@2.1.2': '@radix-ui/react-label',
-      '@radix-ui/react-hover-card@1.1.6': '@radix-ui/react-hover-card',
-      '@radix-ui/react-dialog@1.1.6': '@radix-ui/react-dialog',
+      'figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png': path.resolve(__dirname, './src/assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png'),
+      // ★ 追加したファビコン画像のパス
+      'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png': path.resolve(__dirname, './src/assets/7df12076a8e03cdc25a631eac63c68bcb45432b0.png'),
       '@': path.resolve(__dirname, './src'),
     },
   },
