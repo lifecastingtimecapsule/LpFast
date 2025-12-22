@@ -16,12 +16,15 @@ export default defineConfig({
       'next-themes@0.4.6': 'next-themes',
       'input-otp@1.4.2': 'input-otp',
       
-      // ▼▼▼ 画像の設定（ここを修正しました） ▼▼▼
-      // ロゴとファビコンも .jpg に変更して読み込むようにしました
-      'figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png': path.resolve(__dirname, './src/assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.jpg'),
-      'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png': path.resolve(__dirname, './src/assets/7df12076a8e03cdc25a631eac63c68bcb45432b0.jpg'),
+      // ▼▼▼ 画像の設定（ここが重要！） ▼▼▼
+      // 【ポイント】左側は元のコード(PNG)のまま、右側を実体のファイル(JPG)に向けます
 
-      // その他の写真画像（JPEG）
+      // 1. ロゴとファビコン（これらはPNGのままのはず）
+      'figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png': path.resolve(__dirname, './src/assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png'),
+      'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png': path.resolve(__dirname, './src/assets/7df12076a8e03cdc25a631eac63c68bcb45432b0.png'),
+
+      // 2. 写真画像（JPEGに変換したもの）
+      // ※右側の拡張子を .jpg に変更しています
       'figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png': path.resolve(__dirname, './src/assets/d3aa16a948f66f2158eb7316e75d2a1c2732968e.jpg'),
       'figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.png': path.resolve(__dirname, './src/assets/b249142c3b0afcc8d91208afed6a8e291cdb4144.jpg'),
       'figma:asset/a0354f462dd60a54ee83d6d005b657d7607d28c2.png': path.resolve(__dirname, './src/assets/a0354f462dd60a54ee83d6d005b657d7607d28c2.jpg'),
