@@ -110,7 +110,7 @@ export function About() {
                   今日抱きしめたその小ささは、明日にはもう過去のものになります。
                 </p>
                 <p>
-                  写真は「姿」を鮮明に残してくれます。<br className="hidden md:block"/>
+                  写真は「姿」を鮮���に残してくれます。<br className="hidden md:block"/>
                   でも、私たちが残したいのは、<br className="hidden md:block"/>
                   そこに確かな命があったという「存在感」そのものです。
                 </p>
@@ -133,6 +133,7 @@ export function About() {
                     src={IMG_HANDS} 
                     alt="Family Hands" 
                     className="w-full h-full object-cover grayscale-[10%]" 
+                    loading="lazy"
                  />
               </motion.div>
            </div>
@@ -187,6 +188,7 @@ export function About() {
                           src={IMG_ARTIST} 
                           alt="Artist working" 
                           className="w-full h-full object-cover" 
+                          loading="lazy"
                        />
                     </motion.div>
                  </div>

@@ -168,6 +168,7 @@ export function PlanGallery() {
                       src={image_basic} 
                       alt="Standard Plan" 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      loading="lazy"
                    />
                    <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full bg-[rgba(255,255,255,0.9)]">
                       No Photo
@@ -187,7 +188,7 @@ export function PlanGallery() {
                 
                 <div className="text-[#666666] leading-loose mb-8 md:mb-10 text-[0.85rem] md:text-sm font-light">
                   <p className="mb-4">
-                    シンプルだからこそ、その造形の美しさが際立つスタンダードモデル。<br/>
+                    シンプルだからこそ��その造形の美しさが際立つスタンダードモデル。<br/>
                     ゴールドまたはシルバーの繊細な塗装仕上げで、インテリアに上品な輝きを添えます。
                   </p>
                   <p className="text-[10px] md:text-xs text-[#999999] tracking-wider bg-[#FAFAF8] p-3 border-l-2 border-[#E5E0D8]">
@@ -224,6 +225,7 @@ export function PlanGallery() {
                          src={image_1986fa6511a700ac3e4eeb46a728feea3d8ff040} 
                          alt="Luxury Frame" 
                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                         loading="lazy"
                       />
                       <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full bg-[rgba(255,255,255,0.9)]">
                         With Photo

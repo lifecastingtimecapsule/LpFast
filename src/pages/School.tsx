@@ -180,6 +180,7 @@ export function School() {
                     src={IMG_MESSAGE} 
                     alt="Artist working" 
                     className="w-full h-full object-cover grayscale-[20%]" 
+                    loading="lazy"
                  />
               </div>
             </motion.div>
@@ -310,7 +311,7 @@ export function School() {
                   </li>
                   <li className="flex items-center justify-center gap-3 md:gap-4">
                     <Check size={18} className="text-[#C4A962] shrink-0" />
-                    <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支援</span>
+                    <span>活動に必要な<strong>LP（ランディングページ）</strong>���制作支援</span>
                   </li>
                   <li className="flex items-center justify-center gap-3 md:gap-4">
                     <Check size={18} className="text-[#C4A962] shrink-0" />

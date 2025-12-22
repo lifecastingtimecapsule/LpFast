@@ -193,7 +193,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
             >
                <div className="aspect-[4/5] shadow-xl relative">
-                  <img src={IMG_CONCEPT} alt="ライフキャスティングによる精巧な足形・産後ギフト" className="w-full h-full object-cover grayscale-[5%]" />
+                  <img src={IMG_CONCEPT} alt="ライフキャスティングによる精巧な足形・産後ギフト" className="w-full h-full object-cover grayscale-[5%]" loading="lazy" />
                </div>
             </motion.div>
 
@@ -274,7 +274,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
             >
               <div className="relative aspect-[4/5] bg-white p-3 shadow-lg">
-                 <img src={image_a0354f462dd60a54ee83d6d005b657d7607d28c2} alt="90秒で固まる赤ちゃんに優しい独自の型取り素材" className="w-full h-full object-cover" />
+                 <img src={image_a0354f462dd60a54ee83d6d005b657d7607d28c2} alt="90秒で固まる赤ちゃんに優しい独自の型取り素材" className="w-full h-full object-cover" loading="lazy" />
               </div>
             </motion.div>
           </div>
@@ -308,7 +308,7 @@ export function Home() {
               transition={{ delay: 0.1 }}
             >
               <div className="w-[80%] md:w-full aspect-[3/4] mb-6 overflow-hidden bg-[#FAFAF8] border border-[#E5E0D8]">
-                <img src={IMG_STAFF_1} alt="Renan" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+                <img src={IMG_STAFF_1} alt="Renan" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" loading="lazy" />
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.2em] text-[#C4A962] uppercase mb-2">Casting Artist</p>
@@ -329,7 +329,7 @@ export function Home() {
               transition={{ delay: 0.2 }}
             >
               <div className="w-[80%] md:w-full aspect-[3/4] mb-6 overflow-hidden bg-[#FAFAF8] border border-[#E5E0D8]">
-                <img src={IMG_STAFF_2} alt="Mari" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+                <img src={IMG_STAFF_2} alt="Mari" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" loading="lazy" />
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.2em] text-[#C4A962] uppercase mb-2">Photographer</p>
@@ -350,7 +350,7 @@ export function Home() {
               transition={{ delay: 0.3 }}
             >
               <div className="w-[80%] md:w-full aspect-[3/4] mb-6 overflow-hidden bg-[#FAFAF8] border border-[#E5E0D8]">
-                <img src={IMG_STAFF_3} alt="Yayoi" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+                <img src={IMG_STAFF_3} alt="Yayoi" className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" loading="lazy" />
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.2em] text-[#C4A962] uppercase mb-2">Finishing Artist</p>
