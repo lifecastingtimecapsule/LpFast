@@ -1,4 +1,4 @@
-import image_1986fa6511a700ac3e4eeb46a728feea3d8ff040 from 'figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.jng';
+import image_1986fa6511a700ac3e4eeb46a728feea3d8ff040 from 'figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.jpg';
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { TestimonialCard } from "../components/TestimonialCard";
@@ -8,14 +8,14 @@ import { Helmet } from 'react-helmet-async';
 import { Camera } from "lucide-react";
 
 // Import images
-import image_basic from "figma:asset/869102067ce8235d121d1e72efdd989be969f734.jng";
-import image_collab from "figma:asset/298ca8044759a9db905e0b307ec97ce7f3386940.jng";
-import image_with_photo_new from "figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.jng";
-import image_premium from "figma:asset/2313c0ef7c72fea9684332541201c7988100c7d8.jng";
-import image_gallery_0 from "figma:asset/96363315c6e81ea319cebace631d308b4c40d1f7.jng";
-import image_gallery_1 from "figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.jng";
-import image_gallery_2 from "figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.jng";
-import image_gallery_3 from "figma:asset/92a2101c1f75310484352570d56526aa7857c259.jng";
+import image_basic from "figma:asset/869102067ce8235d121d1e72efdd989be969f734.jpg";
+import image_collab from "figma:asset/298ca8044759a9db905e0b307ec97ce7f3386940.jpg";
+import image_with_photo_new from "figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.jpg";
+import image_premium from "figma:asset/2313c0ef7c72fea9684332541201c7988100c7d8.jpg";
+import image_gallery_0 from "figma:asset/96363315c6e81ea319cebace631d308b4c40d1f7.jpg";
+import image_gallery_1 from "figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.jpg";
+import image_gallery_2 from "figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.jpg";
+import image_gallery_3 from "figma:asset/92a2101c1f75310484352570d56526aa7857c259.jpg";
 
 export function PlanGallery() {
   
