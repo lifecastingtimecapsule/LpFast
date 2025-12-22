@@ -7,7 +7,7 @@ import { About } from "./pages/About";
 import { PlanGallery } from "./pages/PlanGallery";
 import { School } from "./pages/School";
 import { Access } from "./pages/Access"; 
-import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.jng';
+import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
