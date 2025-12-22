@@ -308,15 +308,7 @@ export function Layout({ children }: LayoutProps) {
               <div>完全予約制</div>
             </div>
 
-            {/* SNS Links (Bottom) - Instagram & LINE */}
-            <div className="flex justify-center gap-8 mb-10">
-              <a href="https://www.instagram.com/amaretto_lifecasting_aichi/" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#C4A962] transition-colors p-2" aria-label="Instagram">
-                <Instagram size={20} strokeWidth={1.5} />
-              </a>
-              <a href="https://lin.ee/siRIzsZ" target="_blank" rel="noopener noreferrer" className="text-[#999999] hover:text-[#06C755] transition-colors p-2" aria-label="LINE">
-                <MessageCircle size={20} strokeWidth={1.5} />
-              </a>
-            </div>
+
 
             <p className="text-[10px] text-[#AAAAAA] tracking-[0.1em] font-light">
               © {new Date().getFullYear()} amorétto. All rights reserved.
