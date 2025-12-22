@@ -18,13 +18,15 @@ export default defineConfig({
       
       // ▼▼▼ 画像の設定（ここを修正しました） ▼▼▼
       
-      // 1. ロゴとファビコン（これらは PNG のまま！）
-      // 左側(キー)も右側(パス)も .png です
+      // 1. ロゴ（コードが .png と呼んでも .jpg と呼んでも、実体の .png を渡す）
       'figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png': path.resolve(__dirname, './src/assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png'),
-      'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png': path.resolve(__dirname, './src/assets/7df12076a8e03cdc25a631eac63c68bcb45432b0.png'),
+      'figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.jpg': path.resolve(__dirname, './src/assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png'),
 
-      // 2. その他の写真画像（これらは JPG に変更！）
-      // 左側(キー)も右側(パス)も .jpg に書き換えました
+      // 2. ファビコン（同様に両方のパターンに対応）
+      'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png': path.resolve(__dirname, './src/assets/7df12076a8e03cdc25a631eac63c68bcb45432b0.png'),
+      'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.jpg': path.resolve(__dirname, './src/assets/7df12076a8e03cdc25a631eac63c68bcb45432b0.png'),
+
+      // 3. その他の写真画像（これらはすべて JPG に変換済みなので .jpg を返す）
       'figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.jpg': path.resolve(__dirname, './src/assets/d3aa16a948f66f2158eb7316e75d2a1c2732968e.jpg'),
       'figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.jpg': path.resolve(__dirname, './src/assets/b249142c3b0afcc8d91208afed6a8e291cdb4144.jpg'),
       'figma:asset/a0354f462dd60a54ee83d6d005b657d7607d28c2.jpg': path.resolve(__dirname, './src/assets/a0354f462dd60a54ee83d6d005b657d7607d28c2.jpg'),
