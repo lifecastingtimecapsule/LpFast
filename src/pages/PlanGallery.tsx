@@ -1,4 +1,3 @@
-import image_1986fa6511a700ac3e4eeb46a728feea3d8ff040 from 'figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.png';
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { TestimonialCard } from "../components/TestimonialCard";
@@ -222,7 +221,7 @@ export function PlanGallery() {
                 <div className="relative aspect-square">
                    <div className="w-full h-full shadow-xl overflow-hidden bg-[#F5F3EF] relative">
                       <ImageWithFallback 
-                         src={image_1986fa6511a700ac3e4eeb46a728feea3d8ff040} 
+                         src={image_with_photo_new} 
                          alt="Luxury Frame" 
                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                          loading="lazy"
