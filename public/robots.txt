@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /sitemap
 
-Sitemap: https://www.lifecastingstudio-amoretto.com/sitemap.xml
+Sitemap: https://lifecastingstudio-amoretto.com/sitemap.xml
 
 # Major search engines
 User-agent: Googlebot

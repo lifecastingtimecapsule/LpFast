@@ -10,20 +10,20 @@ export function About() {
       <Helmet>
         <title>立体手形への想い｜日本初のLifeCasting®専門スタジオ amorétto - 愛知県・浜松</title>
         <meta name="description" content="日本初の立体手形専門スタジオamoréttoの想い。LifeCasting®（2024年商標登録済）の技術で赤ちゃんの「今」をアートに。商標取得の歩み、日本初の専門店としての使命、一作品ごとに込める情熱を語ります。愛知県（豊川）・浜松の2拠点。" />
-        <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/about" />
+        <link rel="canonical" href="https://lifecastingstudio-amoretto.com/about" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="立体手形への想い｜日本初の専門スタジオ amorétto - 愛知県・浜松" />
         <meta property="og:description" content="日本初のLifeCasting®立体手形専門スタジオamorétto。2024年商標登録。アートに懸ける想いと、日本初の専門店としての歩みをご紹介。" />
-        <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/about" />
-        <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta property="og:url" content="https://lifecastingstudio-amoretto.com/about" />
+        <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="立体手形への想い｜日本初の専門スタジオ amorétto" />
         <meta name="twitter:description" content="日本初のLifeCasting®立体手形専門スタジオ。2024年商標登録。アートに懸ける想いと歩み。愛知県・浜松。" />
-        <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
@@ -36,13 +36,13 @@ export function About() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "ホーム",
-                  "item": "https://www.lifecastingstudio-amoretto.com/"
+                  "item": "https://lifecastingstudio-amoretto.com/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "About",
-                  "item": "https://www.lifecastingstudio-amoretto.com/about"
+                  "item": "https://lifecastingstudio-amoretto.com/about"
                 }
               ]
             }
@@ -57,13 +57,13 @@ export function About() {
               "@type": "AboutPage",
               "name": "立体手形への想い - amorétto",
               "description": "日本初のLifeCasting®（立体手形）専門スタジオamorétto。2024年10月に商標登録されたLifeCasting®の技術で、赤ちゃんの「今」を立体手形・足形アートとして永遠に残す。日本初の専門店としての歩みとアートへの想い。",
-              "url": "https://www.lifecastingstudio-amoretto.com/about",
+              "url": "https://lifecastingstudio-amoretto.com/about",
               "mainEntity": {
                 "@type": "Organization",
-                "@id": "https://www.lifecastingstudio-amoretto.com/#organization",
+                "@id": "https://lifecastingstudio-amoretto.com/#organization",
                 "name": "amorétto",
-                "url": "https://www.lifecastingstudio-amoretto.com/",
-                "logo": "https://www.lifecastingstudio-amoretto.com/og-image.jpg",
+                "url": "https://lifecastingstudio-amoretto.com/",
+                "logo": "https://lifecastingstudio-amoretto.com/og-image.jpg",
                 "description": "日本初のLifeCasting®（立体手形）専門スタジオ。2024年10月商標登録。愛知県と浜松の2拠点で展開。",
                 "foundingDate": "2023",
                 "brand": {
@@ -113,7 +113,7 @@ export function About() {
                 "@type": "SpeakableSpecification",
                 "cssSelector": ["h1", "h2", "h3", ".speakable"]
               },
-              "url": "https://www.lifecastingstudio-amoretto.com/about",
+              "url": "https://lifecastingstudio-amoretto.com/about",
               "inLanguage": "ja"
             }
           `}

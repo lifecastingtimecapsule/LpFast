@@ -272,7 +272,7 @@ export const metadata: Metadata = {
     title: 'amorétto | LifeCasting® Studio',
     description: '愛知・豊川のLifeCasting®専門スタジオ...',
     images: ['/og-image.jpg'],
-    url: 'https://www.lifecastingstudio-amoretto.com/',
+    url: 'https://lifecastingstudio-amoretto.com/',
   },
   twitter: {
     card: 'summary_large_image',
@@ -402,4 +402,4 @@ vercel --prod
 
 **作成日**: 2025年12月20日  
 **実装者**: Figma Make AI Assistant  
-**対象サイト**: amorétto (https://www.lifecastingstudio-amoretto.com/)
+**対象サイト**: amorétto (https://lifecastingstudio-amoretto.com/)

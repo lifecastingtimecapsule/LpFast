@@ -25,20 +25,20 @@ export function PlanGallery() {
       <Helmet>
         <title>立体手形の料金・プラン｜amorétto 産後ギフト - 愛知県・浜松</title>
         <meta name="description" content="amoréttoの立体手形・足形アート料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店の2拠点で型取り可能。出産祝いや産後ギフトに最適な、写真付き・写真なしの2プランをご用意。美術教員免許保持者が丁寧に制作します。" />
-        <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/plan-gallery" />
+        <link rel="canonical" href="https://lifecastingstudio-amoretto.com/plan-gallery" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="立体手形の料金・プラン｜amorétto 産後ギフト - 愛知県・浜松" />
         <meta property="og:description" content="立体手形・足形アートの料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店で型取り可能。写真付き・写真なしの2プランから選べます。" />
-        <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/plan-gallery" />
-        <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta property="og:url" content="https://lifecastingstudio-amoretto.com/plan-gallery" />
+        <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="立体手形の料金・プラン｜amorétto - 愛知県・浜松" />
         <meta name="twitter:description" content="立体手形・足形アートの料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店で型取り可能。写真付き・写真なしの2プランから選べます。" />
-        <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
@@ -51,13 +51,13 @@ export function PlanGallery() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "ホーム",
-                  "item": "https://www.lifecastingstudio-amoretto.com/"
+                  "item": "https://lifecastingstudio-amoretto.com/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "Plan & Gallery",
-                  "item": "https://www.lifecastingstudio-amoretto.com/plan-gallery"
+                  "item": "https://lifecastingstudio-amoretto.com/plan-gallery"
                 }
               ]
             }
@@ -71,7 +71,7 @@ export function PlanGallery() {
               "@context": "https://schema.org",
               "@type": "Product",
               "name": "amorétto Collection - 立体手形アート（写真なし）",
-              "image": "https://www.lifecastingstudio-amoretto.com/assets/plan-basic.jpg",
+              "image": "https://lifecastingstudio-amoretto.com/assets/plan-basic.jpg",
               "description": "シンプルだからこそ、その造形の美しさが際立つスタンダードモデル。ゴールドまたはシルバーの繊細な塗装仕上げで、インテリアに上品な輝きを添えます。出産祝いや産後ギフトに最適です。",
               "brand": {
                 "@type": "Brand",
@@ -84,7 +84,7 @@ export function PlanGallery() {
                   "price": "38500",
                   "priceCurrency": "JPY",
                   "availability": "https://schema.org/InStock",
-                  "url": "https://www.lifecastingstudio-amoretto.com/plan-gallery"
+                  "url": "https://lifecastingstudio-amoretto.com/plan-gallery"
                 },
                 {
                   "@type": "Offer",
@@ -92,7 +92,7 @@ export function PlanGallery() {
                   "price": "49500",
                   "priceCurrency": "JPY",
                   "availability": "https://schema.org/InStock",
-                  "url": "https://www.lifecastingstudio-amoretto.com/plan-gallery"
+                  "url": "https://lifecastingstudio-amoretto.com/plan-gallery"
                 }
               ],
               "category": "立体手形・立体足型アート"
@@ -107,7 +107,7 @@ export function PlanGallery() {
               "@context": "https://schema.org",
               "@type": "Product",
               "name": "Premium Foto Collection - 立体手形アート（写真付き）",
-              "image": "https://www.lifecastingstudio-amoretto.com/assets/plan-premium.jpg",
+              "image": "https://lifecastingstudio-amoretto.com/assets/plan-premium.jpg",
               "description": "お気に入りの一枚を、立体手形・立体足型と一緒に額装できるプラン。重厚感のある特注フレームに、お子様のお名前や生年月日を刻印。出産祝いや家宝として最適な産後ギフトです。",
               "brand": {
                 "@type": "Brand",
@@ -119,7 +119,7 @@ export function PlanGallery() {
                 "price": "52800",
                 "priceCurrency": "JPY",
                 "availability": "https://schema.org/InStock",
-                "url": "https://www.lifecastingstudio-amoretto.com/plan-gallery",
+                "url": "https://lifecastingstudio-amoretto.com/plan-gallery",
                 "priceValidUntil": "2026-12-31"
               },
               "category": "立体手形・立体足型アート"
@@ -190,7 +190,7 @@ export function PlanGallery() {
                 "@type": "SpeakableSpecification",
                 "cssSelector": ["h1", "h2", "h3", ".speakable"]
               },
-              "url": "https://www.lifecastingstudio-amoretto.com/plan-gallery",
+              "url": "https://lifecastingstudio-amoretto.com/plan-gallery",
               "inLanguage": "ja"
             }
           `}

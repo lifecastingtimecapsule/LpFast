@@ -9,20 +9,20 @@ export function Access() {
       <Helmet>
         <title>立体手形のアクセス・店舗情報｜amorétto 豊川店・浜松店 ご予約</title>
         <meta name="description" content="amorétto（アモレット）の立体手形・足形アートは、ライフスタジオ豊川店（愛知県豊川市門前町15）とライフスタジオ浜松店（静岡県浜松市中央区上島6-2-30）の2拠点で型取りが可能です。出産祝い・産後ギフトのご予約・お問い合わせはこちら。" />
-        <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/access" />
+        <link rel="canonical" href="https://lifecastingstudio-amoretto.com/access" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="Access | amorétto - 豊川店・浜松店 店舗情報・アクセス" />
         <meta property="og:description" content="ライフスタジオ豊川店・浜松店の2拠点で立体手形の型取りが可能。店舗情報・アクセス・ご予約はこちら。" />
-        <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/access" />
-        <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta property="og:url" content="https://lifecastingstudio-amoretto.com/access" />
+        <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Access | amorétto - 豊川店・浜松店 店舗情報・アクセス" />
         <meta name="twitter:description" content="ライフスタジオ豊川店・浜松店の2拠点で立体手形の型取りが可能。店舗情報・アクセス・ご予約はこちら。" />
-        <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         {/* BreadcrumbList */}
         <script type="application/ld+json">
@@ -35,13 +35,13 @@ export function Access() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "ホーム",
-                  "item": "https://www.lifecastingstudio-amoretto.com/"
+                  "item": "https://lifecastingstudio-amoretto.com/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "Access",
-                  "item": "https://www.lifecastingstudio-amoretto.com/access"
+                  "item": "https://lifecastingstudio-amoretto.com/access"
                 }
               ]
             }
@@ -54,7 +54,7 @@ export function Access() {
             {
               "@context": "https://schema.org",
               "@type": "Place",
-              "@id": "https://www.lifecastingstudio-amoretto.com/#toyokawa-place",
+              "@id": "https://lifecastingstudio-amoretto.com/#toyokawa-place",
               "name": "amorétto ライフスタジオ豊川店",
               "alternateName": ["アモレット豊川", "ライフスタジオ豊川 立体手形"],
               "description": "愛知県豊川市のLifeCasting®専門スタジオ。赤ちゃんの立体手形・足形アートの型取りが可能。出産祝い・産後ギフトに最適。",
@@ -73,7 +73,7 @@ export function Access() {
               },
               "telephone": "+81-533-56-9494",
               "email": "lifecasting.timecapsule@gmail.com",
-              "url": "https://www.lifecastingstudio-amoretto.com/",
+              "url": "https://lifecastingstudio-amoretto.com/",
               "hasMap": "https://maps.google.com/maps?q=愛知県豊川市門前町15",
               "openingHoursSpecification": [
                 {
@@ -93,7 +93,7 @@ export function Access() {
             {
               "@context": "https://schema.org",
               "@type": "Place",
-              "@id": "https://www.lifecastingstudio-amoretto.com/#hamamatsu-place",
+              "@id": "https://lifecastingstudio-amoretto.com/#hamamatsu-place",
               "name": "amorétto ライフスタジオ浜松店",
               "alternateName": ["アモレット浜松", "ライフスタジオ浜松 立体手形"],
               "description": "静岡県浜松市のLifeCasting®専門スタジオ。赤ちゃんの立体手形・足形アートの型取りが可能。出産祝い・産後ギフトに最適。",
@@ -112,7 +112,7 @@ export function Access() {
               },
               "telephone": "+81-53-415-8775",
               "email": "lifecasting.timecapsule@gmail.com",
-              "url": "https://www.lifecastingstudio-amoretto.com/",
+              "url": "https://lifecastingstudio-amoretto.com/",
               "hasMap": "https://maps.google.com/maps?q=静岡県浜松市中央区上島6丁目2-30",
               "openingHoursSpecification": [
                 {
@@ -181,7 +181,7 @@ export function Access() {
                 "@type": "SpeakableSpecification",
                 "cssSelector": ["h1", "h2", "h3", ".speakable"]
               },
-              "url": "https://www.lifecastingstudio-amoretto.com/access",
+              "url": "https://lifecastingstudio-amoretto.com/access",
               "inLanguage": "ja"
             }
           `}
