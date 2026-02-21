@@ -6,13 +6,8 @@ import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { PlanGallery } from "./pages/PlanGallery";
 import { School } from "./pages/School";
-<<<<<<< HEAD
 import { Access } from "./pages/Access";
 import { Sitemap } from "./pages/Sitemap";
-=======
-import { Access } from "./pages/Access"; 
-import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.jpg';
->>>>>>> origin/codex/fix-build-error-related-to-image-fetching
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
