@@ -350,14 +350,24 @@ export function School() {
             <p className="text-xs md:text-sm text-[#666666] mb-6 md:mb-8 tracking-widest">
               まずは無料相談会へお越しください。
             </p>
-            <a
-              href="https://lin.ee/siRIzsZ" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-3 md:px-12 md:py-4 bg-[#2C2C2C] text-white tracking-[0.2em] shadow-xl hover:bg-[#444] hover:-translate-y-1 transition-all duration-300 text-[10px] md:text-xs uppercase font-medium"
-            >
-              Contact Us
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="https://lin.ee/55K9AP6" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-8 py-3 md:px-10 md:py-4 bg-[#2C2C2C] text-white tracking-[0.2em] shadow-xl hover:bg-[#444] hover:-translate-y-1 transition-all duration-300 text-[10px] md:text-xs uppercase font-medium"
+              >
+                豊川店 LINE
+              </a>
+              <a
+                href="https://lin.ee/StzkfTW" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-8 py-3 md:px-10 md:py-4 bg-[#2C2C2C] text-white tracking-[0.2em] shadow-xl hover:bg-[#444] hover:-translate-y-1 transition-all duration-300 text-[10px] md:text-xs uppercase font-medium"
+              >
+                浜松店 LINE
+              </a>
+            </div>
           </div>
 
         </div>

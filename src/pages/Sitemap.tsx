@@ -50,10 +50,10 @@ export function Sitemap() {
     {
       title: "Access - 店舗情報・アクセス",
       path: "/access",
-      description: "〒442-0037 愛知県豊川市門前町15。豊川稲荷より徒歩3分。電話: 0533-56-9494",
+      description: "豊川店: 〒442-0037 愛知県豊川市門前町15（TEL: 0533-56-9494）／浜松店: 〒433-8122 静岡県浜松市中央区上島6-2-30（TEL: 053-415-8775）",
       sections: [
-        { name: "店舗情報・営業時間", anchor: "/access" },
-        { name: "Google Map・アクセス方法", anchor: "/access" },
+        { name: "ライフスタジオ豊川店 - 店舗情報・地図", anchor: "/access" },
+        { name: "ライフスタジオ浜松店 - 店舗情報・地図", anchor: "/access" },
         { name: "Q&A - ご予約・営業に関するご質問", anchor: "/access" },
       ]
     },
@@ -63,7 +63,7 @@ export function Sitemap() {
     <>
       <Helmet>
         <title>サイトマップ | amorétto - LifeCasting® Studio</title>
-        <meta name="description" content="amorétto（アモレット）公式サイトのサイトマップ。愛知・豊川のLifeCasting®専門スタジオの全ページ一覧。" />
+        <meta name="description" content="amorétto（アモレット）公式サイトのサイトマップ。豊川・浜松の2拠点で展開するLifeCasting®専門スタジオの全ページ一覧。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/sitemap" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
@@ -120,10 +120,18 @@ export function Sitemap() {
 
             <div className="mt-12 md:mt-16 p-6 md:p-8 bg-white border border-[#E5E0D8] rounded-sm">
               <h2 className="font-jp-serif text-lg text-[#2C2C2C] mb-4">お問い合わせ</h2>
-              <div className="space-y-2 text-sm text-[#666666] font-light">
-                <p>amorétto (アモレット) - LifeCasting® Studio</p>
-                <p>〒442-0037 愛知県豊川市門前町15</p>
-                <p>TEL: <a href="tel:0533569494" className="hover:text-[#C4A962] transition-colors">0533-56-9494</a></p>
+              <div className="space-y-4 text-sm text-[#666666] font-light">
+                <p className="font-medium text-[#2C2C2C]">amorétto (アモレット) - LifeCasting® Studio</p>
+                <div>
+                  <p className="font-medium text-[#2C2C2C] mb-1">豊川店</p>
+                  <p>〒442-0037 愛知県豊川市門前町15</p>
+                  <p>TEL: <a href="tel:0533569494" className="hover:text-[#C4A962] transition-colors">0533-56-9494</a></p>
+                </div>
+                <div>
+                  <p className="font-medium text-[#2C2C2C] mb-1">浜松店</p>
+                  <p>〒433-8122 静岡県浜松市中央区上島6丁目2-30</p>
+                  <p>TEL: <a href="tel:0534158775" className="hover:text-[#C4A962] transition-colors">053-415-8775</a></p>
+                </div>
                 <p>Email: <a href="mailto:lifecasting.timecapsule@gmail.com" className="hover:text-[#C4A962] transition-colors">lifecasting.timecapsule@gmail.com</a></p>
                 <p className="pt-2">
                   <a 
@@ -136,12 +144,21 @@ export function Sitemap() {
                   </a>
                   {" / "}
                   <a 
-                    href="https://lin.ee/siRIzsZ" 
+                    href="https://lin.ee/55K9AP6" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-[#06C755] hover:underline"
                   >
-                    LINEで相談
+                    豊川店 LINE
+                  </a>
+                  {" / "}
+                  <a 
+                    href="https://lin.ee/StzkfTW" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[#06C755] hover:underline"
+                  >
+                    浜松店 LINE
                   </a>
                 </p>
               </div>
