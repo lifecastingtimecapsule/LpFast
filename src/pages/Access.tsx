@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
-import { MapPin, Phone, Mail, Clock, Calendar as CalendarIcon } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Car, MessageCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 
 export function Access() {
@@ -154,7 +154,7 @@ export function Access() {
                   "name": "駐車場はありますか？",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "豊川店・浜松店ともに、近隣にコインパーキングがございます。ご予約の際に詳細な場所をご案内いたしますので、お車でお越しの際はお申し付けください。"
+                    "text": "浜松店は店舗前に駐車場をご用意しております。豊川店は提携している近隣の駐車場をご案内いたしますので、ご予約時にお車でお越しの旨をお伝えください。"
                   }
                 },
                 {
@@ -282,11 +282,27 @@ export function Access() {
                          <span className="text-xl font-en-serif">0533-56-9494</span>
                          <span className="text-xs text-[#999999]">（お電話はこちら）</span>
                        </a>
+                       <a href="https://lin.ee/55K9AP6" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[#06C755] hover:text-[#05b34c] transition-colors border-b border-[#E5E0D8] pb-2">
+                         <MessageCircle size={16} />
+                         <span className="text-sm font-medium">豊川店 LINEで相談する</span>
+                       </a>
                        <a href="mailto:lifecasting.timecapsule@gmail.com" className="flex items-center gap-3 text-[#666666] hover:text-[#C4A962] transition-colors border-b border-[#E5E0D8] pb-2 break-all">
                          <Mail size={16} />
                          <span className="text-sm">lifecasting.timecapsule@gmail.com</span>
                        </a>
                     </div>
+                  </div>
+                </div>
+
+                {/* Parking */}
+                <div className="flex items-start gap-4">
+                  <Car className="text-[#C4A962] shrink-0 mt-1" size={20} />
+                  <div>
+                    <p className="font-jp-serif text-lg text-[#2C2C2C] mb-2">駐車場</p>
+                    <p className="text-[#666666] text-sm leading-relaxed">
+                      提携している近隣の駐車場をご案内いたします。<br />
+                      ご予約時にお車でお越しの旨をお伝えください。
+                    </p>
                   </div>
                 </div>
               </div>
@@ -389,11 +405,27 @@ export function Access() {
                          <span className="text-xl font-en-serif">053-415-8775</span>
                          <span className="text-xs text-[#999999]">（お電話はこちら）</span>
                        </a>
+                       <a href="https://lin.ee/StzkfTW" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[#06C755] hover:text-[#05b34c] transition-colors border-b border-[#E5E0D8] pb-2">
+                         <MessageCircle size={16} />
+                         <span className="text-sm font-medium">浜松店 LINEで相談する</span>
+                       </a>
                        <a href="mailto:lifecasting.timecapsule@gmail.com" className="flex items-center gap-3 text-[#666666] hover:text-[#C4A962] transition-colors border-b border-[#E5E0D8] pb-2 break-all">
                          <Mail size={16} />
                          <span className="text-sm">lifecasting.timecapsule@gmail.com</span>
                        </a>
                     </div>
+                  </div>
+                </div>
+
+                {/* Parking */}
+                <div className="flex items-start gap-4">
+                  <Car className="text-[#C4A962] shrink-0 mt-1" size={20} />
+                  <div>
+                    <p className="font-jp-serif text-lg text-[#2C2C2C] mb-2">駐車場</p>
+                    <p className="text-[#666666] text-sm leading-relaxed">
+                      店舗前に駐車場をご用意しております。<br />
+                      お車でお気軽にお越しください。
+                    </p>
                   </div>
                 </div>
               </div>
@@ -448,7 +480,7 @@ export function Access() {
                },
                { 
                  q: "駐車場はありますか？", 
-                 a: "豊川店・浜松店ともに、近隣にコインパーキングがございます。ご予約の際に詳細な場所をご案内いたしますので、お車でお越しの際はお申し付けください。" 
+                 a: "浜松店は店舗前に駐車場をご用意しております。豊川店は提携している近隣の駐車場をご案内いたしますので、ご予約時にお車でお越しの旨をお伝えください。" 
                },
                { 
                  q: "予約時間に遅れそうな場合はどうすればいいですか？", 
@@ -473,14 +505,24 @@ export function Access() {
 
           <div className="mt-16 text-center">
              <p className="text-sm text-[#666666] mb-6">その他のご質問やご相談はこちらから</p>
-             <a
-                href="https://lin.ee/siRIzsZ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-10 py-3 bg-[#06C755] text-white text-sm tracking-wide rounded-sm shadow-md hover:bg-[#05b34c] transition-all"
-             >
-                LINEで相談する
-             </a>
+             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+               <a
+                  href="https://lin.ee/55K9AP6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#06C755] text-white text-sm tracking-wide rounded-sm shadow-md hover:bg-[#05b34c] transition-all"
+               >
+                  豊川店 LINEで相談
+               </a>
+               <a
+                  href="https://lin.ee/StzkfTW"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#06C755] text-white text-sm tracking-wide rounded-sm shadow-md hover:bg-[#05b34c] transition-all"
+               >
+                  浜松店 LINEで相談
+               </a>
+             </div>
           </div>
         </div>
       </section>

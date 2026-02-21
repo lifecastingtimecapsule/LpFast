@@ -194,13 +194,22 @@ export function Layout({ children }: LayoutProps) {
                     Web予約・空き状況
                  </a>
                  <a
-                    href="https://lin.ee/siRIzsZ"
+                    href="https://lin.ee/55K9AP6"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-4 bg-[#06C755] text-white text-sm font-medium tracking-wide hover:bg-[#05b34c] transition-colors shadow-md"
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-[#06C755] text-white text-sm font-medium tracking-wide hover:bg-[#05b34c] transition-colors shadow-md"
                  >
                     <MessageCircle size={18} strokeWidth={2} />
-                    LINEで相談・予約
+                    豊川店 LINE
+                 </a>
+                 <a
+                    href="https://lin.ee/StzkfTW"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-[#06C755] text-white text-sm font-medium tracking-wide hover:bg-[#05b34c] transition-colors shadow-md"
+                 >
+                    <MessageCircle size={18} strokeWidth={2} />
+                    浜松店 LINE
                  </a>
                </motion.div>
              </div>
@@ -256,17 +265,31 @@ export function Layout({ children }: LayoutProps) {
                   <ArrowRight size={16} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                 </a>
 
-                {/* 2. LINE (Green) */}
+                {/* 2. LINE 豊川店 (Green) */}
                 <a 
-                  href="https://lin.ee/siRIzsZ" 
+                  href="https://lin.ee/55K9AP6" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#06C755] text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
                 >
                   <MessageCircle size={20} strokeWidth={2} />
                   <div className="flex flex-col items-start leading-none text-left">
-                    <span className="text-[10px] tracking-wider mb-1 opacity-90">気軽に質問・相談</span>
-                    <span className="text-sm font-medium tracking-wide">LINEで問い合わせる</span>
+                    <span className="text-[10px] tracking-wider mb-1 opacity-90">豊川店に質問・相談</span>
+                    <span className="text-sm font-medium tracking-wide">豊川店 LINE</span>
+                  </div>
+                </a>
+
+                {/* 2b. LINE 浜松店 (Green) */}
+                <a 
+                  href="https://lin.ee/StzkfTW" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#06C755] text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  <MessageCircle size={20} strokeWidth={2} />
+                  <div className="flex flex-col items-start leading-none text-left">
+                    <span className="text-[10px] tracking-wider mb-1 opacity-90">浜松店に質問・相談</span>
+                    <span className="text-sm font-medium tracking-wide">浜松店 LINE</span>
                   </div>
                 </a>
 

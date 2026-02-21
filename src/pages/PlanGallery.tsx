@@ -171,7 +171,7 @@ export function PlanGallery() {
                   "name": "駐車場はありますか？",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "豊川店・浜松店ともに、近隣にコインパーキングがございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。"
+                    "text": "浜松店は店舗前に駐車場をご用意しております。豊川店は提携している近隣の駐車場をご案内いたしますので、ご予約時にお車でお越しの旨をお伝えください。"
                   }
                 }
               ]
@@ -475,7 +475,7 @@ export function PlanGallery() {
                { q: "赤ちゃんが泣いても大丈夫ですか？", a: "問題ありません。スタッフは赤ちゃんの扱いに慣れておりますし、型取り自体は90秒という短時間で完了するため、泣いている間でもスムーズに行えます。" },
                { q: "肌荒れが心配です。", a: "歯科医療で使用される、海藻由来の安全な素材を使用しています。水で簡単に洗い流せ、肌への刺激は極めて少ないものです。ご心配な方はパッチテストも可能です。" },
                { q: "豊川店と浜松店でプランや料金は同じですか？", a: "はい、ライフスタジオ豊川店・浜松店ともに同じプラン・料金でご利用いただけます。amorétto Collectionプラン（写真なし）とPremium Foto Collectionプラン（写真付き）からお選びいただけます。" },
-               { q: "駐車場はありますか？", a: "豊川店・浜松店ともに、近隣にコインパーキングがございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。" }
+               { q: "駐車場はありますか？", a: "浜松店は店舗前に駐車場をご用意しております。豊川店は提携している近隣の駐車場をご案内いたしますので、ご予約時にお車でお越しの旨をお伝えください。" }
              ].map((item, i) => (
                <AccordionItem key={i} value={`item-${i}`} className="border border-[#E5E0D8] rounded-lg px-4 md:px-6 bg-white last:border-b">
                  <AccordionTrigger className="text-[0.9rem] md:text-[0.95rem] text-[#2C2C2C] font-medium py-4 md:py-5 hover:no-underline hover:text-[#C4A962] transition-colors text-left">
