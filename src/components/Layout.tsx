@@ -4,10 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
 import { ArrowRight, ArrowUp, Calendar } from "lucide-react";
-import { PLACEHOLDER_IMAGE } from "@/lib/placeholder";
-
-const logoImage = PLACEHOLDER_IMAGE;
-const faviconImage = PLACEHOLDER_IMAGE;
+import logoImage from '../assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png';
 
 interface LayoutProps {
   children: ReactNode;
@@ -59,8 +56,8 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col relative overflow-x-hidden selection:bg-[#C4A962] selection:text-white">
       <Helmet>
-        <link rel="icon" type="image/png" href={faviconImage} />
-        <link rel="apple-touch-icon" href={faviconImage} />
+        <link rel="icon" type="image/png" href={logoImage} />
+        <link rel="apple-touch-icon" href={logoImage} />
       </Helmet>
       
       <style>{`
