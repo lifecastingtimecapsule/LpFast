@@ -55,11 +55,6 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col relative overflow-x-hidden selection:bg-[#C4A962] selection:text-white">
-      <Helmet>
-        <link rel="icon" type="image/png" href={logoImage} />
-        <link rel="apple-touch-icon" href={logoImage} />
-      </Helmet>
-      
       <style>{`
         :root {
           --font-en-serif: 'Cormorant Garamond', serif;
