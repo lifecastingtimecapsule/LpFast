@@ -4,8 +4,8 @@ import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
 import { ArrowRight, ArrowUp, Calendar } from "lucide-react";
-import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png";
-import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png';
+import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.jpg";
+import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.jpg';
 
 interface LayoutProps {
   children: ReactNode;

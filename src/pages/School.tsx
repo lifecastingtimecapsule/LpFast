@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
 import { Check, Star, Shield, AlertTriangle } from "lucide-react";
-import heroImage from 'figma:asset/88d78594627298de202a95b666ce87d1601717bf.png';
+import heroImage from 'figma:asset/88d78594627298de202a95b666ce87d1601717bf.jpg';
 
 // Images
 const IMG_HERO = heroImage;
