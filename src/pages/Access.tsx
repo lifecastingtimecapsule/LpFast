@@ -7,14 +7,22 @@ export function Access() {
   return (
     <>
       <Helmet>
-        <title>Access | amorétto - 店舗情報・アクセス</title>
-        <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto（アモレット）へのアクセス。豊川稲荷より徒歩3分。立体手形・産後ギフトのご予約・お問い合わせはこちら。電話: 0533-56-9494" />
+        <title>Access | amorétto - 店舗情報・アクセス・ご予約</title>
+        <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto（アモレット）へのアクセス。豊川稲荷より徒歩3分。〒442-0037 愛知県豊川市門前町15。立体手形・産後ギフトのご予約・お問い合わせはこちら。電話: 0533-56-9494" />
         <link rel="canonical" href="https://lifecastingtimecapsule.com/access" />
         
-        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
+        <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="Access | amorétto - 店舗情報・アクセス" />
         <meta property="og:description" content="愛知・豊川の立体手形アート専門スタジオへのアクセス。豊川稲荷より徒歩3分。" />
         <meta property="og:url" content="https://lifecastingtimecapsule.com/access" />
+        <meta property="og:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Access | amorétto - 店舗情報・アクセス" />
+        <meta name="twitter:description" content="愛知・豊川の立体手形アート専門スタジオへのアクセス。豊川稲荷より徒歩3分。" />
+        <meta name="twitter:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
@@ -109,6 +117,23 @@ export function Access() {
                   }
                 }
               ]
+            }
+          `}
+        </script>
+
+        {/* 構造化データ: Speakable WebPage */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Access | amorétto - 店舗情報・アクセス・ご予約",
+              "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": ["h1", "h2", "h3"]
+              },
+              "url": "https://lifecastingtimecapsule.com/access",
+              "inLanguage": "ja"
             }
           `}
         </script>

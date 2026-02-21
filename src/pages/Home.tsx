@@ -24,59 +24,21 @@ export function Home() {
         <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。90秒で型取り可能な特許素材を使用。美術教員免許保持者が制作。" />
         <link rel="canonical" href="https://lifecastingtimecapsule.com/" />
         
-        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
+        <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="amorétto | LifeCasting® Studio - 立体手形・産後ギフト" />
         <meta property="og:description" content="愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。" />
         <meta property="og:url" content="https://lifecastingtimecapsule.com/" />
+        <meta property="og:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         
-        {/* 構造化データ: LocalBusiness */}
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "amorétto (アモレット)",
-              "image": "https://lifecastingtimecapsule.com/og-image.jpg",
-              "description": "愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アート制作。出産祝いや産後ギフトに最適です。",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "門前町15",
-                "addressLocality": "豊川市",
-                "addressRegion": "愛知県",
-                "postalCode": "442-0037",
-                "addressCountry": "JP"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 34.825,
-                "longitude": 137.39
-              },
-              "url": "https://lifecastingtimecapsule.com/",
-              "telephone": "+81-533-56-9494",
-              "email": "lifecasting.timecapsule@gmail.com",
-              "openingHoursSpecification": [
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Tuesday", "Wednesday"],
-                  "opens": "09:00",
-                  "closes": "17:00"
-                }
-              ],
-              "priceRange": "¥35,000〜",
-              "areaServed": {
-                "@type": "GeoCircle",
-                "geoMidpoint": {
-                  "@type": "GeoCoordinates",
-                  "latitude": 34.825,
-                  "longitude": 137.39
-                },
-                "geoRadius": "50000"
-              }
-            }
-          `}
-        </script>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="amorétto | LifeCasting® Studio - 立体手形・産後ギフト" />
+        <meta name="twitter:description" content="愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アート。" />
+        <meta name="twitter:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
         
-        {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
           {`
             {
@@ -90,6 +52,30 @@ export function Home() {
                   "item": "https://lifecastingtimecapsule.com/"
                 }
               ]
+            }
+          `}
+        </script>
+
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "@id": "https://lifecastingtimecapsule.com/#webpage",
+              "url": "https://lifecastingtimecapsule.com/",
+              "name": "amorétto | LifeCasting® Studio - 愛知・豊川の立体手形アート",
+              "description": "愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アート。",
+              "isPartOf": {
+                "@id": "https://lifecastingtimecapsule.com/#website"
+              },
+              "about": {
+                "@id": "https://lifecastingtimecapsule.com/#localbusiness"
+              },
+              "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": ["h1", "h2", ".speakable"]
+              },
+              "inLanguage": "ja"
             }
           `}
         </script>

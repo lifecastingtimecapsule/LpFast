@@ -1,7 +1,4 @@
-import image_1986fa6511a700ac3e4eeb46a728feea3d8ff040 from 'figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.png';
 import { motion } from "motion/react";
-import { useState, useEffect } from "react";
-import { TestimonialCard } from "../components/TestimonialCard";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 import { Helmet } from 'react-helmet-async';
@@ -9,9 +6,7 @@ import { Camera } from "lucide-react";
 
 // Import images
 import image_basic from "figma:asset/869102067ce8235d121d1e72efdd989be969f734.png";
-import image_collab from "figma:asset/298ca8044759a9db905e0b307ec97ce7f3386940.png";
 import image_with_photo_new from "figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.png";
-import image_premium from "figma:asset/2313c0ef7c72fea9684332541201c7988100c7d8.png";
 import image_gallery_0 from "figma:asset/96363315c6e81ea319cebace631d308b4c40d1f7.png";
 import image_gallery_1 from "figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.png";
 import image_gallery_2 from "figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png";
@@ -20,23 +15,31 @@ import image_gallery_3 from "figma:asset/92a2101c1f75310484352570d56526aa7857c25
 export function PlanGallery() {
   
   const galleryImages = [
-    { src: image_gallery_0, alt: "Silver feet cast" },
-    { src: image_gallery_1, alt: "Baby with teddy bear" },
-    { src: image_gallery_2, alt: "Framed hands and feet" },
-    { src: image_gallery_3, alt: "Baby feet comparison" }
+    { src: image_gallery_0, alt: "シルバー仕上げの赤ちゃん立体足形アート - amorétto作品" },
+    { src: image_gallery_1, alt: "赤ちゃんと立体手形アート - 出産祝いギフト" },
+    { src: image_gallery_2, alt: "額装された立体手形・足形アート - 産後ギフト" },
+    { src: image_gallery_3, alt: "赤ちゃんの成長を記録する立体足形 - LifeCasting®作品" }
   ];
 
   return (
     <>
       <Helmet>
-        <title>Plan & Gallery | amorétto - 立体手形プラン・産後ギフト</title>
+        <title>Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト</title>
         <meta name="description" content="愛知・豊川のamoréttoの立体手形・足形アート料金プランと作品ギャラリー。出産祝いや産後ギフトに最適な、写真付き・写真なしの2プランをご用意。美術教員免許保持者が丁寧に制作します。" />
         <link rel="canonical" href="https://lifecastingtimecapsule.com/plan-gallery" />
         
-        {/* Open Graph */}
-        <meta property="og:title" content="Plan & Gallery | amorétto - 立体手形プラン" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金" />
         <meta property="og:description" content="立体手形・足形アートの料金プランと作品ギャラリー。写真付き・写真なしの2プランから選べます。" />
         <meta property="og:url" content="https://lifecastingtimecapsule.com/plan-gallery" />
+        <meta property="og:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金" />
+        <meta name="twitter:description" content="立体手形・足形アートの料金プランと作品ギャラリー。写真付き・写真なしの2プランから選べます。" />
+        <meta name="twitter:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
@@ -124,6 +127,67 @@ export function PlanGallery() {
             }
           `}
         </script>
+
+        {/* 構造化データ: FAQPage */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "何歳から型取りができますか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "何歳からでも可能です。これまでの最年少実績は生後14日の赤ちゃんです。新生児特有の小ささを残したい場合は、生後1ヶ月以内のご来店をおすすめしております。"
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "赤ちゃんが泣いても大丈夫ですか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "問題ありません。スタッフは赤ちゃんの扱いに慣れておりますし、型取り自体は90秒という短時間で完了するため、泣いている間でもスムーズに行えます。"
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "肌荒れが心配です。",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "歯科医療で使用される、海藻由来の安全な素材を使用しています。水で簡単に洗い流せ、肌への刺激は極めて少ないものです。ご心配な方はパッチテストも可能です。"
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "駐車場はありますか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "専用駐車場はございませんが、近隣に提携駐車場がございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。"
+                  }
+                }
+              ]
+            }
+          `}
+        </script>
+
+        {/* 構造化データ: Speakable WebPage */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト",
+              "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": ["h1", "h2", "h3"]
+              },
+              "url": "https://lifecastingtimecapsule.com/plan-gallery",
+              "inLanguage": "ja"
+            }
+          `}
+        </script>
       </Helmet>
 
       {/* --- Hero / Intro --- */}
@@ -166,7 +230,7 @@ export function PlanGallery() {
                 <div className="aspect-square overflow-hidden bg-[#F5F3EF] shadow-xl relative">
                    <ImageWithFallback 
                       src={image_basic} 
-                      alt="Standard Plan" 
+                      alt="amorétto Collection - 写真なし立体手形アート スタンダードプラン" 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                       loading="lazy"
                    />
@@ -188,7 +252,7 @@ export function PlanGallery() {
                 
                 <div className="text-[#666666] leading-loose mb-8 md:mb-10 text-[0.85rem] md:text-sm font-light">
                   <p className="mb-4">
-                    シンプルだからこそ��その造形の美しさが際立つスタンダードモデル。<br/>
+                    シンプルだからこそ、その造形の美しさが際立つスタンダードモデル。<br/>
                     ゴールドまたはシルバーの繊細な塗装仕上げで、インテリアに上品な輝きを添えます。
                   </p>
                   <p className="text-[10px] md:text-xs text-[#999999] tracking-wider bg-[#FAFAF8] p-3 border-l-2 border-[#E5E0D8]">
@@ -222,8 +286,8 @@ export function PlanGallery() {
                 <div className="relative aspect-square">
                    <div className="w-full h-full shadow-xl overflow-hidden bg-[#F5F3EF] relative">
                       <ImageWithFallback 
-                         src={image_1986fa6511a700ac3e4eeb46a728feea3d8ff040} 
-                         alt="Luxury Frame" 
+                         src={image_with_photo_new} 
+                         alt="Premium Foto Collection - 写真付き立体手形アート 額装プラン" 
                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                          loading="lazy"
                       />

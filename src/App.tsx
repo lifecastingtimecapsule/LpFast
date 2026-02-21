@@ -6,8 +6,8 @@ import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { PlanGallery } from "./pages/PlanGallery";
 import { School } from "./pages/School";
-import { Access } from "./pages/Access"; 
-import faviconImage from 'figma:asset/7df12076a8e03cdc25a631eac63c68bcb45432b0.png';
+import { Access } from "./pages/Access";
+import { Sitemap } from "./pages/Sitemap";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -84,7 +84,8 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/plan-gallery" element={<PlanGallery />} />
             <Route path="/school" element={<School />} />
-            <Route path="/access" element={<Access />} /> 
+            <Route path="/access" element={<Access />} />
+            <Route path="/sitemap" element={<Sitemap />} />
           </Routes>
         </Layout>
       </BrowserRouter>

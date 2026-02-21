@@ -12,14 +12,22 @@ export function About() {
   return (
     <>
       <Helmet>
-        <title>About | amorétto - 私たちの想い</title>
+        <title>About | amorétto - 私たちの想い｜立体手形アート</title>
         <meta name="description" content="amoréttoのブランドストーリー。愛知・豊川のLifeCasting®専門スタジオが大切にしている想いと、立体手形・産後ギフト制作への情熱をご紹介します。" />
         <link rel="canonical" href="https://lifecastingtimecapsule.com/about" />
         
-        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
+        <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="About | amorétto - 私たちの想い" />
         <meta property="og:description" content="amoréttoのブランドストーリー。記憶を形にする、立体手形アートへの想い。" />
         <meta property="og:url" content="https://lifecastingtimecapsule.com/about" />
+        <meta property="og:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About | amorétto - 私たちの想い" />
+        <meta name="twitter:description" content="amoréttoのブランドストーリー。記憶を形にする、立体手形アートへの想い。" />
+        <meta name="twitter:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
@@ -72,6 +80,23 @@ export function About() {
             }
           `}
         </script>
+
+        {/* 構造化データ: Speakable WebPage */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "About | amorétto - 私たちの想い｜立体手形アート",
+              "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": ["h1", "h2", "h3"]
+              },
+              "url": "https://lifecastingtimecapsule.com/about",
+              "inLanguage": "ja"
+            }
+          `}
+        </script>
       </Helmet>
 
       <div className="bg-white">
@@ -110,7 +135,7 @@ export function About() {
                   今日抱きしめたその小ささは、明日にはもう過去のものになります。
                 </p>
                 <p>
-                  写真は「姿」を鮮���に残してくれます。<br className="hidden md:block"/>
+                  写真は「姿」を鮮明に残してくれます。<br className="hidden md:block"/>
                   でも、私たちが残したいのは、<br className="hidden md:block"/>
                   そこに確かな命があったという「存在感」そのものです。
                 </p>
@@ -131,7 +156,7 @@ export function About() {
               >
                  <img 
                     src={IMG_HANDS} 
-                    alt="Family Hands" 
+                    alt="家族の手を重ねた立体手形アート - amoréttoの作品" 
                     className="w-full h-full object-cover grayscale-[10%]" 
                     loading="lazy"
                  />
@@ -186,7 +211,7 @@ export function About() {
                     >
                        <img 
                           src={IMG_ARTIST} 
-                          alt="Artist working" 
+                          alt="amoréttoアーティストが立体手形を丁寧に仕上げる制作風景" 
                           className="w-full h-full object-cover" 
                           loading="lazy"
                        />

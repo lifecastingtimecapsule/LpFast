@@ -11,14 +11,22 @@ export function School() {
   return (
     <>
       <Helmet>
-        <title>School | amorétto - LifeCasting®認定講座</title>
-        <meta name="description" content="愛知・豊川の日本唯一のLifeCasting®認定講座。立体手形・足形アート制作技術を学び、公式アーティストとして活動できます。商標権を持つ本格的な技術指導と開業サポート付き。\" />
+        <title>School | amorétto - LifeCasting®認定講座・立体手形スクール</title>
+        <meta name="description" content="愛知・豊川の日本唯一のLifeCasting®認定講座。立体手形・足形アート制作技術を学び、公式アーティストとして活動できます。商標権を持つ本格的な技術指導と開業サポート付き。" />
         <link rel="canonical" href="https://lifecastingtimecapsule.com/school" />
         
-        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
+        <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="School | amorétto - LifeCasting®認定講座" />
         <meta property="og:description" content="日本唯一のLifeCasting®認定講座。立体手形アート制作技術を学び、公式アーティストとして活動できます。" />
         <meta property="og:url" content="https://lifecastingtimecapsule.com/school" />
+        <meta property="og:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="School | amorétto - LifeCasting®認定講座" />
+        <meta name="twitter:description" content="日本唯一のLifeCasting®認定講座。立体手形アート制作技術を学び、公式アーティストとして活動できます。" />
+        <meta name="twitter:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
@@ -97,6 +105,23 @@ export function School() {
             }
           `}
         </script>
+
+        {/* 構造化データ: Speakable WebPage */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "School | amorétto - LifeCasting®認定講座・立体手形スクール",
+              "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": ["h1", "h2", "h3"]
+              },
+              "url": "https://lifecastingtimecapsule.com/school",
+              "inLanguage": "ja"
+            }
+          `}
+        </script>
       </Helmet>
 
       {/* --- Hero Section --- */}
@@ -107,7 +132,7 @@ export function School() {
             animate={{ scale: 1, opacity: 0.4 }}
             transition={{ duration: 2, ease: "easeOut" }}
             src={IMG_HERO} 
-            alt="Art School" 
+            alt="amorétto LifeCasting®認定講座 - 立体手形アート制作技術を学ぶスクール" 
             className="w-full h-full object-cover grayscale"
           />
           <div className="absolute inset-0 bg-black/40" />
@@ -178,7 +203,7 @@ export function School() {
               <div className="aspect-[3/4] overflow-hidden bg-[#FAFAF8]">
                  <img 
                     src={IMG_MESSAGE} 
-                    alt="Artist working" 
+                    alt="LifeCasting®アーティストが立体手形を丁寧に仕上げる様子" 
                     className="w-full h-full object-cover grayscale-[20%]" 
                     loading="lazy"
                  />
@@ -311,7 +336,7 @@ export function School() {
                   </li>
                   <li className="flex items-center justify-center gap-3 md:gap-4">
                     <Check size={18} className="text-[#C4A962] shrink-0" />
-                    <span>活動に必要な<strong>LP（ランディングページ）</strong>���制作支援</span>
+                    <span>活動に必要な<strong>LP（ランディングページ）</strong>の制作支援</span>
                   </li>
                   <li className="flex items-center justify-center gap-3 md:gap-4">
                     <Check size={18} className="text-[#C4A962] shrink-0" />

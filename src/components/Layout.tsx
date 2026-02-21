@@ -62,8 +62,6 @@ export function Layout({ children }: LayoutProps) {
       </Helmet>
       
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap');
-        
         :root {
           --font-en-serif: 'Cormorant Garamond', serif;
           --font-jp-serif: 'Noto Serif JP', serif;
@@ -308,7 +306,15 @@ export function Layout({ children }: LayoutProps) {
               <div>完全予約制</div>
             </div>
 
-
+            {/* Footer Navigation for SEO */}
+            <nav aria-label="フッターナビゲーション" className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8 text-[10px] md:text-xs text-[#999999] tracking-wider font-light">
+              <Link to="/" className="hover:text-[#C4A962] transition-colors">ホーム</Link>
+              <Link to="/about" className="hover:text-[#C4A962] transition-colors">About</Link>
+              <Link to="/plan-gallery" className="hover:text-[#C4A962] transition-colors">Plan & Gallery</Link>
+              <Link to="/school" className="hover:text-[#C4A962] transition-colors">School</Link>
+              <Link to="/access" className="hover:text-[#C4A962] transition-colors">Access</Link>
+              <Link to="/sitemap" className="hover:text-[#C4A962] transition-colors">サイトマップ</Link>
+            </nav>
 
             <p className="text-[10px] text-[#AAAAAA] tracking-[0.1em] font-light">
               © {new Date().getFullYear()} amorétto. All rights reserved.
