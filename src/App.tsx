@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { Analytics } from "@vercel/analytics/react";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
@@ -88,6 +89,7 @@ export default function App() {
             <Route path="/sitemap" element={<Sitemap />} />
           </Routes>
         </Layout>
+        <Analytics />
       </BrowserRouter>
     </HelmetProvider>
   );
