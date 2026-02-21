@@ -23,21 +23,21 @@ export function PlanGallery() {
   return (
     <>
       <Helmet>
-        <title>Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト</title>
-        <meta name="description" content="愛知・豊川のamoréttoの立体手形・足形アート料金プランと作品ギャラリー。出産祝いや産後ギフトに最適な、写真付き・写真なしの2プランをご用意。美術教員免許保持者が丁寧に制作します。" />
+        <title>Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト｜豊川・浜松</title>
+        <meta name="description" content="amoréttoの立体手形・足形アート料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店の2拠点で型取り可能。出産祝いや産後ギフトに最適な、写真付き・写真なしの2プランをご用意。美術教員免許保持者が丁寧に制作します。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/plan-gallery" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
-        <meta property="og:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金" />
-        <meta property="og:description" content="立体手形・足形アートの料金プランと作品ギャラリー。写真付き・写真なしの2プランから選べます。" />
+        <meta property="og:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金｜豊川・浜松" />
+        <meta property="og:description" content="立体手形・足形アートの料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店で型取り可能。写真付き・写真なしの2プランから選べます。" />
         <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/plan-gallery" />
         <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金" />
-        <meta name="twitter:description" content="立体手形・足形アートの料金プランと作品ギャラリー。写真付き・写真なしの2プランから選べます。" />
+        <meta name="twitter:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金｜豊川・浜松" />
+        <meta name="twitter:description" content="立体手形・足形アートの料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店で型取り可能。写真付き・写真なしの2プランから選べます。" />
         <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
@@ -139,7 +139,7 @@ export function PlanGallery() {
                   "name": "何歳から型取りができますか？",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "何歳からでも可能です。これまでの最年少実績は生後14日の赤ちゃんです。新生児特有の小ささを残したい場合は、生後1ヶ月以内のご来店をおすすめしております。"
+                    "text": "何歳からでも可能です。これまでの最年少実績は生後14日の赤ちゃんです。新生児特有の小ささを残したい場合は、生後1ヶ月以内のご来店をおすすめしております。ライフスタジオ豊川店・浜松店どちらでも型取りが可能です。"
                   }
                 },
                 {
@@ -160,10 +160,18 @@ export function PlanGallery() {
                 },
                 {
                   "@type": "Question",
+                  "name": "豊川店と浜松店でプランや料金は同じですか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "はい、ライフスタジオ豊川店（愛知県豊川市）・浜松店（静岡県浜松市）ともに同じプラン・料金でご利用いただけます。amorétto Collectionプラン（写真なし）とPremium Foto Collectionプラン（写真付き）からお選びいただけます。"
+                  }
+                },
+                {
+                  "@type": "Question",
                   "name": "駐車場はありますか？",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "専用駐車場はございませんが、近隣に提携駐車場がございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。"
+                    "text": "豊川店・浜松店ともに、近隣にコインパーキングがございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。"
                   }
                 }
               ]
@@ -177,10 +185,10 @@ export function PlanGallery() {
             {
               "@context": "https://schema.org",
               "@type": "WebPage",
-              "name": "Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト",
+              "name": "Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト｜豊川・浜松",
               "speakable": {
                 "@type": "SpeakableSpecification",
-                "cssSelector": ["h1", "h2", "h3"]
+                "cssSelector": ["h1", "h2", "h3", ".speakable"]
               },
               "url": "https://www.lifecastingstudio-amoretto.com/plan-gallery",
               "inLanguage": "ja"
@@ -207,6 +215,9 @@ export function PlanGallery() {
             <p className="text-[0.9rem] md:text-[1.1rem] leading-loose text-[#666666] tracking-wide max-w-2xl mx-auto">
               かけがえのない瞬間を、立体手形/立体足型という最適なカタチで。<br />
               写真は「姿」を、私たちは「存在」を残します。
+            </p>
+            <p className="speakable text-xs md:text-sm text-[#999999] mt-4 tracking-wide">
+              ライフスタジオ豊川店・浜松店の2拠点で型取りが可能です
             </p>
           </motion.div>
         </div>
@@ -334,7 +345,7 @@ export function PlanGallery() {
                       amorétto × Life Studio
                     </h4>
                     <p className="text-[10px] md:text-xs text-[#666666] leading-relaxed mb-3">
-                      提携フォトスタジオ「Life Studio」で撮影された方だけの特別優待。<br/>
+                      ライフスタジオ<strong>豊川店</strong>・<strong>浜松店</strong>で撮影された方だけの特別優待。<br/>
                       プロの撮影データを使用して、お得にこのプランをご利用いただけます。
                     </p>
                     <div className="flex items-end gap-2">
@@ -460,10 +471,11 @@ export function PlanGallery() {
 
           <Accordion type="single" collapsible className="w-full space-y-3 md:space-y-4">
              {[
-               { q: "何歳から型取りができますか？", a: "何歳からでも可能です。これまでの最年少実績は生後14日の赤ちゃんです。新生児特有の小ささを残したい場合は、生後1ヶ月以内のご来店をおすすめしております。" },
+               { q: "何歳から型取りができますか？", a: "何歳からでも可能です。これまでの最年少実績は生後14日の赤ちゃんです。新生児特有の小ささを残したい場合は、生後1ヶ月以内のご来店をおすすめしております。ライフスタジオ豊川店・浜松店どちらでも型取りが可能です。" },
                { q: "赤ちゃんが泣いても大丈夫ですか？", a: "問題ありません。スタッフは赤ちゃんの扱いに慣れておりますし、型取り自体は90秒という短時間で完了するため、泣いている間でもスムーズに行えます。" },
                { q: "肌荒れが心配です。", a: "歯科医療で使用される、海藻由来の安全な素材を使用しています。水で簡単に洗い流せ、肌への刺激は極めて少ないものです。ご心配な方はパッチテストも可能です。" },
-               { q: "駐車場はありますか？", a: "専用駐車場はございませんが、近隣に提携駐車場がございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。" }
+               { q: "豊川店と浜松店でプランや料金は同じですか？", a: "はい、ライフスタジオ豊川店・浜松店ともに同じプラン・料金でご利用いただけます。amorétto Collectionプラン（写真なし）とPremium Foto Collectionプラン（写真付き）からお選びいただけます。" },
+               { q: "駐車場はありますか？", a: "豊川店・浜松店ともに、近隣にコインパーキングがございます。ご予約の際に場所をご案内いたしますので、お車でお越しの際はお気軽にお申し付けください。" }
              ].map((item, i) => (
                <AccordionItem key={i} value={`item-${i}`} className="border border-[#E5E0D8] rounded-lg px-4 md:px-6 bg-white last:border-b">
                  <AccordionTrigger className="text-[0.9rem] md:text-[0.95rem] text-[#2C2C2C] font-medium py-4 md:py-5 hover:no-underline hover:text-[#C4A962] transition-colors text-left">

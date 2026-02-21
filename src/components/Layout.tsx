@@ -270,15 +270,27 @@ export function Layout({ children }: LayoutProps) {
                   </div>
                 </a>
 
-                {/* 3. Phone (White) */}
+                {/* 3. Phone (White) - 豊川店 */}
                 <a 
                   href="tel:0533569494" 
                   className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#E5E0D8] text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962] transition-all shadow-sm hover:shadow-md"
                 >
                   <Phone size={18} strokeWidth={1.5} />
                   <div className="flex flex-col items-start leading-none text-left">
-                    <span className="text-[10px] text-[#999999] tracking-wider mb-1">お電話で相談する</span>
+                    <span className="text-[10px] text-[#999999] tracking-wider mb-1">豊川店にお電話</span>
                     <span className="text-sm font-medium tracking-widest">0533-56-9494</span>
+                  </div>
+                </a>
+
+                {/* 4. Phone (White) - 浜松店 */}
+                <a 
+                  href="tel:0534158775" 
+                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#E5E0D8] text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962] transition-all shadow-sm hover:shadow-md"
+                >
+                  <Phone size={18} strokeWidth={1.5} />
+                  <div className="flex flex-col items-start leading-none text-left">
+                    <span className="text-[10px] text-[#999999] tracking-wider mb-1">浜松店にお電話</span>
+                    <span className="text-sm font-medium tracking-widest">053-415-8775</span>
                   </div>
                 </a>
               </div>
@@ -293,16 +305,27 @@ export function Layout({ children }: LayoutProps) {
               />
             </div>
             
-            {/* Address Info */}
-            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-8 mb-10 text-[11px] md:text-xs text-[#666666] tracking-wider font-light">
-              <div className="flex items-center gap-2">
-                 <MapPin size={14} className="text-[#C4A962]" />
-                 <span>愛知県豊川市門前町１５</span>
+            {/* Address Info - 二店舗 */}
+            <div className="mb-10 space-y-4">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 text-[11px] md:text-xs text-[#666666] tracking-wider font-light">
+                <div className="flex items-center gap-2">
+                   <MapPin size={14} className="text-[#C4A962]" />
+                   <span className="font-medium text-[#2C2C2C]">豊川店</span>
+                   <span>愛知県豊川市門前町１５</span>
+                </div>
+                <span className="hidden md:inline text-[#E5E0D8]">|</span>
+                <div>TEL: 0533-56-9494</div>
               </div>
-              <span className="hidden md:inline text-[#E5E0D8]">|</span>
-              <div>豊川稲荷より徒歩3分</div>
-              <span className="hidden md:inline text-[#E5E0D8]">|</span>
-              <div>完全予約制</div>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 text-[11px] md:text-xs text-[#666666] tracking-wider font-light">
+                <div className="flex items-center gap-2">
+                   <MapPin size={14} className="text-[#C4A962]" />
+                   <span className="font-medium text-[#2C2C2C]">浜松店</span>
+                   <span>静岡県浜松市中央区上島６丁目２−３０</span>
+                </div>
+                <span className="hidden md:inline text-[#E5E0D8]">|</span>
+                <div>TEL: 053-415-8775</div>
+              </div>
+              <div className="text-[11px] md:text-xs text-[#999999] tracking-wider font-light">完全予約制</div>
             </div>
 
             {/* Footer Navigation for SEO */}

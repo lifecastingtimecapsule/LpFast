@@ -20,23 +20,23 @@ export function Home() {
   return (
     <>
       <Helmet>
-        <title>amorétto | LifeCasting® Studio - 愛知・豊川の立体手形アート</title>
-        <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。90秒で型取り可能な特許素材を使用。美術教員免許保持者が制作。" />
+        <title>amorétto | LifeCasting® Studio - 豊川・浜松の立体手形アート専門スタジオ</title>
+        <meta name="description" content="愛知・豊川と静岡・浜松の2拠点で展開するLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。90秒で型取り可能な特許素材を使用。美術教員免許保持者が制作。ライフスタジオ豊川店・浜松店で型取り体験いただけます。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
-        <meta property="og:title" content="amorétto | LifeCasting® Studio - 立体手形・産後ギフト" />
-        <meta property="og:description" content="愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。" />
+        <meta property="og:title" content="amorétto | LifeCasting® Studio - 豊川・浜松の立体手形アート" />
+        <meta property="og:description" content="愛知・豊川と静岡・浜松の2拠点で展開するLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。" />
         <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/" />
         <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="amorétto | LifeCasting® Studio - 立体手形・産後ギフト" />
-        <meta name="twitter:description" content="愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アート。" />
+        <meta name="twitter:title" content="amorétto | LifeCasting® Studio - 豊川・浜松の立体手形・産後ギフト" />
+        <meta name="twitter:description" content="愛知・豊川と静岡・浜松の2拠点。赤ちゃんの「今」を残す立体手形・足形アート専門スタジオ。" />
         <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <script type="application/ld+json">
@@ -63,17 +63,18 @@ export function Home() {
               "@type": "WebPage",
               "@id": "https://www.lifecastingstudio-amoretto.com/#webpage",
               "url": "https://www.lifecastingstudio-amoretto.com/",
-              "name": "amorétto | LifeCasting® Studio - 愛知・豊川の立体手形アート",
-              "description": "愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アート。",
+              "name": "amorétto | LifeCasting® Studio - 豊川・浜松の立体手形アート専門スタジオ",
+              "description": "愛知・豊川と静岡・浜松の2拠点で展開するLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アート。ライフスタジオ豊川店・浜松店で型取りが可能です。",
               "isPartOf": {
                 "@id": "https://www.lifecastingstudio-amoretto.com/#website"
               },
-              "about": {
-                "@id": "https://www.lifecastingstudio-amoretto.com/#localbusiness"
-              },
+              "about": [
+                { "@id": "https://www.lifecastingstudio-amoretto.com/#toyokawa" },
+                { "@id": "https://www.lifecastingstudio-amoretto.com/#hamamatsu" }
+              ],
               "speakable": {
                 "@type": "SpeakableSpecification",
-                "cssSelector": ["h1", "h2", ".speakable"]
+                "cssSelector": ["h1", "h2", "h3", ".speakable"]
               },
               "inLanguage": "ja"
             }
@@ -160,6 +161,11 @@ export function Home() {
                 amoréttoは、その一瞬の「物語」を<br />
                 アートとして未来へ届ける<br />
                 日本初のライフキャスティング®（立体手形）専門スタジオです。
+              </p>
+              <p className="speakable">
+                愛知・豊川と静岡・浜松の<strong className="font-medium text-[#2C2C2C]">2つのライフスタジオ</strong>で、<br />
+                あなたの大切な家族の「今」を<br />
+                立体手形アートとしてお届けします。
               </p>
             </div>
           </motion.div>
@@ -368,7 +374,8 @@ export function Home() {
               amoréttoの立体手形アートは、<br className="md:hidden" />
               出産祝いとしても選ばれています。<br />
               「おめでとう」の気持ちを、<br className="md:hidden" />
-              色褪せないカタチにして贈りませんか？
+              色褪せないカタチにして贈りませんか？<br />
+              <span className="text-xs text-[#999999] mt-2 block">ライフスタジオ豊川店・浜松店どちらでもご体験いただけます。</span>
             </p>
             
             <Link 
