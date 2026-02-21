@@ -1,10 +1,9 @@
 import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
 import { Check, Star, Shield, AlertTriangle } from "lucide-react";
-import heroImage from 'figma:asset/88d78594627298de202a95b666ce87d1601717bf.png';
+import { PLACEHOLDER_IMAGE } from "@/lib/placeholder";
 
-// Images
-const IMG_HERO = heroImage;
+const IMG_HERO = PLACEHOLDER_IMAGE;
 const IMG_MESSAGE = "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
 
 export function School() {

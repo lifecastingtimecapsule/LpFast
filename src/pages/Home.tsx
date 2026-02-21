@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import image_a0354f462dd60a54ee83d6d005b657d7607d28c2 from 'figma:asset/a0354f462dd60a54ee83d6d005b657d7607d28c2.png';
-import image_1dcb22b059fada42ca8857edd6c73aa35756f226 from 'figma:asset/1dcb22b059fada42ca8857edd6c73aa35756f226.png';
-import image_1cacdfafa29eecceb028f649eacdf3b80807891d from 'figma:asset/1cacdfafa29eecceb028f649eacdf3b80807891d.png';
-import logoImage from "figma:asset/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png";
-import heroImage from 'figma:asset/61182aee64f023c22f643d006af7762c37e5d671.png';
-import plasterArtImage from 'figma:asset/49bf243a67012d811aa34bfe11f3d464e8fc5388.png';
-import image_staff_3 from 'figma:asset/4f29fd2cd0dcbbe2868733df8ea47200f371e7a2.png';
+import image_a0354f462dd60a54ee83d6d005b657d7607d28c2 from '../assets/a0354f462dd60a54ee83d6d005b657d7607d28c2.png';
+import image_1dcb22b059fada42ca8857edd6c73aa35756f226 from '../assets/1dcb22b059fada42ca8857edd6c73aa35756f226.png';
+import image_1cacdfafa29eecceb028f649eacdf3b80807891d from '../assets/1cacdfafa29eecceb028f649eacdf3b80807891d.png';
+import logoImage from '../assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png';
+import heroImage from '../assets/61182aee64f023c22f643d006af7762c37e5d671.png';
+import plasterArtImage from '../assets/49bf243a67012d811aa34bfe11f3d464e8fc5388.png';
+import image_staff_3 from '../assets/4f29fd2cd0dcbbe2868733df8ea47200f371e7a2.png';
 import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
 

@@ -2,10 +2,7 @@ import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
 import { Link } from "react-router-dom";
 
-// 立体手形（1枚目）・アーティスト（2枚目）：写真が見当たらない場合は空白で表示。
-// 実画像を使う場合は src/assets/ に 9a3380d762d79add87cdd15a8bdf00ca60691e39.png を置き、
-// 下の import を有効にして IMG_HANDS に差し替えてください。
-// import image_hands from 'figma:asset/9a3380d762d79add87cdd15a8bdf00ca60691e39.png';
+// 実画像を使う場合は src/assets/ に画像ファイルを置いて import し、IMG_HANDS に差し替えてください。
 const IMG_HANDS = ''; // 立体手形用。ファイルを置いたら import に差し替え
 const IMG_ARTIST = ''; // アーティスト写真は未所持のため空白
 

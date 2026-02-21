@@ -1,4 +1,3 @@
-import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Instagram } from './Icons';
 
 interface TeamCardProps {
@@ -14,7 +13,7 @@ export function TeamCard({ image, role, name, description, staffName, instagram 
   return (
     <div className="text-center group">
       <div className="relative h-[320px] mb-8 overflow-hidden">
-        <ImageWithFallback
+        <img
           src={image}
           alt={name}
           className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"

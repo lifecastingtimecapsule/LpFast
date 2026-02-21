@@ -1,16 +1,15 @@
 import { motion } from "motion/react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 import { Helmet } from 'react-helmet-async';
 import { Camera } from "lucide-react";
 
 // Import images
-import image_basic from "figma:asset/869102067ce8235d121d1e72efdd989be969f734.png";
-import image_with_photo_new from "figma:asset/1986fa6511a700ac3e4eeb46a728feea3d8ff040.png";
-import image_gallery_0 from "figma:asset/96363315c6e81ea319cebace631d308b4c40d1f7.png";
-import image_gallery_1 from "figma:asset/b249142c3b0afcc8d91208afed6a8e291cdb4144.png";
-import image_gallery_2 from "figma:asset/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png";
-import image_gallery_3 from "figma:asset/92a2101c1f75310484352570d56526aa7857c259.png";
+import image_basic from "../assets/869102067ce8235d121d1e72efdd989be969f734.png";
+import image_with_photo_new from "../assets/1986fa6511a700ac3e4eeb46a728feea3d8ff040.png";
+import image_gallery_0 from "../assets/96363315c6e81ea319cebace631d308b4c40d1f7.png";
+import image_gallery_1 from "../assets/b249142c3b0afcc8d91208afed6a8e291cdb4144.png";
+import image_gallery_2 from "../assets/d3aa16a948f66f2158eb7316e75d2a1c2732968e.png";
+import image_gallery_3 from "../assets/92a2101c1f75310484352570d56526aa7857c259.png";
 
 export function PlanGallery() {
   
@@ -228,10 +227,10 @@ export function PlanGallery() {
                 transition={{ duration: 0.8 }}
               >
                 <div className="aspect-square overflow-hidden bg-[#F5F3EF] shadow-xl relative">
-                   <ImageWithFallback 
-                      src={image_basic} 
-                      alt="amorétto Collection - 写真なし立体手形アート スタンダードプラン" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                   <img
+                      src={image_basic}
+                      alt="amorétto Collection - 写真なし立体手形アート スタンダードプラン"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                    />
                    <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full bg-[rgba(255,255,255,0.9)]">
@@ -285,10 +284,10 @@ export function PlanGallery() {
               >
                 <div className="relative aspect-square">
                    <div className="w-full h-full shadow-xl overflow-hidden bg-[#F5F3EF] relative">
-                      <ImageWithFallback 
-                         src={image_with_photo_new} 
-                         alt="Premium Foto Collection - 写真付き立体手形アート 額装プラン" 
-                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      <img
+                         src={image_with_photo_new}
+                         alt="Premium Foto Collection - 写真付き立体手形アート 額装プラン"
+                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                          loading="lazy"
                       />
                       <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/40 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs tracking-widest uppercase text-[#C4A962] rounded-full bg-[rgba(255,255,255,0.9)]">
