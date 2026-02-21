@@ -115,7 +115,7 @@ export function Layout({ children }: LayoutProps) {
             ))}
             
             <a
-              href="https://lifecastingtimecapsule.com/reservation"
+              href="https://www.lifecastingstudio-amoretto.com/reservation"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
@@ -185,7 +185,7 @@ export function Layout({ children }: LayoutProps) {
                  className="mt-16 w-full max-w-xs space-y-4"
                >
                  <a
-                    href="https://lifecastingtimecapsule.com/reservation"
+                    href="https://www.lifecastingstudio-amoretto.com/reservation"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full py-4 bg-[#C4A962] text-white text-sm font-medium tracking-wide shadow-lg hover:bg-[#B39952] transition-all"
@@ -243,7 +243,7 @@ export function Layout({ children }: LayoutProps) {
                 
                 {/* 1. Web Reservation (Gold) */}
                 <a 
-                  href="https://lifecastingtimecapsule.com/reservation" 
+                  href="https://www.lifecastingstudio-amoretto.com/reservation" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-[#C4A962] text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"

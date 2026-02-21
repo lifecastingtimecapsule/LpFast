@@ -10,20 +10,20 @@ export function About() {
       <Helmet>
         <title>About | amorétto - 私たちの想い｜立体手形アート</title>
         <meta name="description" content="amoréttoのブランドストーリー。愛知・豊川のLifeCasting®専門スタジオが大切にしている想いと、立体手形・産後ギフト制作への情熱をご紹介します。" />
-        <link rel="canonical" href="https://lifecastingtimecapsule.com/about" />
+        <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/about" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="About | amorétto - 私たちの想い" />
         <meta property="og:description" content="amoréttoのブランドストーリー。記憶を形にする、立体手形アートへの想い。" />
-        <meta property="og:url" content="https://lifecastingtimecapsule.com/about" />
-        <meta property="og:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/about" />
+        <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About | amorétto - 私たちの想い" />
         <meta name="twitter:description" content="amoréttoのブランドストーリー。記憶を形にする、立体手形アートへの想い。" />
-        <meta name="twitter:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
         <script type="application/ld+json">
@@ -36,13 +36,13 @@ export function About() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "ホーム",
-                  "item": "https://lifecastingtimecapsule.com/"
+                  "item": "https://www.lifecastingstudio-amoretto.com/"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "About",
-                  "item": "https://lifecastingtimecapsule.com/about"
+                  "item": "https://www.lifecastingstudio-amoretto.com/about"
                 }
               ]
             }
@@ -57,12 +57,12 @@ export function About() {
               "@type": "AboutPage",
               "name": "About amorétto",
               "description": "amoréttoのブランドストーリー。赤ちゃんの「今」を立体手形・足形アートとして残し、産後ギフトとして家族の大切な記憶を形にする想いをご紹介。",
-              "url": "https://lifecastingtimecapsule.com/about",
+              "url": "https://www.lifecastingstudio-amoretto.com/about",
               "mainEntity": {
                 "@type": "Organization",
                 "name": "amorétto",
-                "url": "https://lifecastingtimecapsule.com/",
-                "logo": "https://lifecastingtimecapsule.com/og-image.jpg",
+                "url": "https://www.lifecastingstudio-amoretto.com/",
+                "logo": "https://www.lifecastingstudio-amoretto.com/og-image.jpg",
                 "description": "愛知・豊川のLifeCasting®専門スタジオ。立体手形・足形アート制作。",
                 "address": {
                   "@type": "PostalAddress",
@@ -88,7 +88,7 @@ export function About() {
                 "@type": "SpeakableSpecification",
                 "cssSelector": ["h1", "h2", "h3"]
               },
-              "url": "https://lifecastingtimecapsule.com/about",
+              "url": "https://www.lifecastingstudio-amoretto.com/about",
               "inLanguage": "ja"
             }
           `}

@@ -64,7 +64,7 @@ export function Sitemap() {
       <Helmet>
         <title>サイトマップ | amorétto - LifeCasting® Studio</title>
         <meta name="description" content="amorétto（アモレット）公式サイトのサイトマップ。愛知・豊川のLifeCasting®専門スタジオの全ページ一覧。" />
-        <link rel="canonical" href="https://lifecastingtimecapsule.com/sitemap" />
+        <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/sitemap" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
 
@@ -127,7 +127,7 @@ export function Sitemap() {
                 <p>Email: <a href="mailto:lifecasting.timecapsule@gmail.com" className="hover:text-[#C4A962] transition-colors">lifecasting.timecapsule@gmail.com</a></p>
                 <p className="pt-2">
                   <a 
-                    href="https://lifecastingtimecapsule.com/reservation" 
+                    href="https://www.lifecastingstudio-amoretto.com/reservation" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-[#C4A962] hover:underline"

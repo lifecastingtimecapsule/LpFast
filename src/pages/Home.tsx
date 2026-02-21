@@ -22,22 +22,22 @@ export function Home() {
       <Helmet>
         <title>amorétto | LifeCasting® Studio - 愛知・豊川の立体手形アート</title>
         <meta name="description" content="愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。90秒で型取り可能な特許素材を使用。美術教員免許保持者が制作。" />
-        <link rel="canonical" href="https://lifecastingtimecapsule.com/" />
+        <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="amorétto | LifeCasting® Studio - 立体手形・産後ギフト" />
         <meta property="og:description" content="愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。" />
-        <meta property="og:url" content="https://lifecastingtimecapsule.com/" />
-        <meta property="og:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/" />
+        <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="amorétto | LifeCasting® Studio - 立体手形・産後ギフト" />
         <meta name="twitter:description" content="愛知・豊川のLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アート。" />
-        <meta name="twitter:image" content="https://lifecastingtimecapsule.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <script type="application/ld+json">
           {`
@@ -49,7 +49,7 @@ export function Home() {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "ホーム",
-                  "item": "https://lifecastingtimecapsule.com/"
+                  "item": "https://www.lifecastingstudio-amoretto.com/"
                 }
               ]
             }
@@ -61,15 +61,15 @@ export function Home() {
             {
               "@context": "https://schema.org",
               "@type": "WebPage",
-              "@id": "https://lifecastingtimecapsule.com/#webpage",
-              "url": "https://lifecastingtimecapsule.com/",
+              "@id": "https://www.lifecastingstudio-amoretto.com/#webpage",
+              "url": "https://www.lifecastingstudio-amoretto.com/",
               "name": "amorétto | LifeCasting® Studio - 愛知・豊川の立体手形アート",
               "description": "愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アート。",
               "isPartOf": {
-                "@id": "https://lifecastingtimecapsule.com/#website"
+                "@id": "https://www.lifecastingstudio-amoretto.com/#website"
               },
               "about": {
-                "@id": "https://lifecastingtimecapsule.com/#localbusiness"
+                "@id": "https://www.lifecastingstudio-amoretto.com/#localbusiness"
               },
               "speakable": {
                 "@type": "SpeakableSpecification",
@@ -117,7 +117,7 @@ export function Home() {
             </p>
             
             <a 
-              href="https://lifecastingtimecapsule.com/reservation"
+              href="https://www.lifecastingstudio-amoretto.com/reservation"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex flex-col items-center gap-2 text-white/90 hover:text-white transition-colors"
