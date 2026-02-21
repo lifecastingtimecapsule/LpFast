@@ -1,8 +1,8 @@
 import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
 import { Link } from "react-router-dom";
-import image_9a3380d762d79add87cdd15a8bdf00ca60691e39 from 'figma:asset/9a3380d762d79add87cdd15a8bdf00ca60691e39.jpg';
-import image_64ecf4b89ba86abb64e7b70055c5a78e62299b8b from 'figma:asset/64ecf4b89ba86abb64e7b70055c5a78e62299b8b.jpg';
+import image_9a3380d762d79add87cdd15a8bdf00ca60691e39 from 'figma:asset/9a3380d762d79add87cdd15a8bdf00ca60691e39.png';
+import image_64ecf4b89ba86abb64e7b70055c5a78e62299b8b from 'figma:asset/64ecf4b89ba86abb64e7b70055c5a78e62299b8b.png';
 
 // 画像素材
 const IMG_HANDS = image_9a3380d762d79add87cdd15a8bdf00ca60691e39;
