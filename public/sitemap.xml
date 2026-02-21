@@ -4,7 +4,8 @@
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
-  <!-- ホーム -->
+
+  <!-- ===== ホーム ===== -->
   <url>
     <loc>https://lifecastingtimecapsule.com/</loc>
     <lastmod>2026-02-21</lastmod>
@@ -14,11 +15,11 @@
     <image:image>
       <image:loc>https://lifecastingtimecapsule.com/og-image.jpg</image:loc>
       <image:title>amorétto | LifeCasting® Studio - 愛知・豊川の立体手形アート</image:title>
-      <image:caption>愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの立体手形・足形アート制作。</image:caption>
+      <image:caption>愛知・豊川のLifeCasting®専門スタジオamorétto。赤ちゃんの手形・足形を立体アートとして制作。出産祝い・産後ギフトに最適。</image:caption>
     </image:image>
   </url>
 
-  <!-- About -->
+  <!-- ===== About ===== -->
   <url>
     <loc>https://lifecastingtimecapsule.com/about</loc>
     <lastmod>2026-02-21</lastmod>
@@ -27,12 +28,12 @@
     <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingtimecapsule.com/about" />
     <image:image>
       <image:loc>https://lifecastingtimecapsule.com/og-image.jpg</image:loc>
-      <image:title>About amorétto - 私たちの想い</image:title>
-      <image:caption>amoréttoのブランドストーリー。立体手形アートへの想い。</image:caption>
+      <image:title>About amorétto - 私たちの想い｜立体手形アートへのこだわり</image:title>
+      <image:caption>amoréttoのブランドストーリー。「記憶は、いつか輪郭を失ってしまうから。」赤ちゃんの存在感をアートとして未来へ届ける想い。</image:caption>
     </image:image>
   </url>
 
-  <!-- Plan & Gallery -->
+  <!-- ===== Plan & Gallery ===== -->
   <url>
     <loc>https://lifecastingtimecapsule.com/plan-gallery</loc>
     <lastmod>2026-02-21</lastmod>
@@ -40,18 +41,18 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingtimecapsule.com/plan-gallery" />
     <image:image>
-      <image:loc>https://lifecastingtimecapsule.com/assets/plan-basic.jpg</image:loc>
-      <image:title>amorétto Collection - 写真なし立体手形アート スタンダードプラン</image:title>
-      <image:caption>シンプルな造形美が際立つスタンダードモデル。ゴールドまたはシルバー仕上げ。2点 ¥35,000+tax〜</image:caption>
+      <image:loc>https://lifecastingtimecapsule.com/og-image.jpg</image:loc>
+      <image:title>amorétto Collection - 写真なし立体手形アート｜¥35,000+tax〜</image:title>
+      <image:caption>ゴールドまたはシルバー仕上げのスタンダードモデル。シンプルな造形美が際立つ立体手形アート。手足2点 ¥35,000+tax〜</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://lifecastingtimecapsule.com/assets/plan-premium.jpg</image:loc>
-      <image:title>Premium Foto Collection - 写真付き立体手形アート 額装プラン</image:title>
-      <image:caption>立体手形と写真を一緒に額装。出産祝い・家宝に最適な産後ギフト。¥48,000+tax</image:caption>
+      <image:loc>https://lifecastingtimecapsule.com/og-image.jpg</image:loc>
+      <image:title>Premium Foto Collection - 写真付き立体手形アート額装｜¥48,000+tax</image:title>
+      <image:caption>立体手形・足型と写真を一緒に額装。お名前・生年月日の刻印付き。出産祝い・家宝に最適な産後ギフト。¥48,000+tax</image:caption>
     </image:image>
   </url>
 
-  <!-- School -->
+  <!-- ===== School ===== -->
   <url>
     <loc>https://lifecastingtimecapsule.com/school</loc>
     <lastmod>2026-02-21</lastmod>
@@ -60,25 +61,23 @@
     <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingtimecapsule.com/school" />
     <image:image>
       <image:loc>https://lifecastingtimecapsule.com/og-image.jpg</image:loc>
-      <image:title>LifeCasting®認定講座 - 立体手形アートスクール</image:title>
-      <image:caption>日本唯一のLifeCasting®認定講座。立体手形アート制作技術を学び、公式認定アーティストとして活動。</image:caption>
+      <image:title>LifeCasting®認定講座 - 立体手形アート技術を学ぶスクール</image:title>
+      <image:caption>日本唯一のLifeCasting®認定講座。商標権に基づく本格技術指導と開業サポート。公式認定アーティストとして活動できます。</image:caption>
     </image:image>
   </url>
 
-  <!-- Access -->
+  <!-- ===== Access ===== -->
   <url>
     <loc>https://lifecastingtimecapsule.com/access</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingtimecapsule.com/access" />
+    <image:image>
+      <image:loc>https://lifecastingtimecapsule.com/og-image.jpg</image:loc>
+      <image:title>Access | amorétto - 愛知県豊川市 店舗情報・アクセス</image:title>
+      <image:caption>〒442-0037 愛知県豊川市門前町15。豊川稲荷より徒歩3分。TEL: 0533-56-9494。完全予約制。</image:caption>
+    </image:image>
   </url>
 
-  <!-- HTMLサイトマップ -->
-  <url>
-    <loc>https://lifecastingtimecapsule.com/sitemap</loc>
-    <lastmod>2026-02-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
 </urlset>
