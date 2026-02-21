@@ -248,74 +248,58 @@ export function Layout({ children }: LayoutProps) {
                 制作のご相談やご質問は、LINEまたはお電話にてお気軽にお問い合わせください。
               </p>
 
-              <div className="flex flex-col lg:flex-row gap-4 justify-center items-center">
-                
-                {/* 1. Web Reservation (Gold) */}
+              <div className="space-y-4">
+                {/* Row 1: Web予約 */}
                 <a 
                   href="https://www.lifecastingstudio-amoretto.com/reservation" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-[#C4A962] text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                  className="group flex items-center justify-center gap-3 w-full py-4 bg-[#C4A962] text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
                 >
                   <Calendar size={20} strokeWidth={1.5} />
-                  <div className="flex flex-col items-start leading-none text-left">
-                    <span className="text-[10px] tracking-wider mb-1 opacity-90">24時間受付</span>
-                    <span className="text-sm font-medium tracking-wide">Webで空き状況を見る</span>
-                  </div>
+                  <span className="text-sm font-medium tracking-wide">Webで空き状況を見る</span>
                   <ArrowRight size={16} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                 </a>
 
-                {/* 2. LINE 豊川店 (Green) */}
-                <a 
-                  href="https://lin.ee/55K9AP6" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#06C755] text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-                >
-                  <MessageCircle size={20} strokeWidth={2} />
-                  <div className="flex flex-col items-start leading-none text-left">
-                    <span className="text-[10px] tracking-wider mb-1 opacity-90">豊川店に質問・相談</span>
+                {/* Row 2: 豊川店 LINE + TEL */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <a 
+                    href="https://lin.ee/55K9AP6" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 py-4 bg-white border border-[#06C755] text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                  >
+                    <MessageCircle size={18} strokeWidth={2} />
                     <span className="text-sm font-medium tracking-wide">豊川店 LINE</span>
-                  </div>
-                </a>
+                  </a>
+                  <a 
+                    href="tel:0533569494" 
+                    className="flex items-center justify-center gap-3 py-4 bg-white border border-[#E5E0D8] text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962] transition-all shadow-sm hover:shadow-md"
+                  >
+                    <Phone size={18} strokeWidth={1.5} />
+                    <span className="text-sm font-medium tracking-widest">豊川店 0533-56-9494</span>
+                  </a>
+                </div>
 
-                {/* 2b. LINE 浜松店 (Green) */}
-                <a 
-                  href="https://lin.ee/StzkfTW" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#06C755] text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-                >
-                  <MessageCircle size={20} strokeWidth={2} />
-                  <div className="flex flex-col items-start leading-none text-left">
-                    <span className="text-[10px] tracking-wider mb-1 opacity-90">浜松店に質問・相談</span>
+                {/* Row 3: 浜松店 LINE + TEL */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <a 
+                    href="https://lin.ee/StzkfTW" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 py-4 bg-white border border-[#06C755] text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                  >
+                    <MessageCircle size={18} strokeWidth={2} />
                     <span className="text-sm font-medium tracking-wide">浜松店 LINE</span>
-                  </div>
-                </a>
-
-                {/* 3. Phone (White) - 豊川店 */}
-                <a 
-                  href="tel:0533569494" 
-                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#E5E0D8] text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962] transition-all shadow-sm hover:shadow-md"
-                >
-                  <Phone size={18} strokeWidth={1.5} />
-                  <div className="flex flex-col items-start leading-none text-left">
-                    <span className="text-[10px] text-[#999999] tracking-wider mb-1">豊川店にお電話</span>
-                    <span className="text-sm font-medium tracking-widest">0533-56-9494</span>
-                  </div>
-                </a>
-
-                {/* 4. Phone (White) - 浜松店 */}
-                <a 
-                  href="tel:0534158775" 
-                  className="flex items-center justify-center gap-3 w-full lg:w-auto min-w-[280px] py-4 bg-white border border-[#E5E0D8] text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962] transition-all shadow-sm hover:shadow-md"
-                >
-                  <Phone size={18} strokeWidth={1.5} />
-                  <div className="flex flex-col items-start leading-none text-left">
-                    <span className="text-[10px] text-[#999999] tracking-wider mb-1">浜松店にお電話</span>
-                    <span className="text-sm font-medium tracking-widest">053-415-8775</span>
-                  </div>
-                </a>
+                  </a>
+                  <a 
+                    href="tel:0534158775" 
+                    className="flex items-center justify-center gap-3 py-4 bg-white border border-[#E5E0D8] text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962] transition-all shadow-sm hover:shadow-md"
+                  >
+                    <Phone size={18} strokeWidth={1.5} />
+                    <span className="text-sm font-medium tracking-widest">浜松店 053-415-8775</span>
+                  </a>
+                </div>
               </div>
             </div>
 

@@ -20,23 +20,23 @@ export function Home() {
   return (
     <>
       <Helmet>
-        <title>amorétto | LifeCasting® Studio - 豊川・浜松の立体手形アート専門スタジオ</title>
-        <meta name="description" content="愛知・豊川と静岡・浜松の2拠点で展開するLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。90秒で型取り可能な特許素材を使用。美術教員免許保持者が制作。ライフスタジオ豊川店・浜松店で型取り体験いただけます。" />
+        <title>立体手形の専門スタジオ amorétto｜愛知県・浜松のLifeCasting®アート</title>
+        <meta name="description" content="日本初の立体手形専門スタジオamorétto。LifeCasting®（2024年商標登録済）の技術で、赤ちゃんの「今」を立体手形・足形アートとして永遠に残します。愛知県（豊川）と浜松の2拠点。90秒で型取り完了の独自素材・美術教員免許保持者が仕上げ。出産祝い・産後ギフトに。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
-        <meta property="og:title" content="amorétto | LifeCasting® Studio - 豊川・浜松の立体手形アート" />
-        <meta property="og:description" content="愛知・豊川と静岡・浜松の2拠点で展開するLifeCasting®専門スタジオ。赤ちゃんの「今」を残す立体手形・足形アートは、出産祝いや産後ギフトに最適です。" />
+        <meta property="og:title" content="立体手形の専門スタジオ amorétto｜愛知県・浜松のLifeCasting®アート" />
+        <meta property="og:description" content="日本初の立体手形専門スタジオ。LifeCasting®商標登録済の技術で赤ちゃんの「今」を永遠に。愛知県と浜松の2拠点で体験いただけます。" />
         <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/" />
         <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="amorétto | LifeCasting® Studio - 豊川・浜松の立体手形・産後ギフト" />
-        <meta name="twitter:description" content="愛知・豊川と静岡・浜松の2拠点。赤ちゃんの「今」を残す立体手形・足形アート専門スタジオ。" />
+        <meta name="twitter:title" content="立体手形の専門スタジオ amorétto｜愛知県・浜松" />
+        <meta name="twitter:description" content="日本初のLifeCasting®立体手形専門スタジオ。愛知県と浜松の2拠点で赤ちゃんの「今」をアートに。" />
         <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <script type="application/ld+json">
@@ -63,8 +63,8 @@ export function Home() {
               "@type": "WebPage",
               "@id": "https://www.lifecastingstudio-amoretto.com/#webpage",
               "url": "https://www.lifecastingstudio-amoretto.com/",
-              "name": "amorétto | LifeCasting® Studio - 豊川・浜松の立体手形アート専門スタジオ",
-              "description": "愛知・豊川と静岡・浜松の2拠点で展開するLifeCasting®専門スタジオamorétto。赤ちゃんの「今」を残す立体手形・足形アート。ライフスタジオ豊川店・浜松店で型取りが可能です。",
+              "name": "立体手形の専門スタジオ amorétto｜愛知県・浜松のLifeCasting®アート",
+              "description": "日本初の立体手形専門スタジオamorétto。LifeCasting®（2024年商標登録済）の技術で赤ちゃんの「今」を永遠に。愛知県（豊川）と浜松の2拠点。",
               "isPartOf": {
                 "@id": "https://www.lifecastingstudio-amoretto.com/#website"
               },
@@ -113,6 +113,9 @@ export function Home() {
               />
             </h1>
             
+            <p className="text-[10px] md:text-xs tracking-[0.35em] uppercase mb-4 text-white/70 font-light">
+              日本初・立体手形の専門スタジオ
+            </p>
             <p className="font-serif text-sm md:text-xl tracking-[0.3em] mb-12 text-white/90 font-light">
               愛おしい瞬間を、永遠に。
             </p>
@@ -160,10 +163,14 @@ export function Home() {
               <p>
                 amoréttoは、その一瞬の「物語」を<br />
                 アートとして未来へ届ける<br />
-                日本初のライフキャスティング®（立体手形）専門スタジオです。
+                <strong className="font-medium text-[#2C2C2C]">日本初のLifeCasting®（立体手形）専門スタジオ</strong>です。
+              </p>
+              <p>
+                「LifeCasting®」は2024年10月に商標登録された、<br className="hidden md:block" />
+                私たちが日本で初めて確立した立体手形アートのブランドです。
               </p>
               <p className="speakable">
-                愛知・豊川と静岡・浜松の<strong className="font-medium text-[#2C2C2C]">2つのライフスタジオ</strong>で、<br />
+                愛知県（豊川）と浜松の<strong className="font-medium text-[#2C2C2C]">2つのライフスタジオ</strong>で、<br />
                 あなたの大切な家族の「今」を<br />
                 立体手形アートとしてお届けします。
               </p>

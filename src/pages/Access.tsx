@@ -7,7 +7,7 @@ export function Access() {
   return (
     <>
       <Helmet>
-        <title>Access | amorétto - 豊川店・浜松店 店舗情報・アクセス・ご予約</title>
+        <title>立体手形のアクセス・店舗情報｜amorétto 豊川店・浜松店 ご予約</title>
         <meta name="description" content="amorétto（アモレット）の立体手形・足形アートは、ライフスタジオ豊川店（愛知県豊川市門前町15）とライフスタジオ浜松店（静岡県浜松市中央区上島6-2-30）の2拠点で型取りが可能です。出産祝い・産後ギフトのご予約・お問い合わせはこちら。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/access" />
         

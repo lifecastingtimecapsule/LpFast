@@ -63,7 +63,7 @@ export function Sitemap() {
     <>
       <Helmet>
         <title>サイトマップ | amorétto - LifeCasting® Studio</title>
-        <meta name="description" content="amorétto（アモレット）公式サイトのサイトマップ。豊川・浜松の2拠点で展開するLifeCasting®専門スタジオの全ページ一覧。" />
+        <meta name="description" content="amorétto（アモレット）公式サイトのサイトマップ。愛知県と浜松の2拠点で展開するLifeCasting®専門スタジオの全ページ一覧。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/sitemap" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>

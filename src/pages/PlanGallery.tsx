@@ -23,20 +23,20 @@ export function PlanGallery() {
   return (
     <>
       <Helmet>
-        <title>Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト｜豊川・浜松</title>
+        <title>立体手形の料金・プラン｜amorétto 産後ギフト - 愛知県・浜松</title>
         <meta name="description" content="amoréttoの立体手形・足形アート料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店の2拠点で型取り可能。出産祝いや産後ギフトに最適な、写真付き・写真なしの2プランをご用意。美術教員免許保持者が丁寧に制作します。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/plan-gallery" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
-        <meta property="og:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金｜豊川・浜松" />
+        <meta property="og:title" content="立体手形の料金・プラン｜amorétto 産後ギフト - 愛知県・浜松" />
         <meta property="og:description" content="立体手形・足形アートの料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店で型取り可能。写真付き・写真なしの2プランから選べます。" />
         <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/plan-gallery" />
         <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Plan & Gallery | amorétto - 立体手形プラン・料金｜豊川・浜松" />
+        <meta name="twitter:title" content="立体手形の料金・プラン｜amorétto - 愛知県・浜松" />
         <meta name="twitter:description" content="立体手形・足形アートの料金プランと作品ギャラリー。ライフスタジオ豊川店・浜松店で型取り可能。写真付き・写真なしの2プランから選べます。" />
         <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
@@ -185,7 +185,7 @@ export function PlanGallery() {
             {
               "@context": "https://schema.org",
               "@type": "WebPage",
-              "name": "Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト｜豊川・浜松",
+              "name": "Plan & Gallery | amorétto - 立体手形プラン・料金・産後ギフト｜愛知県・浜松",
               "speakable": {
                 "@type": "SpeakableSpecification",
                 "cssSelector": ["h1", "h2", "h3", ".speakable"]

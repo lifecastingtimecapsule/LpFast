@@ -10,21 +10,21 @@ export function School() {
   return (
     <>
       <Helmet>
-        <title>School | amorétto - LifeCasting®認定講座・立体手形スクール｜豊川・浜松</title>
-        <meta name="description" content="愛知・豊川と静岡・浜松で開講する日本唯一のLifeCasting®認定講座。立体手形・足形アート制作技術を学び、公式アーティストとして活動できます。商標権を持つ本格的な技術指導と開業サポート付き。ライフスタジオ豊川店・浜松店で受講可能。" />
+        <title>立体手形スクール・LifeCasting®認定講座｜amorétto - 愛知県・浜松</title>
+        <meta name="description" content="愛知県と浜松で開講する日本唯一のLifeCasting®認定講座。立体手形・足形アート制作技術を学び、公式アーティストとして活動できます。商標権を持つ本格的な技術指導と開業サポート付き。ライフスタジオ豊川店・浜松店で受講可能。" />
         <link rel="canonical" href="https://www.lifecastingstudio-amoretto.com/school" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
-        <meta property="og:title" content="School | amorétto - LifeCasting®認定講座｜豊川・浜松" />
-        <meta property="og:description" content="日本唯一のLifeCasting®認定講座。豊川・浜松の2拠点で立体手形アート制作技術を学び、公式アーティストとして活動できます。" />
+        <meta property="og:title" content="School | amorétto - LifeCasting®認定講座｜愛知県・浜松" />
+        <meta property="og:description" content="日本唯一のLifeCasting®認定講座。愛知県と浜松の2拠点で立体手形アート制作技術を学び、公式アーティストとして活動できます。" />
         <meta property="og:url" content="https://www.lifecastingstudio-amoretto.com/school" />
         <meta property="og:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="School | amorétto - LifeCasting®認定講座｜豊川・浜松" />
-        <meta name="twitter:description" content="日本唯一のLifeCasting®認定講座。豊川・浜松の2拠点で立体手形アート制作技術を学び、公式アーティストとして活動できます。" />
+        <meta name="twitter:title" content="School | amorétto - LifeCasting®認定講座｜愛知県・浜松" />
+        <meta name="twitter:description" content="日本唯一のLifeCasting®認定講座。愛知県と浜松の2拠点で立体手形アート制作技術を学び、公式アーティストとして活動できます。" />
         <meta name="twitter:image" content="https://www.lifecastingstudio-amoretto.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
