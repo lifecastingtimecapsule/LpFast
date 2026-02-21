@@ -1,10 +1,8 @@
 import { motion } from "motion/react";
 import { Helmet } from 'react-helmet-async';
 import { Link } from "react-router-dom";
-
-// 実画像を使う場合は src/assets/ に画像ファイルを置いて import し、IMG_HANDS に差し替えてください。
-const IMG_HANDS = ''; // 立体手形用。ファイルを置いたら import に差し替え
-const IMG_ARTIST = ''; // アーティスト写真は未所持のため空白
+import IMG_HANDS from '../assets/9a3380d762d79add87cdd15a8bdf00ca60691e39.png';
+import IMG_ARTIST from '../assets/61182aee64f023c22f643d006af7762c37e5d671.png';
 
 export function About() {
   return (
@@ -152,16 +150,12 @@ export function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 1.2 }}
               >
-                 {IMG_HANDS ? (
-                   <img 
-                      src={IMG_HANDS} 
-                      alt="家族の手を重ねた立体手形アート - amoréttoの作品" 
-                      className="w-full h-full object-cover grayscale-[10%]" 
-                      loading="lazy"
-                   />
-                 ) : (
-                   <div className="w-full h-full" aria-hidden />
-                 )}
+                 <img
+                    src={IMG_HANDS}
+                    alt="家族の手を重ねた立体手形アート - amoréttoの作品"
+                    className="w-full h-full object-cover grayscale-[10%]"
+                    loading="lazy"
+                 />
               </motion.div>
            </div>
         </section>
@@ -211,16 +205,12 @@ export function About() {
                        transition={{ duration: 0.8, delay: 0.2 }}
                        className="aspect-square md:aspect-square overflow-hidden bg-white p-3 md:p-4 shadow-xl"
                     >
-                       {IMG_ARTIST ? (
-                         <img 
-                            src={IMG_ARTIST} 
-                            alt="amoréttoアーティストが立体手形を丁寧に仕上げる制作風景" 
-                            className="w-full h-full object-cover" 
-                            loading="lazy"
-                         />
-                       ) : (
-                         <div className="w-full h-full bg-[#FAFAF8]" aria-hidden />
-                       )}
+                       <img
+                          src={IMG_ARTIST}
+                          alt="amoréttoアーティストが立体手形を丁寧に仕上げる制作風景"
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                       />
                     </motion.div>
                  </div>
 
