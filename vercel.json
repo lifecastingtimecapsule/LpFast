@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "header",
+          "key": "host",
+          "value": { "suf": "vercel.app" }
+        }
+      ],
+      "destination": "https://lifecastingstudio-amoretto.com/:path*",
+      "permanent": true
+    }
+  ]
+}
