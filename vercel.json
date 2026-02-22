@@ -13,5 +13,8 @@
       "destination": "https://lifecastingstudio-amoretto.com/:path*",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
