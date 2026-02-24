@@ -134,14 +134,12 @@ export function Sitemap() {
                 </div>
                 <p>Email: <a href="mailto:lifecasting.timecapsule@gmail.com" className="hover:text-[#C4A962] transition-colors">lifecasting.timecapsule@gmail.com</a></p>
                 <p className="pt-2">
-                  <a 
-                    href="https://lifecastingstudio-amoretto.com/reservation" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                  <Link 
+                    to="/reservation"
                     className="text-[#C4A962] hover:underline"
                   >
                     Web予約はこちら
-                  </a>
+                  </Link>
                   {" / "}
                   <a 
                     href="https://lin.ee/55K9AP6" 

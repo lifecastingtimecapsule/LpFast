@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import * as MenubarPrimitive from "@radix-ui/react-menubar@1.1.6";
+import * as MenubarPrimitive from "@radix-ui/react-menubar";
 import { Check as CheckIcon, ChevronRight as ChevronRightIcon, Circle as CircleIcon } from "../Icons";
 
 import { cn } from "./utils";

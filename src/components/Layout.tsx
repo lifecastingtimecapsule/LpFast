@@ -109,17 +109,15 @@ export function Layout({ children }: LayoutProps) {
               </div>
             ))}
             
-            <a
-              href="https://lifecastingstudio-amoretto.com/reservation"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/reservation"
               className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
             >
               <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium">
                 RESERVATION <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -179,15 +177,14 @@ export function Layout({ children }: LayoutProps) {
                  transition={{ delay: 0.6 }}
                  className="mt-16 w-full max-w-xs space-y-4"
                >
-                 <a
-                    href="https://lifecastingstudio-amoretto.com/reservation"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                 <Link
+                    to="/reservation"
+                    onClick={handleNavClick}
                     className="flex items-center justify-center gap-2 w-full py-4 bg-[#C4A962] text-white text-sm font-medium tracking-wide shadow-lg hover:bg-[#B39952] transition-all"
                  >
                     <Calendar size={18} strokeWidth={1.5} />
                     Web予約・空き状況
-                 </a>
+                 </Link>
                  <a
                     href="https://lin.ee/55K9AP6"
                     target="_blank"
@@ -245,16 +242,14 @@ export function Layout({ children }: LayoutProps) {
 
               <div className="space-y-4">
                 {/* Row 1: Web予約 */}
-                <a 
-                  href="https://lifecastingstudio-amoretto.com/reservation" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                <Link 
+                  to="/reservation"
                   className="group flex items-center justify-center gap-3 w-full py-4 bg-[#C4A962] text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
                 >
                   <Calendar size={20} strokeWidth={1.5} />
                   <span className="text-sm font-medium tracking-wide">Webで空き状況を見る</span>
                   <ArrowRight size={16} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
-                </a>
+                </Link>
 
                 {/* Row 2: 豊川店 LINE + TEL */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

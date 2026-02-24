@@ -120,15 +120,13 @@ export function Home() {
               愛おしい瞬間を、永遠に。
             </p>
             
-            <a 
-              href="https://lifecastingstudio-amoretto.com/reservation"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link 
+              to="/reservation"
               className="group relative inline-flex flex-col items-center gap-2 text-white/90 hover:text-white transition-colors"
             >
               <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase">予約する</span>
               <span className="w-8 h-px bg-white/50 group-hover:w-16 transition-all duration-500"></span>
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>

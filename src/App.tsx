@@ -8,6 +8,7 @@ import { PlanGallery } from "./pages/PlanGallery";
 import { School } from "./pages/School";
 import { Access } from "./pages/Access";
 import { Sitemap } from "./pages/Sitemap";
+import { Reservation } from "./pages/Reservation";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -86,6 +87,7 @@ export default function App() {
             <Route path="/school" element={<School />} />
             <Route path="/access" element={<Access />} />
             <Route path="/sitemap" element={<Sitemap />} />
+            <Route path="/reservation" element={<Reservation />} />
           </Routes>
         </Layout>
       </BrowserRouter>
