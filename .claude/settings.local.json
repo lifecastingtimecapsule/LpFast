@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit)",
+      "Bash(npx vite build)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(command -v npm)",
+      "Bash(ls /c/Users/renan/LpFast/node_modules/.bin/vite*)"
+    ]
+  }
+}

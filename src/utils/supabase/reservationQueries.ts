@@ -81,7 +81,7 @@ export async function getBookedSlotsForMonth(
   const { start, end } = parseMonthRange(month);
   let q = client
     .from("reservations")
-    .select("id, reservation_date_time, location_id, duration_minutes")
+    .select("reservation_id, reservation_date_time, location_id, duration_minutes")
     .neq("status", "cancelled")
     .gte("reservation_date_time", start)
     .lte("reservation_date_time", end);
@@ -90,7 +90,7 @@ export async function getBookedSlotsForMonth(
   if (error) throw new Error(error.message);
   const rows = (data ?? []) as Array<Record<string, unknown>>;
   const slots = rows.map((r) => ({
-    reservation_id: r.id,
+    reservation_id: r.reservation_id,
     reservation_date_time: r.reservation_date_time,
     location_id: r.location_id,
     duration_minutes: r.duration_minutes ?? null,
@@ -138,15 +138,15 @@ export async function getLocationsFromDb(): Promise<
   const client = getClient();
   const { data, error } = await client
     .from("locations")
-    .select("id, name, address_text, phone, active_flag")
+    .select("location_id, name, address, phone, active_flag")
     .eq("active_flag", true)
-    .order("sort_order", { ascending: true, nullsFirst: false });
+    .order("created_at", { ascending: true });
   if (error) throw new Error(error.message);
   const rows = (data ?? []) as Array<Record<string, unknown>>;
   return rows.map((r) => ({
-    location_id: (r.id as string) ?? "",
+    location_id: (r.location_id as string) ?? "",
     location_name: (r.name as string) ?? "",
-    address_text: r.address_text as string | undefined,
+    address_text: r.address as string | undefined,
     phone: r.phone as string | undefined,
     active_flag: (r.active_flag as boolean) ?? true,
   }));
@@ -161,24 +161,24 @@ export async function getLocationByIdFromDb(id: string): Promise<{
   const client = getClient();
   const { data, error } = await client
     .from("locations")
-    .select("id, name, name_kana, postal_code, address_text, phone, email, description, active_flag, sort_order")
-    .eq("id", id)
+    .select("location_id, name, address, phone, active_flag")
+    .eq("location_id", id)
     .eq("active_flag", true)
     .maybeSingle();
   if (error) throw new Error(error.message);
   if (!data) return null;
   const r = data as Record<string, unknown>;
   return {
-    id: (r.id as string) ?? id,
+    id: (r.location_id as string) ?? id,
     name: (r.name as string) ?? "",
-    name_kana: (r.name_kana as string | null) ?? null,
-    postal_code: (r.postal_code as string | null) ?? null,
-    address_text: (r.address_text as string | null) ?? null,
+    name_kana: null,
+    postal_code: null,
+    address_text: (r.address as string | null) ?? null,
     phone: (r.phone as string | null) ?? null,
-    email: (r.email as string | null) ?? null,
-    description: (r.description as string | null) ?? null,
+    email: null,
+    description: null,
     active_flag: (r.active_flag as boolean) ?? true,
-    sort_order: (r.sort_order as number | null) ?? null,
+    sort_order: null,
   };
 }
 
@@ -195,6 +195,40 @@ export async function getLocationAvailability(
   if (error) throw new Error(error.message);
   if (!data) return null;
   return mapLocationAvailability(data as Record<string, unknown>, locationId);
+}
+
+/** 店舗に紐づくメニュー一覧を DB から直接取得（静的カタログが空のときのフォールバック用） */
+export async function getMenuItemsByLocationFromDb(locationId: string): Promise<Array<{
+  menu_item_id: string;
+  name: string;
+  description?: string;
+  base_price?: number;
+  duration_minutes?: number | null;
+  is_active: boolean;
+}>> {
+  const client = getClient();
+  const { data: lmData, error: lmError } = await client
+    .from("location_menus")
+    .select("menu_item_id")
+    .eq("location_id", locationId)
+    .eq("enabled", true);
+  if (lmError) throw new Error(lmError.message);
+  if (!lmData?.length) return [];
+  const menuIds = (lmData as Array<Record<string, unknown>>).map((r) => r.menu_item_id as string);
+  const { data, error } = await client
+    .from("menu_items")
+    .select("menu_item_id, name, description, base_price, duration_minutes, is_active")
+    .in("menu_item_id", menuIds)
+    .eq("is_active", true);
+  if (error) throw new Error(error.message);
+  return (data ?? []).map((r: Record<string, unknown>) => ({
+    menu_item_id: r.menu_item_id as string,
+    name: r.name as string,
+    description: (r.description as string) ?? undefined,
+    base_price: (r.base_price as number) ?? undefined,
+    duration_minutes: (r.duration_minutes as number | null) ?? null,
+    is_active: (r.is_active as boolean) ?? true,
+  }));
 }
 
 /** 認証ユーザーの顧客レコードを取得（RLS で自分のみ可） */
@@ -217,24 +251,24 @@ export async function getMyReservations(): Promise<MyReservationItem[]> {
   const { data: rows, error } = await client
     .from("reservations")
     .select(
-      "id, reservation_number, reservation_date_time, status, duration_minutes, location_id, menu_item_id, notes_customer, created_at"
+      "reservation_id, reservation_number, reservation_date_time, status, duration_minutes, location_id, menu_item_id, created_at"
     )
     .order("reservation_date_time", { ascending: false });
   if (error) throw new Error(error.message);
-  const list = (rows ?? []) as Array<Record<string, unknown> & { location_id: string; menu_item_id: string }>;
+  const list = (rows ?? []) as Array<Record<string, unknown> & { reservation_id: string; location_id: string; menu_item_id: string }>;
   if (list.length === 0) return [];
   const locationIds = [...new Set(list.map((r) => r.location_id))];
   const menuIds = [...new Set(list.map((r) => r.menu_item_id))];
-  const { data: locRows } = await client.from("locations").select("id, name").in("id", locationIds);
+  const { data: locRows } = await client.from("locations").select("location_id, name").in("location_id", locationIds);
   const { data: menuRows } = await client.from("menu_items").select("id, name").in("id", menuIds);
   const locMap = new Map(
-    (locRows ?? []).map((r: Record<string, unknown>) => [r.id as string, r.name as string])
+    (locRows ?? []).map((r: Record<string, unknown>) => [r.location_id as string, r.name as string])
   );
   const menuMap = new Map(
     (menuRows ?? []).map((r: Record<string, unknown>) => [r.id as string, r.name as string])
   );
   return list.map((r) => ({
-    reservation_id: r.id,
+    reservation_id: r.reservation_id,
     reservation_number: r.reservation_number,
     reservation_date_time: r.reservation_date_time,
     status: r.status,
@@ -243,7 +277,7 @@ export async function getMyReservations(): Promise<MyReservationItem[]> {
     location_name: locMap.get(r.location_id) ?? null,
     menu_item_id: r.menu_item_id,
     menu_name: menuMap.get(r.menu_item_id) ?? null,
-    notes_customer: r.notes_customer ?? null,
+    notes_customer: null,
     created_at: r.created_at ?? null,
   }));
 }

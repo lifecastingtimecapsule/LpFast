@@ -303,8 +303,13 @@ html {
   border-radius: 4px;
 }
 
-/* Bootstrap のリンク色を上書き（layer 外で最後に読み込まれるように） */
+/* Bootstrap のリンク・アンダーライン上書き（layer 外で最後に読み込まれるように） */
+a {
+  text-decoration: none !important;
+}
+
 nav a,
+header a,
 footer a {
   color: inherit !important;
 }

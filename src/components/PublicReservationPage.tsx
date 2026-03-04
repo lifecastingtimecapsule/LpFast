@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/utils/supabase/client";
 import { useProfile } from "@/hooks/useProfile";
@@ -8,44 +7,19 @@ import { getActiveLocations, getActiveMenuItemsByLocation } from "@/data/reserva
 import { reservationApi } from "@/utils/supabase/reservationApi";
 import type { Location, MenuItem, ReservationSettings, BookedSlot, LocationAvailability } from "@/utils/supabase/reservationApi";
 import * as reservationQueries from "@/utils/supabase/reservationQueries";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/components/ui/utils";
+import { AvailabilityOverview } from "@/components/AvailabilityOverview";
 
-type FormValues = {
-  location_id: string;
-  menu_item_id: string;
-  reservation_date: Date | undefined;
-  reservation_time: string;
+type SessionType = { user: { id: string; email?: string }; access_token: string } | null;
+
+type CustomerData = {
   parent_name: string;
-  parent_name_kana: string;
   child_name: string;
-  child_name_kana: string;
-  child_age_years: number | string;
-  child_age_months: number | string;
   phone: string;
   email: string;
-  notes_customer: string;
-  postal_code: string;
-  address_text: string;
 };
 
 function parseTime(t: string | undefined): number | null {
@@ -56,26 +30,32 @@ function parseTime(t: string | undefined): number | null {
 }
 
 function formatSlot(date: Date, minutes: number): string {
-  const d = new Date(date);
-  d.setHours(Math.floor(minutes / 60), minutes % 60, 0, 0);
-  return d.toISOString().slice(0, 16);
+  const y = date.getFullYear();
+  const mo = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  const h = String(Math.floor(minutes / 60)).padStart(2, "0");
+  const m = String(minutes % 60).padStart(2, "0");
+  return `${y}-${mo}-${d}T${h}:${m}`;
 }
 
-function buildSlotsForDate(
+function buildAllSlots(
   date: Date,
   intervalMinutes: number,
   availability: LocationAvailability | null,
-  _advanceDays: number
+  settings: ReservationSettings | null
 ): string[] {
-  const dayOfWeek = date.getDay();
-  const closedDays = availability?.regular_closed_days ?? [];
-  if (closedDays.includes(dayOfWeek)) return [];
-
-  const startStr = availability?.business_hours_start ?? "09:00";
-  const endStr = availability?.business_hours_end ?? "18:00";
-  let openMin = parseTime(startStr) ?? 9 * 60;
-  let closeMin = parseTime(endStr) ?? 18 * 60;
-
+  const a = availability as Record<string, unknown> | null;
+  const s = settings as Record<string, unknown> | null;
+  const startStr =
+    (a?.business_hours_start as string | undefined) ??
+    (s?.business_hours_start as string | undefined) ??
+    "09:00";
+  const endStr =
+    (a?.business_hours_end as string | undefined) ??
+    (s?.business_hours_end as string | undefined) ??
+    "18:00";
+  const openMin = parseTime(startStr) ?? 9 * 60;
+  const closeMin = parseTime(endStr) ?? 18 * 60;
   const slots: string[] = [];
   for (let m = openMin; m < closeMin; m += intervalMinutes) {
     slots.push(formatSlot(date, m));
@@ -87,276 +67,438 @@ function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function formatJapaneseDate(date: Date): string {
+  const y = date.getFullYear();
+  const mo = date.getMonth() + 1;
+  const d = date.getDate();
+  const days = ["日", "月", "火", "水", "木", "金", "土"];
+  return `${y}年${mo}月${d}日（${days[date.getDay()]}）`;
+}
+
+function formatJapaneseDateTime(date: Date, timeSlot: string): string {
+  const time = timeSlot.slice(11, 16);
+  return `${formatJapaneseDate(date)} ${time}`;
+}
+
+function SectionLabel({ n, label }: { n: string; label: string }) {
+  return (
+    <h2 className="text-base font-semibold text-[#2C2C2C] mb-3 flex items-center gap-2">
+      <span className="w-6 h-6 rounded-full bg-[#C4A962] text-white text-xs flex items-center justify-center font-bold shrink-0">
+        {n}
+      </span>
+      {label}
+    </h2>
+  );
+}
+
 export function PublicReservationPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [session, setSession] = useState<{ user: { id: string }; access_token: string } | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-  const { profile, loading: profileLoading, role } = useProfile(session);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  // Auth
+  const [session, setSession] = useState<SessionType>(null);
+  const [sessionLoading, setSessionLoading] = useState(true);
+  const { loading: profileLoading, role } = useProfile(session);
+
+  // Selections
+  const [selectedLocationId, setSelectedLocationId] = useState("");
+  const [selectedMenuItemId, setSelectedMenuItemId] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedTime, setSelectedTime] = useState("");
+
+  // Data
   const [locations, setLocations] = useState<Location[]>([]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [menuLoading, setMenuLoading] = useState(false);
   const [settings, setSettings] = useState<ReservationSettings | null>(null);
-  const [availability, setAvailability] = useState<LocationAvailability | null>(null);
+  const [availabilityByLocation, setAvailabilityByLocation] = useState<
+    Record<string, LocationAvailability | null>
+  >({});
+
+  // Calendar
+  const [displayedMonth, setDisplayedMonth] = useState<Date>(() => new Date());
+  const [monthBookedSlots, setMonthBookedSlots] = useState<Record<string, BookedSlot[]>>({});
+
+  // Customer form (required fields only)
+  const [customerData, setCustomerData] = useState<CustomerData>({
+    parent_name: "",
+    child_name: "",
+    phone: "",
+    email: "",
+  });
+
+  // Auth
+  const [authMode, setAuthMode] = useState<"register" | "login">("register");
+  const [authPassword, setAuthPassword] = useState("");
+  const [authPasswordConfirm, setAuthPasswordConfirm] = useState("");
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  // Global
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  /** 営業設定（location_availability）はAPIで1回だけ取得してキャッシュ */
-  const [availabilityByLocation, setAvailabilityByLocation] = useState<Record<string, LocationAvailability | null>>({});
-  /** カレンダー表示月。月単位で空き状況を取得する */
-  const [displayedMonth, setDisplayedMonth] = useState<Date>(() => new Date());
-  /** 月ごとの予約済み枠キャッシュ（キー: YYYY-MM） */
-  const [monthBookedSlots, setMonthBookedSlots] = useState<Record<string, BookedSlot[]>>({});
+  const [formError, setFormError] = useState<string | null>(null);
 
-  const form = useForm<FormValues>({
-    defaultValues: {
-      location_id: "",
-      menu_item_id: "",
-      reservation_date: undefined,
-      reservation_time: "",
-      parent_name: "",
-      parent_name_kana: "",
-      child_name: "",
-      child_name_kana: "",
-      child_age_years: "",
-      child_age_months: "",
-      phone: "",
-      email: "",
-      notes_customer: "",
-      postal_code: "",
-      address_text: "",
-    },
-  });
-
-  const locationId = form.watch("location_id");
-  const selectedDate = form.watch("reservation_date");
+  // ── Effects ─────────────────────────────────────────────────────────────────
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session as { user: { id: string }; access_token: string } | null);
-      setAuthLoading(false);
+      setSession(data.session as SessionType);
+      setSessionLoading(false);
     });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s as { user: { id: string }; access_token: string } | null);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, s) => {
+      setSession(s as SessionType);
     });
     return () => subscription.unsubscribe();
   }, []);
 
-  useEffect(() => {
-    if (authLoading) return;
-    if (!session) {
-      const redirect = encodeURIComponent(location.pathname || "/reservation");
-      navigate(`/login?redirect=${redirect}`, { replace: true });
-    }
-  }, [authLoading, session, navigate, location.pathname]);
-
+  // Prefill customer data if logged in
   useEffect(() => {
     if (!session?.access_token || profileLoading) return;
     if (role !== undefined && role !== null && role !== "customer") return;
     let cancelled = false;
-    reservationQueries.getMyCustomer().then((customer) => {
-      if (cancelled || !customer) return;
-      form.reset((prev) => ({
-        ...prev,
-        phone: customer.phone ?? prev.phone,
-        email: customer.email ?? prev.email,
-        parent_name: customer.parent_name ?? prev.parent_name,
-        parent_name_kana: customer.parent_name_kana ?? prev.parent_name_kana,
-        child_name: customer.child_name ?? prev.child_name,
-        child_name_kana: customer.child_name_kana ?? prev.child_name_kana,
-        child_age_years: customer.child_age_years ?? prev.child_age_years,
-        child_age_months: customer.child_age_months ?? prev.child_age_months,
-        postal_code: customer.postal_code ?? prev.postal_code,
-        address_text: customer.address_text ?? prev.address_text,
-      }));
-    }).catch(() => {
-      // 404 or error: do not prefill
-    });
-    return () => { cancelled = true; };
+    reservationQueries
+      .getMyCustomer()
+      .then((customer) => {
+        if (cancelled || !customer) return;
+        setCustomerData((prev) => ({
+          ...prev,
+          phone: customer.phone ?? prev.phone,
+          email: customer.email ?? prev.email,
+          parent_name: customer.parent_name ?? prev.parent_name,
+          child_name: customer.child_name ?? prev.child_name,
+        }));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
   }, [session?.access_token, profileLoading, role]);
 
-  // 店舗は静的カタログから取得。空の場合は DB からフォールバック
+  // Load initial data (locations + settings)
   useEffect(() => {
     const activeLocs = getActiveLocations();
     if (activeLocs.length > 0) {
       setLocations(activeLocs);
     } else {
-      reservationQueries.getLocationsFromDb().then((dbLocs) => {
-        setLocations(dbLocs as Location[]);
-      }).catch(() => {});
+      reservationQueries
+        .getLocationsFromDb()
+        .then((dbLocs) => setLocations(dbLocs as Location[]))
+        .catch(() => {});
     }
     let cancelled = false;
-    reservationQueries.getReservationSettings().then((setRes) => {
-      if (!cancelled) setSettings(setRes ?? null);
-    }).catch((e) => {
-      if (!cancelled) setError(e instanceof Error ? e.message : "読み込みに失敗しました");
-    }).finally(() => {
-      if (!cancelled) setLoading(false);
-    });
-    return () => { cancelled = true; };
+    reservationQueries
+      .getReservationSettings()
+      .then((res) => {
+        if (!cancelled) setSettings(res ?? null);
+      })
+      .catch((e) => {
+        if (!cancelled)
+          setError(e instanceof Error ? e.message : "読み込みに失敗しました");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // 店舗一覧に基づき営業設定（location_availability）を一括取得してキャッシュ（locations state が入ったあと）
+  // Load availability for all locations
   useEffect(() => {
     if (locations.length === 0) return;
     let cancelled = false;
     (async () => {
-      const availMap: Record<string, LocationAvailability | null> = {};
+      const map: Record<string, LocationAvailability | null> = {};
       await Promise.all(
         locations.map(async (loc) => {
-          const avail = await reservationQueries.getLocationAvailability(loc.location_id).catch(() => null);
-          if (!cancelled) availMap[loc.location_id] = avail ?? null;
+          const avail = await reservationQueries
+            .getLocationAvailability(loc.location_id)
+            .catch(() => null);
+          if (!cancelled) map[loc.location_id] = avail ?? null;
         })
       );
-      if (!cancelled) setAvailabilityByLocation((prev) => ({ ...prev, ...availMap }));
+      if (!cancelled) setAvailabilityByLocation((prev) => ({ ...prev, ...map }));
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [locations]);
 
-  // 選択中の店舗が変わったら静的カタログからメニュー、キャッシュから営業設定を表示
+  // Load menu items when location selected
   useEffect(() => {
-    if (!locationId) {
+    if (!selectedLocationId) {
       setMenuItems([]);
-      setAvailability(null);
-      form.setValue("menu_item_id", "");
       return;
     }
-    setMenuItems(getActiveMenuItemsByLocation(locationId));
-    setAvailability(availabilityByLocation[locationId] ?? null);
-  }, [locationId, availabilityByLocation]);
+    const staticMenus = getActiveMenuItemsByLocation(selectedLocationId);
+    if (staticMenus.length > 0) {
+      setMenuItems(staticMenus);
+      return;
+    }
+    setMenuLoading(true);
+    reservationQueries
+      .getMenuItemsByLocationFromDb(selectedLocationId)
+      .then((items) => setMenuItems(items as MenuItem[]))
+      .catch(() => setMenuItems([]))
+      .finally(() => setMenuLoading(false));
+  }, [selectedLocationId]);
 
-  // カレンダー表示月または店舗が変わったら、その月の予約済み枠のみ取得（1ヶ月分）
+  // Load booked slots for displayed month + location
   useEffect(() => {
-    if (!locationId) return;
+    if (!selectedLocationId) return;
     const y = displayedMonth.getFullYear();
-    const m = displayedMonth.getMonth() + 1;
-    const monthKey = `${y}-${String(m).padStart(2, "0")}`;
+    const mo = displayedMonth.getMonth() + 1;
+    const monthKey = `${y}-${String(mo).padStart(2, "0")}`;
     let cancelled = false;
-    reservationQueries.getBookedSlotsForMonth(monthKey, locationId).then((res) => {
-      if (!cancelled) setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: res.slots ?? [] }));
-    }).catch(() => {
-      if (!cancelled) setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: [] }));
-    });
-    return () => { cancelled = true; };
-  }, [displayedMonth, locationId]);
+    reservationQueries
+      .getBookedSlotsForMonth(monthKey, selectedLocationId)
+      .then((res) => {
+        if (!cancelled)
+          setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: res.slots ?? [] }));
+      })
+      .catch(() => {
+        if (!cancelled) setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: [] }));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [displayedMonth, selectedLocationId]);
 
-  // 選択日の予約済み枠は月キャッシュから取得
-  const bookedSlotsForSelectedDay = (() => {
-    if (!selectedDate || !locationId) return [];
-    const monthKey = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, "0")}`;
-    const list = monthBookedSlots[monthKey] ?? [];
-    const dateStr = selectedDate.toISOString().slice(0, 10);
-    return list.filter((s) => s.reservation_date_time.startsWith(dateStr));
-  })();
+  // ── Computed ─────────────────────────────────────────────────────────────────
 
-  const availableTimeSlots = (() => {
+  const currentAvailability = availabilityByLocation[selectedLocationId] ?? null;
+
+  const bookedCountsByDay = useMemo<Record<string, number>>(() => {
+    const counts: Record<string, number> = {};
+    Object.values(monthBookedSlots)
+      .flat()
+      .forEach((slot) => {
+        const dateStr = String(slot.reservation_date_time).slice(0, 10);
+        counts[dateStr] = (counts[dateStr] ?? 0) + 1;
+      });
+    return counts;
+  }, [monthBookedSlots]);
+
+  const allTimeSlotsForDate = useMemo<string[]>(() => {
     if (!selectedDate || !settings) return [];
     const interval = settings.slot_interval_minutes ?? 30;
-    const advance = settings.advance_reservation_days ?? settings.advance_booking_days ?? 60;
-    const slots = buildSlotsForDate(selectedDate, interval, availability, advance);
-    const bookedSet = new Set(bookedSlotsForSelectedDay.map((s) => s.reservation_date_time.slice(0, 16)));
-    return slots.filter((s) => !bookedSet.has(s));
-  })();
+    return buildAllSlots(selectedDate, interval, currentAvailability, settings);
+  }, [selectedDate, settings, currentAvailability]);
 
-  const handleSubmit = async (values: FormValues) => {
+  const bookedTimesForDate = useMemo<Set<string>>(() => {
+    if (!selectedDate) return new Set();
+    const sy = selectedDate.getFullYear();
+    const smo = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const sd = String(selectedDate.getDate()).padStart(2, "0");
+    const localDateStr = `${sy}-${smo}-${sd}`;
+    const monthKey = `${sy}-${smo}`;
+    const slots = monthBookedSlots[monthKey] ?? [];
+    return new Set(
+      slots
+        .filter((s) => {
+          const dt = new Date(s.reservation_date_time as string);
+          const dy = dt.getFullYear();
+          const dmo = String(dt.getMonth() + 1).padStart(2, "0");
+          const dd = String(dt.getDate()).padStart(2, "0");
+          return `${dy}-${dmo}-${dd}` === localDateStr;
+        })
+        .map((s) => {
+          const dt = new Date(s.reservation_date_time as string);
+          const h = String(dt.getHours()).padStart(2, "0");
+          const m = String(dt.getMinutes()).padStart(2, "0");
+          return `${localDateStr}T${h}:${m}`;
+        })
+    );
+  }, [selectedDate, monthBookedSlots]);
+
+  const bookedDateModifiers = useMemo<Date[]>(() => {
+    return Object.entries(bookedCountsByDay)
+      .filter(([, count]) => count > 0)
+      .map(([dateStr]) => {
+        const [y, mo, d] = dateStr.split("-").map(Number);
+        return new Date(y, mo - 1, d);
+      });
+  }, [bookedCountsByDay]);
+
+  const selectedLocationObj = locations.find((l) => l.location_id === selectedLocationId);
+  const selectedMenuObj = menuItems.find((m) => m.menu_item_id === selectedMenuItemId);
+
+  // ── Calendar disabled logic ───────────────────────────────────────────────────
+
+  const isDateDisabled = (date: Date): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (date < today) return true;
+    const advance =
+      settings?.advance_reservation_days ?? settings?.advance_booking_days ?? 60;
+    const maxDate = new Date(today);
+    maxDate.setDate(maxDate.getDate() + advance);
+    if (date > maxDate) return true;
+
+    const dayOfWeek = date.getDay();
+    const avail = currentAvailability;
+    if (avail) {
+      if (avail.regular_closed_days?.includes(dayOfWeek)) return true;
+      const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      if ((avail.closed_dates ?? []).includes(dateStr)) return true;
+    } else if (settings?.allowed_days) {
+      if (!settings.allowed_days.includes(dayOfWeek)) return true;
+    }
+
+    const avail2 = currentAvailability as Record<string, unknown> | null;
+    const maxPerDay =
+      (avail2?.max_reservations_per_day as number | undefined) ??
+      settings?.max_reservations_per_day;
+    if (maxPerDay) {
+      const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      if ((bookedCountsByDay[dateStr] ?? 0) >= maxPerDay) return true;
+    }
+    return false;
+  };
+
+  // ── Submit ────────────────────────────────────────────────────────────────────
+
+  const handleSubmit = async () => {
     setError(null);
-    if (!values.location_id) {
-      form.setError("location_id", { message: "店舗を選択してください" });
+    setAuthError(null);
+    setFormError(null);
+
+    // Validate customer fields
+    if (!customerData.parent_name.trim()) {
+      setFormError("保護者名を入力してください");
       return;
     }
-    if (!values.menu_item_id) {
-      form.setError("menu_item_id", { message: "メニューを選択してください" });
+    if (!customerData.child_name.trim()) {
+      setFormError("お子様名を入力してください");
       return;
     }
-    if (!values.reservation_date) {
-      form.setError("reservation_date", { message: "日付を選択してください" });
+    if (!customerData.phone.trim()) {
+      setFormError("電話番号を入力してください");
       return;
     }
-    if (!values.reservation_time) {
-      form.setError("reservation_time", { message: "時間を選択してください" });
-      return;
-    }
-    if (!values.parent_name?.trim()) {
-      form.setError("parent_name", { message: "保護者名を入力してください" });
-      return;
-    }
-    if (!values.child_name?.trim()) {
-      form.setError("child_name", { message: "お子様名を入力してください" });
-      return;
-    }
-    if (!values.phone?.trim()) {
-      form.setError("phone", { message: "電話番号を入力してください" });
-      return;
-    }
-    if (!values.email?.trim()) {
-      form.setError("email", { message: "メールアドレスを入力してください" });
-      return;
-    }
-    if (!validateEmail(values.email)) {
-      form.setError("email", { message: "有効なメールアドレスを入力してください" });
-      return;
-    }
-    setSubmitLoading(true);
-    try {
-      const dateTime = values.reservation_time;
-      const location = locations.find((l) => l.location_id === values.location_id);
-      const menu = menuItems.find((m) => m.menu_item_id === values.menu_item_id);
-      const accessToken = session?.access_token;
-      if (!accessToken) {
-        setError("ログインの有効期限が切れています。再度ログインしてください。");
+
+    let currentSession = session;
+
+    if (!currentSession) {
+      if (!customerData.email.trim() || !validateEmail(customerData.email)) {
+        setAuthError("有効なメールアドレスを入力してください");
+        return;
+      }
+      if (!authPassword) {
+        setAuthError("パスワードを入力してください");
+        return;
+      }
+      setSubmitLoading(true);
+      try {
+        if (authMode === "register") {
+          if (authPassword.length < 6) {
+            setAuthError("パスワードは6文字以上で入力してください");
+            setSubmitLoading(false);
+            return;
+          }
+          if (authPassword !== authPasswordConfirm) {
+            setAuthError("パスワードが一致しません");
+            setSubmitLoading(false);
+            return;
+          }
+          const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+            email: customerData.email,
+            password: authPassword,
+          });
+          if (signUpError) {
+            setAuthError(
+              signUpError.message.includes("already registered") ||
+                signUpError.message.includes("User already registered")
+                ? "このメールアドレスは既に登録されています。「会員の方」からログインしてください。"
+                : signUpError.message
+            );
+            setSubmitLoading(false);
+            return;
+          }
+          if (!signUpData.session) {
+            setAuthError(
+              "確認メールをお送りしました。メール内のリンクをクリックし、ログインしてから予約をお試しください。"
+            );
+            setSubmitLoading(false);
+            return;
+          }
+          currentSession = signUpData.session as SessionType;
+        } else {
+          const { data: signInData, error: signInError } =
+            await supabase.auth.signInWithPassword({
+              email: customerData.email,
+              password: authPassword,
+            });
+          if (signInError) {
+            setAuthError("メールアドレスまたはパスワードが正しくありません。");
+            setSubmitLoading(false);
+            return;
+          }
+          currentSession = signInData.session as SessionType;
+        }
+      } catch (e) {
+        setAuthError(e instanceof Error ? e.message : "認証に失敗しました");
         setSubmitLoading(false);
         return;
       }
-      const res = await reservationApi.createReservation({
-        reservation_date_time: dateTime,
-        menu_item_id: values.menu_item_id,
-        location_id: values.location_id,
-        parent_name: values.parent_name,
-        parent_name_kana: values.parent_name_kana || undefined,
-        child_name: values.child_name,
-        child_name_kana: values.child_name_kana || undefined,
-        child_age_years: values.child_age_years !== "" && values.child_age_years != null ? Number(values.child_age_years) : undefined,
-        child_age_months: values.child_age_months !== "" && values.child_age_months != null ? Number(values.child_age_months) : undefined,
-        phone: values.phone,
-        email: values.email,
-        notes_customer: values.notes_customer || undefined,
-        postal_code: values.postal_code || undefined,
-        address_text: values.address_text || undefined,
-      }, accessToken);
+    } else {
+      setSubmitLoading(true);
+    }
+
+    try {
+      const accessToken = currentSession?.access_token;
+      if (!accessToken) {
+        setError("認証エラーが発生しました。再度お試しください。");
+        setSubmitLoading(false);
+        return;
+      }
+      const res = await reservationApi.createReservation(
+        {
+          reservation_date_time: selectedTime,
+          menu_item_id: selectedMenuItemId,
+          location_id: selectedLocationId,
+          parent_name: customerData.parent_name,
+          child_name: customerData.child_name,
+          phone: customerData.phone,
+          email: session?.user?.email ?? customerData.email,
+        },
+        accessToken
+      );
       const payload = {
         reservation_id: res.reservation.reservation_id,
         reservation_number: res.reservation.reservation_number,
         reservation_date_time: res.reservation.reservation_date_time,
         customer_code: res.customer_code ?? res.reservation.customer_code ?? "",
-        location_name: location?.location_name ?? "",
-        menu_name: menu?.name ?? "",
-        parent_name: values.parent_name,
-        child_name: values.child_name,
+        location_name: selectedLocationObj?.location_name ?? "",
+        menu_name: selectedMenuObj?.name ?? "",
+        parent_name: customerData.parent_name,
+        child_name: customerData.child_name,
       };
       const data = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
       navigate(`/public/reservation/complete?data=${encodeURIComponent(data)}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "予約の登録に失敗しました");
-    } finally {
       setSubmitLoading(false);
     }
   };
 
-  const isStaffOrAdmin = role === "staff" || role === "admin";
+  // ── Guards ────────────────────────────────────────────────────────────────────
 
-  if (authLoading || !session) {
-    return (
-      <div className="container mx-auto px-6 py-16 text-center text-[#2C2C2C]">
-        <p>読み込み中...</p>
-      </div>
-    );
-  }
+  const isStaffOrAdmin = role === "staff" || role === "admin";
 
   if (!profileLoading && isStaffOrAdmin) {
     return (
-      <div className="container mx-auto px-6 pt-8 pb-16 max-w-xl text-center text-[#2C2C2C]">
-        <h1 className="font-en-serif text-2xl text-[#2C2C2C] mb-4 scroll-mt-24">Web予約</h1>
-        <p className="mb-6">予約は会員のみご利用いただけます。スタッフ・管理者アカウントではご予約いただけません。</p>
-        <Button type="button" variant="outline" onClick={() => navigate("/")}>トップへ</Button>
+      <div className="container mx-auto px-6 pb-16 max-w-xl text-center" style={{ paddingTop: "clamp(100px, 14vw, 160px)" }}>
+        <h1 className="font-en-serif text-2xl text-[#2C2C2C] mb-4">Web予約</h1>
+        <p className="mb-6 text-[#2C2C2C]">
+          スタッフ・管理者アカウントではご予約いただけません。
+        </p>
+        <Button type="button" variant="outline" onClick={() => navigate("/")}>
+          トップへ
+        </Button>
       </div>
     );
   }
@@ -369,316 +511,425 @@ export function PublicReservationPage() {
     );
   }
 
+  // ── Helpers ───────────────────────────────────────────────────────────────────
+
+  const scrollToForm = () => {
+    setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+  };
+
+  const resetBooking = () => {
+    setSelectedLocationId("");
+    setSelectedMenuItemId("");
+    setSelectedDate(undefined);
+    setSelectedTime("");
+    setMonthBookedSlots({});
+    setFormError(null);
+    setAuthError(null);
+    setError(null);
+  };
+
+  // ── Render ────────────────────────────────────────────────────────────────────
+
   return (
     <>
       <Helmet>
         <title>Web予約｜立体手形の専門スタジオ amorétto</title>
-        <meta name="description" content="amoréttoのWeb予約フォームです。店舗・メニュー・日時を選んでご予約ください。" />
+        <meta
+          name="description"
+          content="amoréttoのWeb予約フォームです。店舗・メニュー・日時を選んでご予約ください。"
+        />
       </Helmet>
-      <div className="container mx-auto px-6 pt-10 pb-12 md:pt-14 md:pb-16 max-w-2xl">
-        <h1 className="font-en-serif text-3xl md:text-4xl text-[#2C2C2C] tracking-wide mb-2 scroll-mt-28">Web予約</h1>
-        <p className="text-[#2C2C2C]/80 text-sm md:text-base mb-10">店舗・メニュー・日時をご選択のうえ、必要事項をご入力ください。</p>
 
-        {error && (
-          <div className="mb-6 p-4 rounded-md bg-red-50 text-red-800 text-sm" role="alert">
-            {error}
-          </div>
-        )}
+      <div className="container mx-auto px-4 pb-16 max-w-2xl" style={{ paddingTop: "clamp(100px, 14vw, 160px)" }}>
+        <h1 className="font-en-serif text-3xl md:text-4xl text-[#2C2C2C] tracking-wide mb-6">
+          Web予約
+        </h1>
 
-        {!error && !loading && locations.length === 0 && (
-          <div className="mb-6 p-4 rounded-md bg-amber-50 text-amber-900 text-sm" role="status">
-            現在、登録されている店舗がありません。Supabase のダッシュボードで「locations」テーブルに店舗を追加するか、シードマイグレーション（20250223000000_seed_locations_and_menus.sql）を実行してください。
-          </div>
-        )}
+        {/* Availability Overview */}
+        <AvailabilityOverview
+          locations={locations}
+          availabilityByLocation={availabilityByLocation}
+          settings={settings}
+          onBook={(locId) => {
+            setSelectedLocationId(locId);
+            setSelectedMenuItemId("");
+            setSelectedDate(undefined);
+            setSelectedTime("");
+            setMonthBookedSlots({});
+            scrollToForm();
+          }}
+          onDateSelect={(locId, date) => {
+            setSelectedLocationId(locId);
+            setSelectedDate(date);
+            setDisplayedMonth(new Date(date.getFullYear(), date.getMonth(), 1));
+            setSelectedMenuItemId("");
+            setSelectedTime("");
+            setMonthBookedSlots({});
+            scrollToForm();
+          }}
+        />
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-            <Card className="border-[#C4A962]/30">
-              <CardHeader>
-                <CardTitle className="text-lg text-[#2C2C2C]">ご予約内容</CardTitle>
-                <CardDescription>店舗・メニュー・日時を選択してください</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="location_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">店舗</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="bg-[#FAFAF8] border-[#C4A962]/30">
-                            <SelectValue placeholder="店舗を選択" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {locations.map((loc) => (
-                            <SelectItem key={loc.location_id} value={loc.location_id}>
-                              {loc.location_name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+        {/* Booking form anchor */}
+        <div ref={formRef}>
+          {!selectedLocationId ? (
+            <p className="text-sm text-[#AAAAAA] text-center py-6">
+              上の空き状況から「予約する」を押してください
+            </p>
+          ) : (
+            <div className="space-y-8">
 
-                <FormField
-                  control={form.control}
-                  name="menu_item_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">メニュー</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value} disabled={!locationId}>
-                        <FormControl>
-                          <SelectTrigger className="bg-[#FAFAF8] border-[#C4A962]/30">
-                            <SelectValue placeholder="メニューを選択" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {menuItems.map((m) => (
-                            <SelectItem key={m.menu_item_id} value={m.menu_item_id}>
-                              {m.name}
-                              {m.duration_minutes != null ? `（約${m.duration_minutes}分）` : ""}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="reservation_date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">希望日</FormLabel>
-                      <p className="text-[#2C2C2C]/70 text-xs mb-3">予約は火曜・水曜のみ可能です。</p>
-                      <FormControl>
-                        <div className="w-full rounded-lg border border-[#E5E0D8] bg-white shadow-sm p-4 md:p-5">
-                            <Calendar
-                              mode="single"
-                              month={displayedMonth}
-                              onMonthChange={setDisplayedMonth}
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => {
-                                if (!settings) return true;
-                                const day = date.getDay();
-                                if (day !== 2 && day !== 3) return true;
-                                const today = new Date();
-                                today.setHours(0, 0, 0, 0);
-                                const max = new Date(today);
-                                max.setDate(max.getDate() + (settings.advance_reservation_days ?? settings.advance_booking_days ?? 60));
-                                return date < today || date > max;
-                              }}
-                              className="mx-auto"
-                            />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="reservation_time"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">希望時間</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value} disabled={availableTimeSlots.length === 0}>
-                        <FormControl>
-                          <SelectTrigger className="bg-[#FAFAF8] border-[#C4A962]/30">
-                            <SelectValue placeholder={selectedDate ? "時間を選択" : "まず日付を選択してください"} />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {availableTimeSlots.map((slot) => {
-                            const label = slot.slice(11, 16);
-                            return (
-                              <SelectItem key={slot} value={slot}>
-                                {label}
-                              </SelectItem>
-                            );
-                          })}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="border-[#C4A962]/30">
-              <CardHeader>
-                <CardTitle className="text-lg text-[#2C2C2C]">お客様情報</CardTitle>
-                <CardDescription>保護者様・お子様の情報とご連絡先</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="parent_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">保護者名 <span className="text-red-500">*</span></FormLabel>
-                      <FormControl>
-                        <Input className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="山田 花子" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="parent_name_kana"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">保護者名（ふりがな）</FormLabel>
-                      <FormControl>
-                        <Input className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="やまだ はなこ" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="child_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">お子様名 <span className="text-red-500">*</span></FormLabel>
-                      <FormControl>
-                        <Input className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="山田 太郎" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="child_name_kana"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">お子様名（ふりがな）</FormLabel>
-                      <FormControl>
-                        <Input className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="やまだ たろう" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="child_age_years"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-[#2C2C2C]">お子様の年齢（歳）</FormLabel>
-                        <FormControl>
-                          <Input type="number" min={0} className="bg-[#FAFAF8] border-[#C4A962]/30" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="child_age_months"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-[#2C2C2C]">お子様の年齢（ヶ月）</FormLabel>
-                        <FormControl>
-                          <Input type="number" min={0} className="bg-[#FAFAF8] border-[#C4A962]/30" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              {/* Selected store bar */}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "10px 16px",
+                background: "#FFFBF0",
+                border: "1px solid #E5D99A",
+                borderRadius: 12,
+              }}>
+                <div>
+                  <span style={{ fontSize: 11, color: "#C4A962", fontWeight: 600 }}>予約店舗</span>
+                  <p style={{ margin: 0, fontWeight: 700, color: "#2C2C2C" }}>
+                    {selectedLocationObj?.location_name}
+                  </p>
                 </div>
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">電話番号 <span className="text-red-500">*</span></FormLabel>
-                      <FormControl>
-                        <Input type="tel" className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="090-1234-5678" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">メールアドレス <span className="text-red-500">*</span></FormLabel>
-                      <FormControl>
-                        <Input type="email" className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="customer@example.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="postal_code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">郵便番号</FormLabel>
-                      <FormControl>
-                        <Input className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="430-0900" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="address_text"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">住所</FormLabel>
-                      <FormControl>
-                        <Input className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="市区町村・番地" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="notes_customer"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#2C2C2C]">備考</FormLabel>
-                      <FormControl>
-                        <Textarea className="bg-[#FAFAF8] border-[#C4A962]/30" placeholder="ご要望など" rows={3} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </Card>
+                <button
+                  type="button"
+                  onClick={() => { resetBooking(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  style={{ fontSize: 11, color: "#9CA3AF", background: "none", border: "1px solid #D1D5DB", borderRadius: 999, padding: "3px 12px", cursor: "pointer" }}
+                >
+                  変更
+                </button>
+              </div>
 
-            <Button
-              type="submit"
-              disabled={submitLoading}
-              className={cn(
-                "w-full md:w-auto min-w-[200px] bg-[#C4A962] hover:bg-[#B39952] text-white"
+              {/* ① Date selection */}
+              <section>
+                <SectionLabel n="①" label="日付を選ぶ" />
+                <div className="rounded-xl border border-[#E5E0D8] bg-white shadow-sm p-4 md:p-5">
+                  <Calendar
+                    mode="single"
+                    month={displayedMonth}
+                    onMonthChange={(m) => {
+                      setDisplayedMonth(m);
+                      setSelectedDate(undefined);
+                      setSelectedMenuItemId("");
+                      setSelectedTime("");
+                    }}
+                    selected={selectedDate}
+                    onSelect={(d) => {
+                      setSelectedDate(d);
+                      setSelectedMenuItemId("");
+                      setSelectedTime("");
+                      setFormError(null);
+                    }}
+                    disabled={isDateDisabled}
+                    modifiers={{ booked: bookedDateModifiers }}
+                    modifiersClassNames={{ booked: "day-has-bookings" }}
+                    className="mx-auto"
+                  />
+                  <p className="text-xs text-[#BBBBBB] text-center mt-3">
+                    グレーの日付は予約不可（休業日・満席）です
+                  </p>
+                </div>
+              </section>
+
+              {/* ② Menu selection (shown when date selected) */}
+              {selectedDate && (
+                <section>
+                  <SectionLabel n="②" label="メニューを選ぶ" />
+                  {menuLoading ? (
+                    <p className="text-sm text-[#888] py-4 text-center">読み込み中...</p>
+                  ) : menuItems.length === 0 ? (
+                    <p className="text-sm text-[#888] bg-[#FAFAF8] rounded-xl p-4 text-center">
+                      この店舗のメニューが見つかりませんでした。
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {menuItems.map((m) => (
+                        <button
+                          key={m.menu_item_id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedMenuItemId(m.menu_item_id);
+                            setSelectedTime("");
+                            setFormError(null);
+                          }}
+                          className={cn(
+                            "text-left p-4 rounded-xl border-2 transition-all",
+                            selectedMenuItemId === m.menu_item_id
+                              ? "border-[#C4A962] bg-[#C4A962]/5 shadow-sm"
+                              : "border-[#E5E0D8] bg-white hover:border-[#C4A962]/50 hover:shadow-sm"
+                          )}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <span className="font-semibold text-[#2C2C2C]">{m.name}</span>
+                            {selectedMenuItemId === m.menu_item_id && (
+                              <span className="text-[#C4A962] text-xs font-medium shrink-0 mt-0.5">✓</span>
+                            )}
+                          </div>
+                          {m.duration_minutes != null && (
+                            <div className="text-xs text-[#888] mt-1.5">約{m.duration_minutes}分</div>
+                          )}
+                          {m.description && (
+                            <div className="text-xs text-[#999] mt-1 line-clamp-2">{m.description}</div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </section>
               )}
-            >
-              {submitLoading ? "送信中..." : "予約内容を送信する"}
-            </Button>
-          </form>
-        </Form>
+
+              {/* ③ Time slot selection (shown when date + menu selected) */}
+              {selectedDate && selectedMenuItemId && (
+                <section>
+                  <SectionLabel n="③" label={`時間を選ぶ（${formatJapaneseDate(selectedDate)}）`} />
+                  {allTimeSlotsForDate.length === 0 ? (
+                    <p className="text-sm text-[#888] bg-[#FAFAF8] rounded-xl p-4 text-center">
+                      この日は予約可能な時間帯がありません。別の日付をお選びください。
+                    </p>
+                  ) : (
+                    <>
+                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                        {allTimeSlotsForDate.map((slot) => {
+                          const isBooked = bookedTimesForDate.has(slot.slice(0, 16));
+                          const isSelected = selectedTime === slot;
+                          const label = slot.slice(11, 16);
+                          return (
+                            <button
+                              key={slot}
+                              type="button"
+                              disabled={isBooked}
+                              onClick={() => {
+                                setSelectedTime(slot);
+                                setFormError(null);
+                              }}
+                              className={cn(
+                                "py-3 px-2 rounded-lg text-sm font-medium border-2 transition-all",
+                                isBooked
+                                  ? "border-gray-200 bg-gray-100 text-gray-300 cursor-not-allowed"
+                                  : isSelected
+                                  ? "border-[#C4A962] bg-[#C4A962] text-white shadow-sm"
+                                  : "border-[#E5E0D8] bg-white text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962]"
+                              )}
+                            >
+                              {label}
+                              {isBooked && <div className="text-xs mt-0.5 text-gray-300">満席</div>}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <div className="flex items-center gap-5 mt-4 text-xs text-[#999]">
+                        <span className="flex items-center gap-1.5">
+                          <span className="inline-block w-4 h-4 rounded border-2 border-[#E5E0D8] bg-white" />
+                          空き
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="inline-block w-4 h-4 rounded bg-[#C4A962]" />
+                          選択中
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="inline-block w-4 h-4 rounded bg-gray-100 border-2 border-gray-200" />
+                          満席
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </section>
+              )}
+
+              {/* ④ Account + customer info (shown when time selected) */}
+              {selectedTime && (
+                <section className="space-y-5">
+                  {/* Mini summary */}
+                  <div className="bg-[#FAFAF8] border border-[#E5E0D8] rounded-xl p-4 text-sm space-y-1">
+                    <p className="text-[#AAAAAA] text-xs font-semibold uppercase tracking-wide mb-2">ご予約内容</p>
+                    <p className="text-[#2C2C2C]">
+                      <span className="text-[#888]">店舗：</span>{selectedLocationObj?.location_name}
+                    </p>
+                    <p className="text-[#2C2C2C]">
+                      <span className="text-[#888]">メニュー：</span>
+                      {selectedMenuObj?.name}
+                      {selectedMenuObj?.duration_minutes != null && `（約${selectedMenuObj.duration_minutes}分）`}
+                    </p>
+                    {selectedDate && (
+                      <p className="text-[#2C2C2C]">
+                        <span className="text-[#888]">日時：</span>
+                        {formatJapaneseDateTime(selectedDate, selectedTime)}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Auth section (not logged in) */}
+                  {!session && !sessionLoading && (
+                    <div className="space-y-4">
+                      <h2 className="text-base font-semibold text-[#2C2C2C] pb-2 border-b border-[#E5E0D8]">
+                        アカウント
+                      </h2>
+
+                      <div className="flex rounded-lg border border-[#E5E0D8] overflow-hidden">
+                        <button
+                          type="button"
+                          onClick={() => { setAuthMode("register"); setAuthError(null); setAuthPasswordConfirm(""); }}
+                          className={cn(
+                            "flex-1 py-3 text-sm font-medium transition-colors",
+                            authMode === "register"
+                              ? "bg-[#C4A962] text-white"
+                              : "bg-white text-[#666] hover:bg-[#FAFAF8]"
+                          )}
+                        >
+                          はじめての方（新規登録）
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setAuthMode("login"); setAuthError(null); setAuthPasswordConfirm(""); }}
+                          className={cn(
+                            "flex-1 py-3 text-sm font-medium transition-colors",
+                            authMode === "login"
+                              ? "bg-[#C4A962] text-white"
+                              : "bg-white text-[#666] hover:bg-[#FAFAF8]"
+                          )}
+                        >
+                          会員の方（ログイン）
+                        </button>
+                      </div>
+
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                            メールアドレス <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            type="email"
+                            value={customerData.email}
+                            onChange={(e) => setCustomerData((p) => ({ ...p, email: e.target.value }))}
+                            placeholder="customer@example.com"
+                            className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                            パスワード
+                            {authMode === "register" && (
+                              <span className="text-[#999] text-xs font-normal ml-1">（6文字以上）</span>
+                            )}
+                            <span className="text-red-500"> *</span>
+                          </label>
+                          <input
+                            type="password"
+                            value={authPassword}
+                            onChange={(e) => setAuthPassword(e.target.value)}
+                            autoComplete={authMode === "register" ? "new-password" : "current-password"}
+                            placeholder="••••••••"
+                            className="w-full h-10 rounded-md border border-[#D5D0C8] bg-[#FAFAF8] px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C4A962]/30 focus:border-[#C4A962]"
+                          />
+                        </div>
+                        {authMode === "register" && (
+                          <div>
+                            <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                              パスワード（確認） <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="password"
+                              value={authPasswordConfirm}
+                              onChange={(e) => setAuthPasswordConfirm(e.target.value)}
+                              autoComplete="new-password"
+                              placeholder="••••••••"
+                              className="w-full h-10 rounded-md border border-[#D5D0C8] bg-[#FAFAF8] px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C4A962]/30 focus:border-[#C4A962]"
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      {authError && (
+                        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-3" role="alert">
+                          {authError}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Logged in indicator */}
+                  {session && (
+                    <div className="flex items-center gap-2 text-sm text-[#555] bg-[#F5F3EF] border border-[#E5E0D8] rounded-lg p-3">
+                      <span className="text-[#C4A962] font-bold">✓</span>
+                      <span>ログイン中：{session.user?.email ?? session.user?.id}</span>
+                    </div>
+                  )}
+
+                  {/* Customer info */}
+                  <div className="space-y-4">
+                    <h2 className="text-base font-semibold text-[#2C2C2C] pb-2 border-b border-[#E5E0D8]">
+                      お客様情報
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                          保護者名 <span className="text-red-500">*</span>
+                        </label>
+                        <Input
+                          value={customerData.parent_name}
+                          onChange={(e) => setCustomerData((p) => ({ ...p, parent_name: e.target.value }))}
+                          placeholder="山田 花子"
+                          className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                          お子様名 <span className="text-red-500">*</span>
+                        </label>
+                        <Input
+                          value={customerData.child_name}
+                          onChange={(e) => setCustomerData((p) => ({ ...p, child_name: e.target.value }))}
+                          placeholder="山田 太郎"
+                          className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                        電話番号 <span className="text-red-500">*</span>
+                      </label>
+                      <Input
+                        type="tel"
+                        value={customerData.phone}
+                        onChange={(e) => setCustomerData((p) => ({ ...p, phone: e.target.value }))}
+                        placeholder="090-1234-5678"
+                        className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                      />
+                    </div>
+                  </div>
+
+                  {(formError || error) && (
+                    <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-3" role="alert">
+                      {formError || error}
+                    </p>
+                  )}
+
+                  <Button
+                    type="button"
+                    onClick={handleSubmit}
+                    disabled={submitLoading}
+                    className="w-full bg-[#C4A962] hover:bg-[#B39952] text-white py-3 text-base"
+                  >
+                    {submitLoading
+                      ? "処理中..."
+                      : session
+                      ? "予約を確定する"
+                      : authMode === "register"
+                      ? "会員登録して予約する"
+                      : "ログインして予約する"}
+                  </Button>
+
+                  <p className="text-xs text-[#AAAAAA] text-center">
+                    ご予約確認メールをお送りします。
+                  </p>
+                </section>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

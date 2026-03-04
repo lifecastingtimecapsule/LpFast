@@ -1,5 +1,5 @@
 import { ReactNode, useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
@@ -108,15 +108,20 @@ export function Layout({ children }: LayoutProps) {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-[0.95rem] tracking-wide font-medium">
             {navLinks.map((link) => (
-              <div key={link.name} className="relative group">
-                <Link 
-                  to={link.path}
-                  className="text-[#666666] group-hover:text-[#C4A962] transition-colors py-2 font-en-serif text-base"
-                >
-                  {link.name}
-                </Link>
-                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#C4A962] transition-all duration-300 group-hover:w-full"></span>
-              </div>
+              <NavLink
+                key={link.name}
+                to={link.path}
+                end={link.path === "/"}
+                className={({ isActive }) =>
+                  `font-en-serif text-base py-2 transition-colors ${
+                    isActive
+                      ? "text-[#C4A962]"
+                      : "text-[#666666] hover:text-[#C4A962]"
+                  }`
+                }
+              >
+                {link.name}
+              </NavLink>
             ))}
             
             {session ? (
@@ -259,7 +264,7 @@ export function Layout({ children }: LayoutProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="flex-grow pt-28 md:pt-32"
+          className="flex-grow"
         >
           {children}
         </motion.main>
