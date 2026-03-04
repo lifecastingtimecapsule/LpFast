@@ -5,15 +5,23 @@ export function Company() {
   return (
     <>
       <Helmet>
-        <title>会社概要・運営情報｜amorétto LifeCasting® Studio</title>
+        <title>会社概要・運営情報｜amorétto LifeCasting® Studio - 立体手形・ライフキャスティング</title>
         <meta
           name="description"
-          content="日本初のLifeCasting®（立体手形）専門スタジオamoréttoの会社概要・運営情報。運営拠点、連絡先、事業内容、私たちのあり方について。"
+          content="日本初のLifeCasting®（ライフキャスティング・立体手形）専門スタジオamoréttoの会社概要・運営情報。事業内容、愛知県豊川・浜松の2拠点、連絡先などをご案内します。"
         />
-        <link
-          rel="canonical"
-          href="https://lifecastingstudio-amoretto.com/company"
-        />
+        <link rel="canonical" href="https://lifecastingstudio-amoretto.com/company" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="会社概要・運営情報｜amorétto LifeCasting® Studio" />
+        <meta property="og:description" content="日本初のLifeCasting®（ライフキャスティング・立体手形）専門スタジオamoréttoの会社概要。愛知県豊川・浜松の2拠点。" />
+        <meta property="og:url" content="https://lifecastingstudio-amoretto.com/company" />
+        <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:site_name" content="amorétto LifeCasting® Studio" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="会社概要｜amorétto LifeCasting® Studio" />
+        <meta name="twitter:description" content="日本初のLifeCasting®（立体手形）専門スタジオamoréttoの会社概要・運営情報。" />
+        <meta name="twitter:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
       </Helmet>
 
       <section className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 bg-[#FAFAF8]">

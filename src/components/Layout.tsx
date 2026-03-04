@@ -6,6 +6,7 @@ import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
 import { ArrowRight, ArrowUp, Calendar } from "lucide-react";
 import logoImage from '../assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png';
 import { supabase } from "@/utils/supabase/client";
+import { useProfile } from "@/hooks/useProfile";
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,7 +15,7 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [session, setSession] = useState<unknown>(null);
+  const [session, setSession] = useState<any>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -23,6 +24,8 @@ export function Layout({ children }: LayoutProps) {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => setSession(s));
     return () => subscription.unsubscribe();
   }, []);
+
+  const { isStaffOrAdmin } = useProfile(session);
 
   // Scroll detection
   useEffect(() => {
@@ -116,29 +119,31 @@ export function Layout({ children }: LayoutProps) {
                   `font-en-serif text-base py-2 transition-colors ${
                     isActive
                       ? "text-[#C4A962]"
-                      : "text-[#666666] hover:text-[#C4A962]"
+                      : scrolled
+                        ? "text-[#666666] hover:text-[#C4A962]"
+                        : "text-white/80 hover:text-white"
                   }`
                 }
               >
                 {link.name}
               </NavLink>
             ))}
-            
-            {session ? (
+
+            {session && !isStaffOrAdmin ? (
               <Link
                 to="/my/reservations"
-                className="text-[#666666] hover:text-[#C4A962] transition-colors py-2 font-en-serif text-base whitespace-nowrap"
+                className={`transition-colors py-2 font-en-serif text-base whitespace-nowrap ${scrolled ? "text-[#666666] hover:text-[#C4A962]" : "text-white/80 hover:text-white"}`}
               >
                 マイ予約
               </Link>
-            ) : (
+            ) : !session ? (
               <Link
                 to="/login"
-                className="text-[#666666] hover:text-[#C4A962] transition-colors py-2 font-en-serif text-base whitespace-nowrap"
+                className={`transition-colors py-2 font-en-serif text-base whitespace-nowrap ${scrolled ? "text-[#666666] hover:text-[#C4A962]" : "text-white/80 hover:text-white"}`}
               >
                 ログイン
               </Link>
-            )}
+            ) : null}
             <Link
               to="/reservation"
               className="group relative overflow-hidden flex-shrink-0 px-6 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
@@ -153,7 +158,7 @@ export function Layout({ children }: LayoutProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden relative z-[101] p-2 text-[#2C2C2C] active:scale-95 transition-transform"
+            className={`md:hidden relative z-[101] p-2 active:scale-95 transition-transform ${scrolled || mobileMenuOpen ? "text-[#2C2C2C]" : "text-white"}`}
             aria-label="Menu"
           >
             {mobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
@@ -207,7 +212,7 @@ export function Layout({ children }: LayoutProps) {
                  transition={{ delay: 0.6 }}
                  className="mt-16 w-full max-w-xs space-y-4"
                >
-                 {session ? (
+                 {session && !isStaffOrAdmin ? (
                    <Link
                      to="/my/reservations"
                      onClick={handleNavClick}
@@ -215,7 +220,7 @@ export function Layout({ children }: LayoutProps) {
                    >
                      マイ予約
                    </Link>
-                 ) : (
+                 ) : !session ? (
                    <Link
                      to="/login"
                      onClick={handleNavClick}
@@ -223,7 +228,7 @@ export function Layout({ children }: LayoutProps) {
                    >
                      ログイン
                    </Link>
-                 )}
+                 ) : null}
                  <Link
                     to="/reservation"
                     onClick={handleNavClick}
@@ -260,10 +265,8 @@ export function Layout({ children }: LayoutProps) {
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="flex-grow"
         >
           {children}

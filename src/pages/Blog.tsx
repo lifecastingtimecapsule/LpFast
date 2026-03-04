@@ -63,26 +63,39 @@ export function Blog() {
   return (
     <>
       <Helmet>
-        <title>コラム・ブログ｜amorétto LifeCasting® Studio</title>
+        <title>コラム・ブログ｜立体手形・七五三・ライフキャスティング amorétto</title>
         <meta
           name="description"
-          content="日本初のLifeCasting®専門スタジオamoréttoによる公式コラム。立体手形・足形アートへの想い、制作の裏側、豊川店・浜松店で生まれた家族の物語をお届けします。"
+          content="日本初のLifeCasting®（ライフキャスティング）専門スタジオamoréttoの公式コラム。立体手形・足形アート、七五三記念、写真との複合作品、赤ちゃんの「今」を残す想いをお届けします。"
         />
-        <link
-          rel="canonical"
-          href="https://lifecastingstudio-amoretto.com/blog"
-        />
+        <link rel="canonical" href="https://lifecastingstudio-amoretto.com/blog" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="コラム・ブログ｜立体手形・七五三・ライフキャスティング amorétto" />
+        <meta property="og:description" content="日本初のLifeCasting®（ライフキャスティング）専門スタジオamoréttoの公式コラム。立体手形・足形アート、七五三記念、写真との複合作品など。" />
+        <meta property="og:url" content="https://lifecastingstudio-amoretto.com/blog" />
+        <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:site_name" content="amorétto LifeCasting® Studio" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="コラム・ブログ｜立体手形・七五三・ライフキャスティング amorétto" />
+        <meta name="twitter:description" content="日本初のLifeCasting®（ライフキャスティング）専門スタジオamoréttoの公式コラム。七五三・出産記念の立体手形ストーリーをお届けします。" />
+        <meta name="twitter:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "Blog",
-              "name": "amorétto LifeCasting® Blog",
-              "description": "立体手形・足形アートに関するコラムや制作ストーリーを発信する公式ブログ。",
-              "url": "https://lifecastingstudio-amoretto.com/blog",
-              "inLanguage": "ja"
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "name": "amorétto LifeCasting® Journal",
+            "description": "日本初のLifeCasting®（ライフキャスティング）専門スタジオamoréttoの公式コラム。立体手形・足形アート、七五三記念、写真との複合作品に関する記事を発信。",
+            "url": "https://lifecastingstudio-amoretto.com/blog",
+            "inLanguage": "ja",
+            "publisher": {
+              "@type": "Organization",
+              "name": "amorétto LifeCasting® Studio",
+              "url": "https://lifecastingstudio-amoretto.com"
             }
-          `}
+          })}
         </script>
       </Helmet>
 

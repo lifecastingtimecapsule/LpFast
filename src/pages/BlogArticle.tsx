@@ -83,20 +83,40 @@ export function BlogArticle() {
   return (
     <>
       <Helmet>
-        <title>{post.title}｜コラム・ブログ｜amorétto LifeCasting® Studio</title>
-        <meta
-          name="description"
-          content={post.excerpt ?? `${post.title} - amorétto公式コラム`}
-        />
+        <title>{post.title}｜コラム｜amorétto LifeCasting® Studio</title>
+        <meta name="description" content={post.excerpt ?? `${post.title} - amorétto公式コラム。立体手形・ライフキャスティングの専門スタジオが発信するストーリー。`} />
         <link rel="canonical" href={canonical} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${post.title}｜amorétto LifeCasting® Studio`} />
+        <meta property="og:description" content={post.excerpt ?? `${post.title} - amorétto公式コラム`} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={post.image_url ?? "https://lifecastingstudio-amoretto.com/og-image.jpg"} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:site_name" content="amorétto LifeCasting® Studio" />
+        {post.published_at && <meta property="article:published_time" content={post.published_at} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${post.title}｜amorétto`} />
+        <meta name="twitter:description" content={post.excerpt ?? `${post.title} - amorétto公式コラム`} />
+        <meta name="twitter:image" content={post.image_url ?? "https://lifecastingstudio-amoretto.com/og-image.jpg"} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
             headline: post.title,
             description: post.excerpt ?? post.title,
+            image: post.image_url ?? "https://lifecastingstudio-amoretto.com/og-image.jpg",
             datePublished: post.published_at ?? undefined,
-            author: { "@type": "Organization", name: "amorétto スタジオチーム" },
+            url: canonical,
+            author: { "@type": "Organization", name: "amorétto スタジオチーム", url: "https://lifecastingstudio-amoretto.com" },
+            publisher: {
+              "@type": "Organization",
+              name: "amorétto LifeCasting® Studio",
+              url: "https://lifecastingstudio-amoretto.com",
+              logo: { "@type": "ImageObject", url: "https://lifecastingstudio-amoretto.com/og-image.jpg" }
+            },
+            mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
           })}
         </script>
       </Helmet>

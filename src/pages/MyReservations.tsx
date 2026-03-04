@@ -6,6 +6,7 @@ import type { MyReservationItem } from "@/utils/supabase/reservationApi";
 import * as reservationQueries from "@/utils/supabase/reservationQueries";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useProfile } from "@/hooks/useProfile";
 
 function formatDateTime(iso: string): string {
   try {
@@ -53,6 +54,8 @@ export function MyReservations() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const { isStaffOrAdmin, loading: profileLoading } = useProfile(session as any);
+
   useEffect(() => {
     if (!session?.access_token) return;
     setError(null);
@@ -73,7 +76,14 @@ export function MyReservations() {
     }
   }, [authLoading, session, navigate, location.pathname]);
 
-  if (authLoading || !session) {
+  // スタッフ・管理者はホームへリダイレクト
+  useEffect(() => {
+    if (!profileLoading && isStaffOrAdmin) {
+      navigate("/", { replace: true });
+    }
+  }, [profileLoading, isStaffOrAdmin, navigate]);
+
+  if (authLoading || !session || profileLoading) {
     return (
       <div className="container mx-auto px-6 py-16 text-center text-[#2C2C2C]">
         <p>読み込み中...</p>

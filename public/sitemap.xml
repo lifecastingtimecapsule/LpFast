@@ -80,4 +80,55 @@
     </image:image>
   </url>
 
+  <!-- ===== Stores ===== -->
+  <url>
+    <loc>https://lifecastingstudio-amoretto.com/stores</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingstudio-amoretto.com/stores" />
+    <image:image>
+      <image:loc>https://lifecastingstudio-amoretto.com/og-image.jpg</image:loc>
+      <image:title>店舗紹介｜amorétto ライフスタジオ豊川店・浜松店 - 立体手形・ライフキャスティング</image:title>
+      <image:caption>愛知県豊川市・静岡県浜松市で立体手形（ライフキャスティング）が体験できるamoréttoの店舗一覧。完全予約制。七五三・誕生日・出産祝いの記念に。</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ===== Blog ===== -->
+  <url>
+    <loc>https://lifecastingstudio-amoretto.com/blog</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingstudio-amoretto.com/blog" />
+    <image:image>
+      <image:loc>https://lifecastingstudio-amoretto.com/og-image.jpg</image:loc>
+      <image:title>コラム・ブログ｜amorétto LifeCasting® Studio - 立体手形・七五三・ライフキャスティング</image:title>
+      <image:caption>日本初のLifeCasting®専門スタジオamoréttoによる公式コラム。立体手形・足形アート、七五三記念、出産祝いなどにまつわるストーリーをお届けします。</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ===== Stories / Testimonials ===== -->
+  <url>
+    <loc>https://lifecastingstudio-amoretto.com/stories</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingstudio-amoretto.com/stories" />
+    <image:image>
+      <image:loc>https://lifecastingstudio-amoretto.com/og-image.jpg</image:loc>
+      <image:title>制作事例・お客様の声｜amorétto - 立体手形・七五三・ライフキャスティング体験談</image:title>
+      <image:caption>七五三・赤ちゃん誕生・1歳など大切な記念に立体手形を制作されたお客様の声。ライフキャスティング（LifeCasting®）の感動体験をご紹介します。</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ===== Company ===== -->
+  <url>
+    <loc>https://lifecastingstudio-amoretto.com/company</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lifecastingstudio-amoretto.com/company" />
+  </url>
+
 </urlset>

@@ -19,6 +19,7 @@ import { Testimonials } from "./pages/Testimonials";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { Terms } from "./pages/Terms";
 import { BlogAdmin } from "./pages/BlogAdmin";
+import { BlogAdminEdit } from "./pages/BlogAdminEdit";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { PublicReservationPage } from "./components/PublicReservationPage";
@@ -114,6 +115,8 @@ export default function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/admin/blog" element={<BlogAdmin />} />
+            <Route path="/admin/blog/new" element={<BlogAdminEdit />} />
+            <Route path="/admin/blog/edit/:id" element={<BlogAdminEdit />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/plan-gallery" element={<PlanGallery />} />

@@ -44,12 +44,70 @@ export function Stores() {
   return (
     <>
       <Helmet>
-        <title>店舗紹介｜amorétto LifeCasting® Studio</title>
+        <title>店舗紹介｜立体手形・ライフキャスティングのamorétto 豊川店・浜松店</title>
         <meta
           name="description"
-          content="立体手形・足形アートが体験できるamoréttoの店舗一覧。お近くのスタジオをご紹介します。"
+          content="立体手形（ライフキャスティング）が体験できるamoréttoの店舗一覧。愛知県豊川市のライフスタジオ豊川店と静岡県浜松市のライフスタジオ浜松店の2拠点。七五三・出産記念・1歳記念に完全予約制で対応。"
         />
         <link rel="canonical" href="https://lifecastingstudio-amoretto.com/stores" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="店舗紹介｜立体手形・ライフキャスティングのamorétto 豊川店・浜松店" />
+        <meta property="og:description" content="愛知県豊川市・静岡県浜松市で立体手形（ライフキャスティング）が体験できるamoréttoの店舗一覧。七五三・出産記念・1歳記念に。" />
+        <meta property="og:url" content="https://lifecastingstudio-amoretto.com/stores" />
+        <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:site_name" content="amorétto LifeCasting® Studio" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="店舗紹介｜amorétto 豊川店・浜松店 - 立体手形・ライフキャスティング" />
+        <meta name="twitter:description" content="愛知県豊川・静岡県浜松で立体手形（ライフキャスティング）が体験できるamoréttoの2店舗。七五三・出産記念・1歳記念に。" />
+        <meta name="twitter:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "amorétto LifeCasting® Studio 店舗一覧",
+            "description": "立体手形（ライフキャスティング）が体験できるamoréttoの店舗一覧。七五三・出産記念・1歳記念に対応。",
+            "url": "https://lifecastingstudio-amoretto.com/stores",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@type": "LocalBusiness",
+                  "name": "amorétto ライフスタジオ豊川店",
+                  "url": "https://lifecastingstudio-amoretto.com/stores",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "門前町15",
+                    "addressLocality": "豊川市",
+                    "addressRegion": "愛知県",
+                    "postalCode": "442-0037",
+                    "addressCountry": "JP"
+                  },
+                  "telephone": "0533-56-9494"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@type": "LocalBusiness",
+                  "name": "amorétto ライフスタジオ浜松店",
+                  "url": "https://lifecastingstudio-amoretto.com/stores",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "上島6-2-30",
+                    "addressLocality": "浜松市中央区",
+                    "addressRegion": "静岡県",
+                    "postalCode": "433-8122",
+                    "addressCountry": "JP"
+                  },
+                  "telephone": "053-415-8775"
+                }
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       <section className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 bg-[#FAFAF8] min-h-screen">
         <div className="container mx-auto max-w-4xl">
