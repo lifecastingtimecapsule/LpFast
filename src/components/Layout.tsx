@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, MessageCircle, Phone, Instagram, MapPin } from "./Icons";
 import { ArrowRight, ArrowUp, Calendar } from "lucide-react";
 import logoImage from '../assets/a5fc00399012eeaf62209d6c1238a54dcc136bcf.png';
+import { supabase } from "@/utils/supabase/client";
 
 interface LayoutProps {
   children: ReactNode;
@@ -13,7 +14,15 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [session, setSession] = useState<unknown>(null);
   const location = useLocation();
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => setSession(s));
+    return () => subscription.unsubscribe();
+  }, []);
 
   // Scroll detection
   useEffect(() => {
@@ -50,7 +59,8 @@ export function Layout({ children }: LayoutProps) {
     { name: "About", path: "/about" },
     { name: "Plan & Gallery", path: "/plan-gallery" },
     { name: "School", path: "/school" },
-    { name: "Access", path: "/access" },       
+    { name: "Access", path: "/access" },
+    { name: "Blog", path: "/blog" },      
   ];
 
   return (
@@ -96,12 +106,12 @@ export function Layout({ children }: LayoutProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-10 text-[0.95rem] tracking-wide font-medium">
+          <nav className="hidden md:flex items-center gap-6 text-[0.95rem] tracking-wide font-medium">
             {navLinks.map((link) => (
               <div key={link.name} className="relative group">
                 <Link 
                   to={link.path}
-                  className="text-[#666666] group-hover:text-[#C4A962] transition-colors py-2 font-en-serif text-lg"
+                  className="text-[#666666] group-hover:text-[#C4A962] transition-colors py-2 font-en-serif text-base"
                 >
                   {link.name}
                 </Link>
@@ -109,17 +119,30 @@ export function Layout({ children }: LayoutProps) {
               </div>
             ))}
             
-            <a
-              href="https://lifecastingstudio-amoretto.com/reservation"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative overflow-hidden px-8 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
+            {session ? (
+              <Link
+                to="/my/reservations"
+                className="text-[#666666] hover:text-[#C4A962] transition-colors py-2 font-en-serif text-base whitespace-nowrap"
+              >
+                マイ予約
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="text-[#666666] hover:text-[#C4A962] transition-colors py-2 font-en-serif text-base whitespace-nowrap"
+              >
+                ログイン
+              </Link>
+            )}
+            <Link
+              to="/reservation"
+              className="group relative overflow-hidden flex-shrink-0 px-6 py-3 bg-[#C4A962] text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#C4A962]/20"
             >
-              <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium">
+              <span className="relative z-10 flex items-center gap-2 tracking-wider text-xs font-medium whitespace-nowrap">
                 RESERVATION <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -179,15 +202,31 @@ export function Layout({ children }: LayoutProps) {
                  transition={{ delay: 0.6 }}
                  className="mt-16 w-full max-w-xs space-y-4"
                >
-                 <a
-                    href="https://lifecastingstudio-amoretto.com/reservation"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                 {session ? (
+                   <Link
+                     to="/my/reservations"
+                     onClick={handleNavClick}
+                     className="flex items-center justify-center gap-2 w-full py-3 border border-[#C4A962]/40 text-[#C4A962] text-sm font-medium tracking-wide hover:bg-[#C4A962]/5 transition-all"
+                   >
+                     マイ予約
+                   </Link>
+                 ) : (
+                   <Link
+                     to="/login"
+                     onClick={handleNavClick}
+                     className="flex items-center justify-center gap-2 w-full py-3 border border-[#2C2C2C]/20 text-[#2C2C2C] text-sm font-medium tracking-wide hover:bg-[#2C2C2C]/5 transition-all"
+                   >
+                     ログイン
+                   </Link>
+                 )}
+                 <Link
+                    to="/reservation"
+                    onClick={handleNavClick}
                     className="flex items-center justify-center gap-2 w-full py-4 bg-[#C4A962] text-white text-sm font-medium tracking-wide shadow-lg hover:bg-[#B39952] transition-all"
                  >
                     <Calendar size={18} strokeWidth={1.5} />
                     Web予約・空き状況
-                 </a>
+                 </Link>
                  <a
                     href="https://lin.ee/55K9AP6"
                     target="_blank"
@@ -212,7 +251,7 @@ export function Layout({ children }: LayoutProps) {
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
+      {/* Main Content - 固定ヘッダー分＋ゆとりの余白を確保 */}
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
@@ -220,7 +259,7 @@ export function Layout({ children }: LayoutProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="flex-grow pt-[0px] md:pt-[0px]"
+          className="flex-grow pt-28 md:pt-32"
         >
           {children}
         </motion.main>
@@ -245,16 +284,14 @@ export function Layout({ children }: LayoutProps) {
 
               <div className="space-y-4">
                 {/* Row 1: Web予約 */}
-                <a 
-                  href="https://lifecastingstudio-amoretto.com/reservation" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                <Link 
+                  to="/reservation" 
                   className="group flex items-center justify-center gap-3 w-full py-4 bg-[#C4A962] text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
                 >
                   <Calendar size={20} strokeWidth={1.5} />
                   <span className="text-sm font-medium tracking-wide">Webで空き状況を見る</span>
                   <ArrowRight size={16} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
-                </a>
+                </Link>
 
                 {/* Row 2: 豊川店 LINE + TEL */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -334,9 +371,15 @@ export function Layout({ children }: LayoutProps) {
             <nav aria-label="フッターナビゲーション" className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8 text-[10px] md:text-xs text-[#999999] tracking-wider font-light">
               <Link to="/" className="hover:text-[#C4A962] transition-colors">ホーム</Link>
               <Link to="/about" className="hover:text-[#C4A962] transition-colors">About</Link>
+              <Link to="/company" className="hover:text-[#C4A962] transition-colors">会社概要</Link>
               <Link to="/plan-gallery" className="hover:text-[#C4A962] transition-colors">Plan & Gallery</Link>
               <Link to="/school" className="hover:text-[#C4A962] transition-colors">School</Link>
+              <Link to="/blog" className="hover:text-[#C4A962] transition-colors">Blog</Link>
+              <Link to="/news" className="hover:text-[#C4A962] transition-colors">News</Link>
+              <Link to="/stories" className="hover:text-[#C4A962] transition-colors">お客様の声</Link>
               <Link to="/access" className="hover:text-[#C4A962] transition-colors">Access</Link>
+              <Link to="/privacy" className="hover:text-[#C4A962] transition-colors">プライバシーポリシー</Link>
+              <Link to="/terms" className="hover:text-[#C4A962] transition-colors">利用規約</Link>
               <Link to="/sitemap" className="hover:text-[#C4A962] transition-colors">サイトマップ</Link>
             </nav>
 

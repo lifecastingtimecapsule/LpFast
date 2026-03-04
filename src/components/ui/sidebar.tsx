@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot@1.1.2";
-import { VariantProps, cva } from "class-variance-authority@0.7.1";
+import { Slot } from "@radix-ui/react-slot";
+import { VariantProps, cva } from "class-variance-authority";
 import { PanelLeft as PanelLeftIcon } from "../Icons";
 
 import { useIsMobile } from "./use-mobile";

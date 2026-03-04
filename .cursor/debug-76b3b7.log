@@ -1,0 +1,4 @@
+{"sessionId":"76b3b7","location":"locator.html:DOMContentLoaded","message":"Config state","data":{"apiKeyIsPlaceholder":false,"mapId":null},"timestamp":1771801880458,"hypothesisId":"A"}
+{"sessionId":"76b3b7","location":"locator.html:beforeConfigure","message":"Before configureFromQuickBuilder","data":{"hasLocator":true},"timestamp":1771801880459,"hypothesisId":"C"}
+{"sessionId":"76b3b7","location":"locator.html:whenDefined","message":"Component defined","data":{},"timestamp":1771801880459,"hypothesisId":"B"}
+{"sessionId":"76b3b7","location":"locator.html:afterConfigure","message":"configureFromQuickBuilder succeeded","data":{},"timestamp":1771801880459,"hypothesisId":"C"}

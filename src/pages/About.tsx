@@ -9,20 +9,20 @@ export function About() {
     <>
       <Helmet>
         <title>立体手形への想い｜日本初のLifeCasting®専門スタジオ amorétto - 愛知県・浜松</title>
-        <meta name="description" content="日本初の立体手形専門スタジオamoréttoの想い。LifeCasting®（2024年商標登録済）の技術で赤ちゃんの「今」をアートに。商標取得の歩み、日本初の専門店としての使命、一作品ごとに込める情熱を語ります。愛知県（豊川）・浜松の2拠点。" />
+        <meta name="description" content="日本初の立体手形専門スタジオamoréttoの想い。LifeCasting®（2023年商標登録済）の技術で赤ちゃんの「今」をアートに。商標取得の歩み、日本初の専門店としての使命、一作品ごとに込める情熱を語ります。愛知県（豊川）・浜松の2拠点。" />
         <link rel="canonical" href="https://lifecastingstudio-amoretto.com/about" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="立体手形への想い｜日本初の専門スタジオ amorétto - 愛知県・浜松" />
-        <meta property="og:description" content="日本初のLifeCasting®立体手形専門スタジオamorétto。2024年商標登録。アートに懸ける想いと、日本初の専門店としての歩みをご紹介。" />
+        <meta property="og:description" content="日本初のLifeCasting®立体手形専門スタジオamorétto。2023年商標登録。アートに懸ける想いと、日本初の専門店としての歩みをご紹介。" />
         <meta property="og:url" content="https://lifecastingstudio-amoretto.com/about" />
         <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="立体手形への想い｜日本初の専門スタジオ amorétto" />
-        <meta name="twitter:description" content="日本初のLifeCasting®立体手形専門スタジオ。2024年商標登録。アートに懸ける想いと歩み。愛知県・浜松。" />
+        <meta name="twitter:description" content="日本初のLifeCasting®立体手形専門スタジオ。2023年商標登録。アートに懸ける想いと歩み。愛知県・浜松。" />
         <meta name="twitter:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         
         {/* 構造化データ: BreadcrumbList */}
@@ -56,7 +56,7 @@ export function About() {
               "@context": "https://schema.org",
               "@type": "AboutPage",
               "name": "立体手形への想い - amorétto",
-              "description": "日本初のLifeCasting®（立体手形）専門スタジオamorétto。2024年10月に商標登録されたLifeCasting®の技術で、赤ちゃんの「今」を立体手形・足形アートとして永遠に残す。日本初の専門店としての歩みとアートへの想い。",
+              "description": "日本初のLifeCasting®（立体手形）専門スタジオamorétto。2023年に商標登録されたLifeCasting®の技術で、赤ちゃんの「今」を立体手形・足形アートとして永遠に残す。日本初の専門店としての歩みとアートへの想い。",
               "url": "https://lifecastingstudio-amoretto.com/about",
               "mainEntity": {
                 "@type": "Organization",
@@ -64,12 +64,12 @@ export function About() {
                 "name": "amorétto",
                 "url": "https://lifecastingstudio-amoretto.com/",
                 "logo": "https://lifecastingstudio-amoretto.com/og-image.jpg",
-                "description": "日本初のLifeCasting®（立体手形）専門スタジオ。2024年10月商標登録。愛知県と浜松の2拠点で展開。",
+                "description": "日本初のLifeCasting®（立体手形）専門スタジオ。2023年商標登録。愛知県と浜松の2拠点で展開。",
                 "foundingDate": "2023",
                 "brand": {
                   "@type": "Brand",
                   "name": "LifeCasting®",
-                  "description": "2024年10月商標登録。日本初の立体手形アートブランド。"
+                  "description": "2023年商標登録。日本初の立体手形アートブランド。"
                 },
                 "location": [
                   {
@@ -231,7 +231,7 @@ export function About() {
                 一からすべてを築いてきました。
               </p>
               <p>
-                そして2024年10月、私たちが生み出したこの技術とブランドは<br className="hidden md:block"/>
+                そして2023年、私たちが生み出したこの技術とブランドは<br className="hidden md:block"/>
                 <strong className="font-medium text-[#2C2C2C]">「LifeCasting®」として正式に商標登録</strong>されました。
               </p>
               <p>
@@ -402,46 +402,39 @@ export function About() {
               </h2>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-8 text-[#4A4A4A] leading-[2.2] md:leading-[2.6] tracking-wide font-light text-[0.9rem] md:text-base text-justify md:text-center"
-            >
+            <div className="space-y-8 text-[#4A4A4A] leading-[2.1] md:leading-[2.4] tracking-wide font-light text-[0.9rem] md:text-base text-justify md:text-center">
               <p>
-                「もっと簡単に作れないんですか？」<br className="hidden md:block"/>
-                「もっと安くできないんですか？」<br className="hidden md:block"/>
-                そう聞かれることがあります。
+                私たちが大切にしているのは、<br className="hidden md:block" />
+                「どんな手形を残したか」だけではなく、<br className="hidden md:block" />
+                その一日がご家族にとってどんな思い出になるか、ということです。
               </p>
               <p>
-                正直に言えば、もっと簡単に、もっと安く作ることはできます。<br className="hidden md:block"/>
-                でも、私たちはそれを選びません。
+                お客様がこのスタジオに来てくださるのは、<br className="hidden md:block" />
+                ただ「手形を取りたいから」ではありません。<br className="hidden md:block" />
+                本当に求めているのは、<br className="hidden md:block" />
+                <strong className="font-medium text-[#2C2C2C]">
+                  この子が生まれてきてくれた奇跡を、かたちにして残したい
+                </strong>
+                <br className="hidden md:block" />
+                という、親としての深い愛情そのものだと私たちは考えています。
               </p>
               <p>
-                なぜなら、お客様がこのスタジオに来てくださるのは、<br className="hidden md:block"/>
-                「手形を取りたいから」ではないと知っているからです。<br className="hidden md:block"/>
-                本当に求めているのは、<br className="hidden md:block"/>
-                <strong className="font-medium text-[#2C2C2C]">この子が生まれてきてくれた奇跡を、形にして残したい</strong><br className="hidden md:block"/>
-                という、親としての深い愛情そのものです。
-              </p>
-              <p>
-                だからこそ、素材の一つひとつ、<br className="hidden md:block"/>
-                仕上げの一工程ごとに、<br className="hidden md:block"/>
-                「この作品を受け取ったご家族は、どんな表情をするだろう」と<br className="hidden md:block"/>
+                だからこそ、素材の一つひとつ、<br className="hidden md:block" />
+                仕上げの一工程ごとに、<br className="hidden md:block" />
+                「この作品を受け取ったご家族は、どんな表情をするだろう」と<br className="hidden md:block" />
                 想像しながら向き合っています。
               </p>
               <p>
-                納品の日、作品を手に取ったお母さんが涙を流す瞬間。<br className="hidden md:block"/>
-                お父さんが「こんなに小さかったのか」と声を震わせる瞬間。<br className="hidden md:block"/>
+                納品の日、作品を手に取ったお母さんが涙を流す瞬間。<br className="hidden md:block" />
+                お父さんが「こんなに小さかったのか」と声を震わせる瞬間。<br className="hidden md:block" />
                 おじいちゃん、おばあちゃんが孫の手形を撫でながら微笑む瞬間。
               </p>
               <p>
-                その一つひとつの瞬間が、<br className="hidden md:block"/>
-                私たちがこの仕事を続ける理由であり、<br className="hidden md:block"/>
+                その一つひとつの情景が、<br className="hidden md:block" />
+                私たちがこの仕事を続ける理由であり、<br className="hidden md:block" />
                 一切の妥協を許さない理由です。
               </p>
-            </motion.div>
+            </div>
           </div>
         </section>
 

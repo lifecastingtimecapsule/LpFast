@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { GripVertical as GripVerticalIcon } from "../Icons";
-import * as ResizablePrimitive from "react-resizable-panels@2.1.7";
+import * as ResizablePrimitive from "react-resizable-panels";
 
 import { cn } from "./utils";
 

@@ -55,15 +55,50 @@
           {"title":"amorétto LifeCasting™studio","address1":"豊川市門前町１５","address2":"愛知県, Japan","coords":{"lat":34.8243357,"lng":137.395763},"placeId":"ChIJ0eHJqfabBGARUBiJtpPd6wU"}
         ],
         "mapOptions": {"center":{"lat":34.8243357,"lng":137.395763},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":14,"zoomControl":true,"maxZoom":17,"mapId":""},
-        "mapsApiKey": "YOUR_API_KEY_HERE",
+        "mapsApiKey": "AIzaSyCI6udrgz8k9274RFM4gd3iL4WPkrcOR8I",
         "capabilities": {"input":true,"autocomplete":true,"directions":true,"distanceMatrix":true,"details":true,"actions":false}
       };
     </script>
     <script type="module">
+      // #region agent log
+      const DEBUG = {
+        endpoint: 'http://127.0.0.1:7920/ingest/787822ed-425b-4f7b-9435-e3d923ac7173',
+        sessionId: '76b3b7',
+        log(location, message, data, hypothesisId) {
+          const payload = { sessionId: this.sessionId, location, message, data: data || {}, timestamp: Date.now(), hypothesisId };
+          fetch(this.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': this.sessionId }, body: JSON.stringify(payload) }).catch(() => {});
+        }
+      };
+      // #endregion
+      window.addEventListener('error', (e) => {
+        // #region agent log
+        DEBUG.log('window.error', 'Uncaught error', { message: e.message, filename: e.filename, lineno: e.lineno }, 'E');
+        // #endregion
+      });
       document.addEventListener('DOMContentLoaded', async () => {
+        // #region agent log
+        const apiKeyIsPlaceholder = !CONFIGURATION.mapsApiKey || CONFIGURATION.mapsApiKey === 'YOUR_API_KEY_HERE';
+        DEBUG.log('locator.html:DOMContentLoaded', 'Config state', { apiKeyIsPlaceholder, mapId: document.querySelector('gmpx-store-locator')?.getAttribute('map-id') }, 'A');
+        // #endregion
         await customElements.whenDefined('gmpx-store-locator');
+        // #region agent log
+        DEBUG.log('locator.html:whenDefined', 'Component defined', {}, 'B');
+        // #endregion
         const locator = document.querySelector('gmpx-store-locator');
-        locator.configureFromQuickBuilder(CONFIGURATION);
+        try {
+          // #region agent log
+          DEBUG.log('locator.html:beforeConfigure', 'Before configureFromQuickBuilder', { hasLocator: !!locator }, 'C');
+          // #endregion
+          locator.configureFromQuickBuilder(CONFIGURATION);
+          // #region agent log
+          DEBUG.log('locator.html:afterConfigure', 'configureFromQuickBuilder succeeded', {}, 'C');
+          // #endregion
+        } catch (err) {
+          // #region agent log
+          DEBUG.log('locator.html:configureCatch', 'configureFromQuickBuilder threw', { message: err?.message, name: err?.name }, 'C');
+          // #endregion
+          console.error(err);
+        }
       });
     </script>
   </head>
@@ -73,7 +108,7 @@
     <!-- Uses components from the Extended Component Library; see
          https://github.com/googlemaps/extended-component-library for more information
          on these HTML tags and how to configure them. -->
-    <gmpx-api-loader key="YOUR_API_KEY_HERE" solution-channel="GMP_QB_locatorplus_v11_cABCDE"></gmpx-api-loader>
-    <gmpx-store-locator map-id="DEMO_MAP_ID"></gmpx-store-locator>
+    <gmpx-api-loader key="AIzaSyCI6udrgz8k9274RFM4gd3iL4WPkrcOR8I" solution-channel="GMP_QB_locatorplus_v11_cABCDE"></gmpx-api-loader>
+    <gmpx-store-locator></gmpx-store-locator>
   </body>
 </html>

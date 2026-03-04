@@ -21,14 +21,14 @@ export function Home() {
     <>
       <Helmet>
         <title>立体手形の専門スタジオ amorétto｜愛知県・浜松のLifeCasting®アート</title>
-        <meta name="description" content="日本初の立体手形専門スタジオamorétto。LifeCasting®（2024年商標登録済）の技術で、赤ちゃんの「今」を立体手形・足形アートとして永遠に残します。愛知県（豊川）と浜松の2拠点。90秒で型取り完了の独自素材・美術教員免許保持者が仕上げ。出産祝い・産後ギフトに。" />
+        <meta name="description" content="日本初の立体手形専門スタジオamorétto。LifeCasting®（2023年商標登録済）の技術で、赤ちゃんの「今」を立体手形・足形アートとして永遠に残します。愛知県（豊川）と浜松の2拠点。90秒で型取り完了の独自素材・美術教員免許保持者が仕上げ。出産祝い・産後ギフトに。" />
         <link rel="canonical" href="https://lifecastingstudio-amoretto.com/" />
         
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="amorétto | LifeCasting® Studio" />
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:title" content="立体手形の専門スタジオ amorétto｜愛知県・浜松のLifeCasting®アート" />
-        <meta property="og:description" content="日本初の立体手形専門スタジオ。LifeCasting®商標登録済の技術で赤ちゃんの「今」を永遠に。愛知県と浜松の2拠点で体験いただけます。" />
+        <meta property="og:description" content="日本初の立体手形専門スタジオ。LifeCasting®（2023年商標登録済）の技術で赤ちゃんの「今」を永遠に。愛知県と浜松の2拠点で体験いただけます。" />
         <meta property="og:url" content="https://lifecastingstudio-amoretto.com/" />
         <meta property="og:image" content="https://lifecastingstudio-amoretto.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
@@ -64,7 +64,7 @@ export function Home() {
               "@id": "https://lifecastingstudio-amoretto.com/#webpage",
               "url": "https://lifecastingstudio-amoretto.com/",
               "name": "立体手形の専門スタジオ amorétto｜愛知県・浜松のLifeCasting®アート",
-              "description": "日本初の立体手形専門スタジオamorétto。LifeCasting®（2024年商標登録済）の技術で赤ちゃんの「今」を永遠に。愛知県（豊川）と浜松の2拠点。",
+              "description": "日本初の立体手形専門スタジオamorétto。LifeCasting®（2023年商標登録済）の技術で赤ちゃんの「今」を永遠に。愛知県（豊川）と浜松の2拠点。",
               "isPartOf": {
                 "@id": "https://lifecastingstudio-amoretto.com/#website"
               },
@@ -120,15 +120,13 @@ export function Home() {
               愛おしい瞬間を、永遠に。
             </p>
             
-            <a 
-              href="https://lifecastingstudio-amoretto.com/reservation"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link 
+              to="/reservation"
               className="group relative inline-flex flex-col items-center gap-2 text-white/90 hover:text-white transition-colors"
             >
               <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase">予約する</span>
               <span className="w-8 h-px bg-white/50 group-hover:w-16 transition-all duration-500"></span>
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>
