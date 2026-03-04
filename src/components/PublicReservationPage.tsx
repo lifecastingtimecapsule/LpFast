@@ -9,7 +9,6 @@ import type { Location, MenuItem, ReservationSettings, BookedSlot, LocationAvail
 import * as reservationQueries from "@/utils/supabase/reservationQueries";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/components/ui/utils";
 import { AvailabilityOverview } from "@/components/AvailabilityOverview";
 
@@ -17,9 +16,15 @@ type SessionType = { user: { id: string; email?: string }; access_token: string 
 
 type CustomerData = {
   parent_name: string;
+  parent_name_kana: string;
   child_name: string;
+  child_name_kana: string;
   phone: string;
   email: string;
+  postal_code: string;
+  prefecture: string;
+  city: string;
+  address_line: string;
 };
 
 function parseTime(t: string | undefined): number | null {
@@ -82,12 +87,42 @@ function formatJapaneseDateTime(date: Date, timeSlot: string): string {
 
 function SectionLabel({ n, label }: { n: string; label: string }) {
   return (
-    <h2 className="text-base font-semibold text-[#2C2C2C] mb-3 flex items-center gap-2">
-      <span className="w-6 h-6 rounded-full bg-[#C4A962] text-white text-xs flex items-center justify-center font-bold shrink-0">
+    <h2 style={{ fontSize: 15, fontWeight: 600, color: "#2C2C2C", marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+      <span style={{ width: 24, height: 24, borderRadius: "50%", background: "#C4A962", color: "white", fontSize: 12, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0 }}>
         {n}
       </span>
       {label}
     </h2>
+  );
+}
+
+const STEP_LABELS = ["スケジュール", "お客様情報", "確認"];
+
+function StepIndicator({ step }: { step: 1 | 2 | 3 }) {
+  return (
+    <div style={{ display: "flex", alignItems: "flex-start", marginTop: 20, marginBottom: 28 }}>
+      {[1, 2, 3].map((n, i) => (
+        <div key={n} style={{ display: "flex", alignItems: "center", flex: i < 2 ? 1 : undefined }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+            <div style={{
+              width: 28, height: 28, borderRadius: "50%",
+              background: step >= n ? "#C4A962" : "#E5E0D8",
+              color: step >= n ? "white" : "#9CA3AF",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 12, fontWeight: 700,
+            }}>
+              {n}
+            </div>
+            <span style={{ fontSize: 9, color: step === n ? "#C4A962" : "#AAAAAA", fontWeight: step === n ? 600 : 400, whiteSpace: "nowrap" }}>
+              {STEP_LABELS[i]}
+            </span>
+          </div>
+          {i < 2 && (
+            <div style={{ flex: 1, height: 1, background: step > n ? "#C4A962" : "#E5E0D8", marginBottom: 14, margin: "0 6px 14px" }} />
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -99,6 +134,9 @@ export function PublicReservationPage() {
   const [session, setSession] = useState<SessionType>(null);
   const [sessionLoading, setSessionLoading] = useState(true);
   const { loading: profileLoading, role } = useProfile(session);
+
+  // Step
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
   // Selections
   const [selectedLocationId, setSelectedLocationId] = useState("");
@@ -119,19 +157,30 @@ export function PublicReservationPage() {
   const [displayedMonth, setDisplayedMonth] = useState<Date>(() => new Date());
   const [monthBookedSlots, setMonthBookedSlots] = useState<Record<string, BookedSlot[]>>({});
 
-  // Customer form (required fields only)
+  // Customer form
   const [customerData, setCustomerData] = useState<CustomerData>({
     parent_name: "",
+    parent_name_kana: "",
     child_name: "",
+    child_name_kana: "",
     phone: "",
     email: "",
+    postal_code: "",
+    prefecture: "",
+    city: "",
+    address_line: "",
   });
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [postalSearchLoading, setPostalSearchLoading] = useState(false);
+  const [postalError, setPostalError] = useState<string | null>(null);
 
   // Auth
   const [authMode, setAuthMode] = useState<"register" | "login">("register");
   const [authPassword, setAuthPassword] = useState("");
   const [authPasswordConfirm, setAuthPasswordConfirm] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [editingCustomerInfo, setEditingCustomerInfo] = useState(false);
 
   // Global
   const [loading, setLoading] = useState(true);
@@ -139,7 +188,7 @@ export function PublicReservationPage() {
   const [error, setError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
-  // ── Effects ─────────────────────────────────────────────────────────────────
+  // ── Effects ──────────────────────────────────────────────────────────────────
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -154,7 +203,6 @@ export function PublicReservationPage() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Prefill customer data if logged in
   useEffect(() => {
     if (!session?.access_token || profileLoading) return;
     if (role !== undefined && role !== null && role !== "customer") return;
@@ -163,21 +211,25 @@ export function PublicReservationPage() {
       .getMyCustomer()
       .then((customer) => {
         if (cancelled || !customer) return;
+        const c = customer as Record<string, unknown>;
         setCustomerData((prev) => ({
           ...prev,
           phone: customer.phone ?? prev.phone,
           email: customer.email ?? prev.email,
           parent_name: customer.parent_name ?? prev.parent_name,
+          parent_name_kana: (c.parent_name_kana as string) ?? prev.parent_name_kana,
           child_name: customer.child_name ?? prev.child_name,
+          child_name_kana: (c.child_name_kana as string) ?? prev.child_name_kana,
+          postal_code: (c.postal_code as string) ?? prev.postal_code,
+          prefecture: (c.prefecture as string) ?? prev.prefecture,
+          city: (c.city as string) ?? prev.city,
+          address_line: (c.address_line as string) ?? prev.address_line,
         }));
       })
       .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [session?.access_token, profileLoading, role]);
 
-  // Load initial data (locations + settings)
   useEffect(() => {
     const activeLocs = getActiveLocations();
     if (activeLocs.length > 0) {
@@ -191,22 +243,12 @@ export function PublicReservationPage() {
     let cancelled = false;
     reservationQueries
       .getReservationSettings()
-      .then((res) => {
-        if (!cancelled) setSettings(res ?? null);
-      })
-      .catch((e) => {
-        if (!cancelled)
-          setError(e instanceof Error ? e.message : "読み込みに失敗しました");
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
+      .then((res) => { if (!cancelled) setSettings(res ?? null); })
+      .catch((e) => { if (!cancelled) setError(e instanceof Error ? e.message : "読み込みに失敗しました"); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
   }, []);
 
-  // Load availability for all locations
   useEffect(() => {
     if (locations.length === 0) return;
     let cancelled = false;
@@ -222,22 +264,13 @@ export function PublicReservationPage() {
       );
       if (!cancelled) setAvailabilityByLocation((prev) => ({ ...prev, ...map }));
     })();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [locations]);
 
-  // Load menu items when location selected
   useEffect(() => {
-    if (!selectedLocationId) {
-      setMenuItems([]);
-      return;
-    }
+    if (!selectedLocationId) { setMenuItems([]); return; }
     const staticMenus = getActiveMenuItemsByLocation(selectedLocationId);
-    if (staticMenus.length > 0) {
-      setMenuItems(staticMenus);
-      return;
-    }
+    if (staticMenus.length > 0) { setMenuItems(staticMenus); return; }
     setMenuLoading(true);
     reservationQueries
       .getMenuItemsByLocationFromDb(selectedLocationId)
@@ -246,7 +279,6 @@ export function PublicReservationPage() {
       .finally(() => setMenuLoading(false));
   }, [selectedLocationId]);
 
-  // Load booked slots for displayed month + location
   useEffect(() => {
     if (!selectedLocationId) return;
     const y = displayedMonth.getFullYear();
@@ -255,32 +287,14 @@ export function PublicReservationPage() {
     let cancelled = false;
     reservationQueries
       .getBookedSlotsForMonth(monthKey, selectedLocationId)
-      .then((res) => {
-        if (!cancelled)
-          setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: res.slots ?? [] }));
-      })
-      .catch(() => {
-        if (!cancelled) setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: [] }));
-      });
-    return () => {
-      cancelled = true;
-    };
+      .then((res) => { if (!cancelled) setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: res.slots ?? [] })); })
+      .catch(() => { if (!cancelled) setMonthBookedSlots((prev) => ({ ...prev, [monthKey]: [] })); });
+    return () => { cancelled = true; };
   }, [displayedMonth, selectedLocationId]);
 
-  // ── Computed ─────────────────────────────────────────────────────────────────
+  // ── Computed ──────────────────────────────────────────────────────────────────
 
   const currentAvailability = availabilityByLocation[selectedLocationId] ?? null;
-
-  const bookedCountsByDay = useMemo<Record<string, number>>(() => {
-    const counts: Record<string, number> = {};
-    Object.values(monthBookedSlots)
-      .flat()
-      .forEach((slot) => {
-        const dateStr = String(slot.reservation_date_time).slice(0, 10);
-        counts[dateStr] = (counts[dateStr] ?? 0) + 1;
-      });
-    return counts;
-  }, [monthBookedSlots]);
 
   const allTimeSlotsForDate = useMemo<string[]>(() => {
     if (!selectedDate || !settings) return [];
@@ -314,49 +328,93 @@ export function PublicReservationPage() {
     );
   }, [selectedDate, monthBookedSlots]);
 
-  const bookedDateModifiers = useMemo<Date[]>(() => {
-    return Object.entries(bookedCountsByDay)
-      .filter(([, count]) => count > 0)
-      .map(([dateStr]) => {
-        const [y, mo, d] = dateStr.split("-").map(Number);
-        return new Date(y, mo - 1, d);
-      });
-  }, [bookedCountsByDay]);
-
   const selectedLocationObj = locations.find((l) => l.location_id === selectedLocationId);
   const selectedMenuObj = menuItems.find((m) => m.menu_item_id === selectedMenuItemId);
 
-  // ── Calendar disabled logic ───────────────────────────────────────────────────
+  // ── Postal code search ───────────────────────────────────────────────────────
 
-  const isDateDisabled = (date: Date): boolean => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (date < today) return true;
-    const advance =
-      settings?.advance_reservation_days ?? settings?.advance_booking_days ?? 60;
-    const maxDate = new Date(today);
-    maxDate.setDate(maxDate.getDate() + advance);
-    if (date > maxDate) return true;
+  const handlePostalSearch = async () => {
+    const code = customerData.postal_code.replace(/-/g, "").trim();
+    if (code.length !== 7 || !/^\d{7}$/.test(code)) {
+      setPostalError("7桁の郵便番号を入力してください（例：1234567）");
+      return;
+    }
+    setPostalSearchLoading(true);
+    setPostalError(null);
+    try {
+      const res = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${code}`);
+      const json = await res.json();
+      if (json.results && json.results.length > 0) {
+        const r = json.results[0];
+        setCustomerData((p) => ({
+          ...p,
+          prefecture: r.address1 ?? p.prefecture,
+          city: (r.address2 ?? "") + (r.address3 ?? ""),
+        }));
+      } else {
+        setPostalError("該当する住所が見つかりませんでした");
+      }
+    } catch {
+      setPostalError("住所の検索に失敗しました");
+    } finally {
+      setPostalSearchLoading(false);
+    }
+  };
 
-    const dayOfWeek = date.getDay();
-    const avail = currentAvailability;
-    if (avail) {
-      if (avail.regular_closed_days?.includes(dayOfWeek)) return true;
-      const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-      if ((avail.closed_dates ?? []).includes(dateStr)) return true;
-    } else if (settings?.allowed_days) {
-      if (!settings.allowed_days.includes(dayOfWeek)) return true;
+  // ── Login only (member) ───────────────────────────────────────────────────────
+
+  const handleLoginOnly = async () => {
+    setAuthError(null);
+    if (!customerData.email.trim() || !validateEmail(customerData.email)) {
+      setAuthError("有効なメールアドレスを入力してください");
+      return;
+    }
+    if (!authPassword) { setAuthError("パスワードを入力してください"); return; }
+    setLoginLoading(true);
+    try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: customerData.email,
+        password: authPassword,
+      });
+      if (signInError) {
+        setAuthError("メールアドレスまたはパスワードが正しくありません。");
+      }
+      // On success, onAuthStateChange fires → session state updates → useEffect auto-fills customer data
+    } catch (e) {
+      setAuthError(e instanceof Error ? e.message : "ログインに失敗しました");
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  // ── To confirmation ──────────────────────────────────────────────────────────
+
+  const handleToConfirmation = () => {
+    setFormError(null);
+    setAuthError(null);
+    setError(null);
+
+    if (!customerData.parent_name.trim()) { setFormError("保護者名を入力してください"); return; }
+    if (!customerData.parent_name_kana.trim()) { setFormError("保護者名（フリガナ）を入力してください"); return; }
+    if (!customerData.phone.trim()) { setFormError("電話番号を入力してください"); return; }
+    if (!customerData.postal_code.trim()) { setFormError("郵便番号を入力してください"); return; }
+    if (!customerData.prefecture.trim()) { setFormError("都道府県を入力してください"); return; }
+    if (!customerData.city.trim()) { setFormError("市区町村を入力してください"); return; }
+    if (!customerData.address_line.trim()) { setFormError("番地・建物名を入力してください"); return; }
+
+    if (!session) {
+      if (!customerData.email.trim() || !validateEmail(customerData.email)) {
+        setAuthError("有効なメールアドレスを入力してください");
+        return;
+      }
+      if (!authPassword) { setAuthError("パスワードを入力してください"); return; }
+      if (authMode === "register") {
+        if (authPassword.length < 6) { setAuthError("パスワードは6文字以上で入力してください"); return; }
+        if (authPassword !== authPasswordConfirm) { setAuthError("パスワードが一致しません"); return; }
+      }
     }
 
-    const avail2 = currentAvailability as Record<string, unknown> | null;
-    const maxPerDay =
-      (avail2?.max_reservations_per_day as number | undefined) ??
-      settings?.max_reservations_per_day;
-    if (maxPerDay) {
-      const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-      if ((bookedCountsByDay[dateStr] ?? 0) >= maxPerDay) return true;
-    }
-    return false;
+    setStep(3);
   };
 
   // ── Submit ────────────────────────────────────────────────────────────────────
@@ -366,19 +424,13 @@ export function PublicReservationPage() {
     setAuthError(null);
     setFormError(null);
 
-    // Validate customer fields
-    if (!customerData.parent_name.trim()) {
-      setFormError("保護者名を入力してください");
-      return;
-    }
-    if (!customerData.child_name.trim()) {
-      setFormError("お子様名を入力してください");
-      return;
-    }
-    if (!customerData.phone.trim()) {
-      setFormError("電話番号を入力してください");
-      return;
-    }
+    if (!customerData.parent_name.trim()) { setFormError("保護者名を入力してください"); return; }
+    if (!customerData.parent_name_kana.trim()) { setFormError("保護者名（フリガナ）を入力してください"); return; }
+    if (!customerData.phone.trim()) { setFormError("電話番号を入力してください"); return; }
+    if (!customerData.postal_code.trim()) { setFormError("郵便番号を入力してください"); return; }
+    if (!customerData.prefecture.trim()) { setFormError("都道府県を入力してください"); return; }
+    if (!customerData.city.trim()) { setFormError("市区町村を入力してください"); return; }
+    if (!customerData.address_line.trim()) { setFormError("番地・建物名を入力してください"); return; }
 
     let currentSession = session;
 
@@ -387,31 +439,19 @@ export function PublicReservationPage() {
         setAuthError("有効なメールアドレスを入力してください");
         return;
       }
-      if (!authPassword) {
-        setAuthError("パスワードを入力してください");
-        return;
-      }
+      if (!authPassword) { setAuthError("パスワードを入力してください"); return; }
       setSubmitLoading(true);
       try {
         if (authMode === "register") {
-          if (authPassword.length < 6) {
-            setAuthError("パスワードは6文字以上で入力してください");
-            setSubmitLoading(false);
-            return;
-          }
-          if (authPassword !== authPasswordConfirm) {
-            setAuthError("パスワードが一致しません");
-            setSubmitLoading(false);
-            return;
-          }
+          if (authPassword.length < 6) { setAuthError("パスワードは6文字以上で入力してください"); setSubmitLoading(false); return; }
+          if (authPassword !== authPasswordConfirm) { setAuthError("パスワードが一致しません"); setSubmitLoading(false); return; }
           const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email: customerData.email,
             password: authPassword,
           });
           if (signUpError) {
             setAuthError(
-              signUpError.message.includes("already registered") ||
-                signUpError.message.includes("User already registered")
+              signUpError.message.includes("already registered") || signUpError.message.includes("User already registered")
                 ? "このメールアドレスは既に登録されています。「会員の方」からログインしてください。"
                 : signUpError.message
             );
@@ -419,24 +459,17 @@ export function PublicReservationPage() {
             return;
           }
           if (!signUpData.session) {
-            setAuthError(
-              "確認メールをお送りしました。メール内のリンクをクリックし、ログインしてから予約をお試しください。"
-            );
+            setVerificationSent(true);
             setSubmitLoading(false);
             return;
           }
           currentSession = signUpData.session as SessionType;
         } else {
-          const { data: signInData, error: signInError } =
-            await supabase.auth.signInWithPassword({
-              email: customerData.email,
-              password: authPassword,
-            });
-          if (signInError) {
-            setAuthError("メールアドレスまたはパスワードが正しくありません。");
-            setSubmitLoading(false);
-            return;
-          }
+          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+            email: customerData.email,
+            password: authPassword,
+          });
+          if (signInError) { setAuthError("メールアドレスまたはパスワードが正しくありません。"); setSubmitLoading(false); return; }
           currentSession = signInData.session as SessionType;
         }
       } catch (e) {
@@ -450,11 +483,7 @@ export function PublicReservationPage() {
 
     try {
       const accessToken = currentSession?.access_token;
-      if (!accessToken) {
-        setError("認証エラーが発生しました。再度お試しください。");
-        setSubmitLoading(false);
-        return;
-      }
+      if (!accessToken) { setError("認証エラーが発生しました。再度お試しください。"); setSubmitLoading(false); return; }
       const res = await reservationApi.createReservation(
         {
           reservation_date_time: selectedTime,
@@ -493,12 +522,8 @@ export function PublicReservationPage() {
     return (
       <div className="container mx-auto px-6 pb-16 max-w-xl text-center" style={{ paddingTop: "clamp(100px, 14vw, 160px)" }}>
         <h1 className="font-en-serif text-2xl text-[#2C2C2C] mb-4">Web予約</h1>
-        <p className="mb-6 text-[#2C2C2C]">
-          スタッフ・管理者アカウントではご予約いただけません。
-        </p>
-        <Button type="button" variant="outline" onClick={() => navigate("/")}>
-          トップへ
-        </Button>
+        <p className="mb-6 text-[#2C2C2C]">スタッフ・管理者アカウントではご予約いただけません。</p>
+        <Button type="button" variant="outline" onClick={() => navigate("/")}>トップへ</Button>
       </div>
     );
   }
@@ -526,6 +551,9 @@ export function PublicReservationPage() {
     setFormError(null);
     setAuthError(null);
     setError(null);
+    setStep(1);
+    setEditingCustomerInfo(false);
+    setVerificationSent(false);
   };
 
   // ── Render ────────────────────────────────────────────────────────────────────
@@ -534,10 +562,7 @@ export function PublicReservationPage() {
     <>
       <Helmet>
         <title>Web予約｜立体手形の専門スタジオ amorétto</title>
-        <meta
-          name="description"
-          content="amoréttoのWeb予約フォームです。店舗・メニュー・日時を選んでご予約ください。"
-        />
+        <meta name="description" content="amoréttoのWeb予約フォームです。店舗・メニュー・日時を選んでご予約ください。" />
       </Helmet>
 
       <div className="container mx-auto px-4 pb-16 max-w-2xl" style={{ paddingTop: "clamp(100px, 14vw, 160px)" }}>
@@ -556,6 +581,7 @@ export function PublicReservationPage() {
             setSelectedDate(undefined);
             setSelectedTime("");
             setMonthBookedSlots({});
+            setStep(1);
             scrollToForm();
           }}
           onDateSelect={(locId, date) => {
@@ -565,6 +591,7 @@ export function PublicReservationPage() {
             setSelectedMenuItemId("");
             setSelectedTime("");
             setMonthBookedSlots({});
+            setStep(1);
             scrollToForm();
           }}
         />
@@ -576,328 +603,672 @@ export function PublicReservationPage() {
               上の空き状況から「予約する」を押してください
             </p>
           ) : (
-            <div className="space-y-8">
-
-              {/* Selected store bar */}
+            <div>
+              {/* ── Sticky selection summary bar ── */}
               <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                position: "sticky",
+                top: 60,
+                zIndex: 30,
+                background: "white",
+                borderTop: "1px solid #E5E0D8",
+                borderBottom: "1px solid #E5E0D8",
+                marginLeft: -16,
+                marginRight: -16,
                 padding: "10px 16px",
-                background: "#FFFBF0",
-                border: "1px solid #E5D99A",
-                borderRadius: 12,
               }}>
-                <div>
-                  <span style={{ fontSize: 11, color: "#C4A962", fontWeight: 600 }}>予約店舗</span>
-                  <p style={{ margin: 0, fontWeight: 700, color: "#2C2C2C" }}>
-                    {selectedLocationObj?.location_name}
-                  </p>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, flex: 1, minWidth: 0, flexWrap: "wrap" }}>
+                    <span style={{ fontWeight: 700, color: "#2C2C2C", fontSize: 14, flexShrink: 0 }}>
+                      {selectedLocationObj?.location_name}
+                    </span>
+                    {selectedDate && (
+                      <span style={{ fontSize: 12, color: "#C4A962", flexShrink: 0 }}>
+                        {formatJapaneseDate(selectedDate)}
+                      </span>
+                    )}
+                    {selectedMenuObj && (
+                      <>
+                        <span style={{ color: "#D5D0C8", fontSize: 12 }}>·</span>
+                        <span style={{ fontSize: 12, color: "#666", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {selectedMenuObj.name}
+                        </span>
+                      </>
+                    )}
+                    {selectedTime && (
+                      <>
+                        <span style={{ color: "#D5D0C8", fontSize: 12 }}>·</span>
+                        <span style={{ fontSize: 12, color: "#2C2C2C", fontWeight: 600, flexShrink: 0 }}>
+                          {selectedTime.slice(11, 16)}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => { resetBooking(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    style={{ fontSize: 11, color: "#9CA3AF", border: "1px solid #D1D5DB", borderRadius: 999, padding: "3px 10px", background: "white", cursor: "pointer", flexShrink: 0 }}
+                  >
+                    変更
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => { resetBooking(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  style={{ fontSize: 11, color: "#9CA3AF", background: "none", border: "1px solid #D1D5DB", borderRadius: 999, padding: "3px 12px", cursor: "pointer" }}
-                >
-                  変更
-                </button>
               </div>
 
-              {/* ① Date selection */}
-              <section>
-                <SectionLabel n="①" label="日付を選ぶ" />
-                <div className="rounded-xl border border-[#E5E0D8] bg-white shadow-sm p-4 md:p-5">
-                  <Calendar
-                    mode="single"
-                    month={displayedMonth}
-                    onMonthChange={(m) => {
-                      setDisplayedMonth(m);
-                      setSelectedDate(undefined);
-                      setSelectedMenuItemId("");
-                      setSelectedTime("");
-                    }}
-                    selected={selectedDate}
-                    onSelect={(d) => {
-                      setSelectedDate(d);
-                      setSelectedMenuItemId("");
-                      setSelectedTime("");
-                      setFormError(null);
-                    }}
-                    disabled={isDateDisabled}
-                    modifiers={{ booked: bookedDateModifiers }}
-                    modifiersClassNames={{ booked: "day-has-bookings" }}
-                    className="mx-auto"
-                  />
-                  <p className="text-xs text-[#BBBBBB] text-center mt-3">
-                    グレーの日付は予約不可（休業日・満席）です
-                  </p>
-                </div>
-              </section>
+              {/* ── Step indicator ── */}
+              <StepIndicator step={step} />
 
-              {/* ② Menu selection (shown when date selected) */}
-              {selectedDate && (
-                <section>
-                  <SectionLabel n="②" label="メニューを選ぶ" />
-                  {menuLoading ? (
-                    <p className="text-sm text-[#888] py-4 text-center">読み込み中...</p>
-                  ) : menuItems.length === 0 ? (
-                    <p className="text-sm text-[#888] bg-[#FAFAF8] rounded-xl p-4 text-center">
-                      この店舗のメニューが見つかりませんでした。
+              {/* ── STEP 1: Schedule selection ── */}
+              {step === 1 && (
+                <div className="space-y-8">
+                  {/* ① Menu */}
+                  {!selectedDate ? (
+                    <p className="text-sm text-[#AAAAAA] text-center py-4">
+                      上の空き状況カレンダーから日付を選んでください
                     </p>
                   ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {menuItems.map((m) => (
-                        <button
-                          key={m.menu_item_id}
-                          type="button"
-                          onClick={() => {
-                            setSelectedMenuItemId(m.menu_item_id);
-                            setSelectedTime("");
-                            setFormError(null);
-                          }}
-                          className={cn(
-                            "text-left p-4 rounded-xl border-2 transition-all",
-                            selectedMenuItemId === m.menu_item_id
-                              ? "border-[#C4A962] bg-[#C4A962]/5 shadow-sm"
-                              : "border-[#E5E0D8] bg-white hover:border-[#C4A962]/50 hover:shadow-sm"
-                          )}
-                        >
-                          <div className="flex items-start justify-between gap-2">
-                            <span className="font-semibold text-[#2C2C2C]">{m.name}</span>
-                            {selectedMenuItemId === m.menu_item_id && (
-                              <span className="text-[#C4A962] text-xs font-medium shrink-0 mt-0.5">✓</span>
-                            )}
-                          </div>
-                          {m.duration_minutes != null && (
-                            <div className="text-xs text-[#888] mt-1.5">約{m.duration_minutes}分</div>
-                          )}
-                          {m.description && (
-                            <div className="text-xs text-[#999] mt-1 line-clamp-2">{m.description}</div>
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </section>
-              )}
-
-              {/* ③ Time slot selection (shown when date + menu selected) */}
-              {selectedDate && selectedMenuItemId && (
-                <section>
-                  <SectionLabel n="③" label={`時間を選ぶ（${formatJapaneseDate(selectedDate)}）`} />
-                  {allTimeSlotsForDate.length === 0 ? (
-                    <p className="text-sm text-[#888] bg-[#FAFAF8] rounded-xl p-4 text-center">
-                      この日は予約可能な時間帯がありません。別の日付をお選びください。
-                    </p>
-                  ) : (
-                    <>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                        {allTimeSlotsForDate.map((slot) => {
-                          const isBooked = bookedTimesForDate.has(slot.slice(0, 16));
-                          const isSelected = selectedTime === slot;
-                          const label = slot.slice(11, 16);
-                          return (
+                    <section>
+                      <SectionLabel n="①" label="メニューを選ぶ" />
+                      {menuLoading ? (
+                        <p className="text-sm text-[#888] py-4 text-center">読み込み中...</p>
+                      ) : menuItems.length === 0 ? (
+                        <p className="text-sm text-[#888] bg-[#FAFAF8] rounded-xl p-4 text-center">
+                          この店舗のメニューが見つかりませんでした。
+                        </p>
+                      ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {menuItems.map((m) => (
                             <button
-                              key={slot}
+                              key={m.menu_item_id}
                               type="button"
-                              disabled={isBooked}
                               onClick={() => {
-                                setSelectedTime(slot);
+                                setSelectedMenuItemId(m.menu_item_id);
+                                setSelectedTime("");
                                 setFormError(null);
                               }}
                               className={cn(
-                                "py-3 px-2 rounded-lg text-sm font-medium border-2 transition-all",
-                                isBooked
-                                  ? "border-gray-200 bg-gray-100 text-gray-300 cursor-not-allowed"
-                                  : isSelected
-                                  ? "border-[#C4A962] bg-[#C4A962] text-white shadow-sm"
-                                  : "border-[#E5E0D8] bg-white text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962]"
+                                "text-left p-4 rounded-xl border-2 transition-all",
+                                selectedMenuItemId === m.menu_item_id
+                                  ? "border-[#C4A962] bg-[#C4A962]/5 shadow-sm"
+                                  : "border-[#E5E0D8] bg-white hover:border-[#C4A962]/50 hover:shadow-sm"
                               )}
                             >
-                              {label}
-                              {isBooked && <div className="text-xs mt-0.5 text-gray-300">満席</div>}
+                              <div className="flex items-start justify-between gap-2">
+                                <span className="font-semibold text-[#2C2C2C]">{m.name}</span>
+                                {selectedMenuItemId === m.menu_item_id && (
+                                  <span className="text-[#C4A962] text-xs font-medium shrink-0 mt-0.5">✓</span>
+                                )}
+                              </div>
+                              {m.duration_minutes != null && (
+                                <div className="text-xs text-[#888] mt-1.5">約{m.duration_minutes}分</div>
+                              )}
+                              {m.description && (
+                                <div className="text-xs text-[#999] mt-1 line-clamp-2">{m.description}</div>
+                              )}
                             </button>
-                          );
-                        })}
-                      </div>
-                      <div className="flex items-center gap-5 mt-4 text-xs text-[#999]">
-                        <span className="flex items-center gap-1.5">
-                          <span className="inline-block w-4 h-4 rounded border-2 border-[#E5E0D8] bg-white" />
-                          空き
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <span className="inline-block w-4 h-4 rounded bg-[#C4A962]" />
-                          選択中
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <span className="inline-block w-4 h-4 rounded bg-gray-100 border-2 border-gray-200" />
-                          満席
-                        </span>
-                      </div>
-                    </>
+                          ))}
+                        </div>
+                      )}
+                    </section>
                   )}
-                </section>
+
+                  {/* ② Time */}
+                  {selectedDate && selectedMenuItemId && (() => {
+                    const availableSlots = allTimeSlotsForDate.filter(
+                      (slot) => !bookedTimesForDate.has(slot.slice(0, 16))
+                    );
+                    const morningSlots = availableSlots.filter((s) => parseInt(s.slice(11, 13)) < 12);
+                    const afternoonSlots = availableSlots.filter((s) => parseInt(s.slice(11, 13)) >= 12);
+
+                    const SlotButton = ({ slot }: { slot: string }) => {
+                      const isSelected = selectedTime === slot;
+                      return (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => { setSelectedTime(slot); setFormError(null); }}
+                          className={cn(
+                            "py-3 rounded-lg text-sm font-medium border-2 transition-all",
+                            isSelected
+                              ? "border-[#C4A962] bg-[#C4A962] text-white shadow-sm"
+                              : "border-[#E5E0D8] bg-white text-[#2C2C2C] hover:border-[#C4A962] hover:text-[#C4A962]"
+                          )}
+                        >
+                          {slot.slice(11, 16)}
+                        </button>
+                      );
+                    };
+
+                    return (
+                      <section>
+                        <SectionLabel n="②" label="時間を選ぶ" />
+                        {availableSlots.length === 0 ? (
+                          <p className="text-sm text-[#888] bg-[#FAFAF8] rounded-xl p-4 text-center">
+                            この日は予約可能な時間帯がありません。別の日付をお選びください。
+                          </p>
+                        ) : (
+                          <div className="space-y-4">
+                            {morningSlots.length > 0 && (
+                              <div>
+                                <p className="text-xs text-[#AAAAAA] font-medium mb-2 ml-1">午前</p>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+                                  {morningSlots.map((slot) => <SlotButton key={slot} slot={slot} />)}
+                                </div>
+                              </div>
+                            )}
+                            {afternoonSlots.length > 0 && (
+                              <div>
+                                <p className="text-xs text-[#AAAAAA] font-medium mb-2 ml-1">午後</p>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+                                  {afternoonSlots.map((slot) => <SlotButton key={slot} slot={slot} />)}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </section>
+                    );
+                  })()}
+
+                  {/* Next button */}
+                  {selectedTime && (
+                    <Button
+                      type="button"
+                      onClick={() => setStep(2)}
+                      className="w-full bg-[#C4A962] hover:bg-[#B39952] text-white py-3 text-base"
+                    >
+                      次へ → お客様情報の入力
+                    </Button>
+                  )}
+                </div>
               )}
 
-              {/* ④ Account + customer info (shown when time selected) */}
-              {selectedTime && (
-                <section className="space-y-5">
-                  {/* Mini summary */}
-                  <div className="bg-[#FAFAF8] border border-[#E5E0D8] rounded-xl p-4 text-sm space-y-1">
-                    <p className="text-[#AAAAAA] text-xs font-semibold uppercase tracking-wide mb-2">ご予約内容</p>
-                    <p className="text-[#2C2C2C]">
-                      <span className="text-[#888]">店舗：</span>{selectedLocationObj?.location_name}
-                    </p>
-                    <p className="text-[#2C2C2C]">
-                      <span className="text-[#888]">メニュー：</span>
-                      {selectedMenuObj?.name}
-                      {selectedMenuObj?.duration_minutes != null && `（約${selectedMenuObj.duration_minutes}分）`}
-                    </p>
-                    {selectedDate && (
-                      <p className="text-[#2C2C2C]">
-                        <span className="text-[#888]">日時：</span>
-                        {formatJapaneseDateTime(selectedDate, selectedTime)}
+              {/* ── STEP 2: Account + Customer form ── */}
+              {step === 2 && (() => {
+                const isDataComplete =
+                  Boolean(customerData.parent_name.trim()) &&
+                  Boolean(customerData.parent_name_kana.trim()) &&
+                  Boolean(customerData.phone.trim()) &&
+                  Boolean(customerData.postal_code.trim()) &&
+                  Boolean(customerData.prefecture.trim()) &&
+                  Boolean(customerData.city.trim()) &&
+                  Boolean(customerData.address_line.trim());
+                const showForm = !session || editingCustomerInfo || !isDataComplete;
+
+                // Email verification pending screen
+                if (verificationSent) {
+                  return (
+                    <section className="space-y-5 text-center">
+                      <div style={{ fontSize: 48, marginBottom: 8 }}>📧</div>
+                      <h2 style={{ fontSize: 18, fontWeight: 700, color: "#2C2C2C" }}>確認メールを送信しました</h2>
+                      <p style={{ fontSize: 13, color: "#666", lineHeight: 1.7 }}>
+                        <strong>{customerData.email}</strong> 宛に確認メールを送信しました。<br />
+                        メール内のリンクをクリックしてアカウントを有効化してください。
                       </p>
-                    )}
-                  </div>
-
-                  {/* Auth section (not logged in) */}
-                  {!session && !sessionLoading && (
-                    <div className="space-y-4">
-                      <h2 className="text-base font-semibold text-[#2C2C2C] pb-2 border-b border-[#E5E0D8]">
-                        アカウント
-                      </h2>
-
-                      <div className="flex rounded-lg border border-[#E5E0D8] overflow-hidden">
-                        <button
-                          type="button"
-                          onClick={() => { setAuthMode("register"); setAuthError(null); setAuthPasswordConfirm(""); }}
-                          className={cn(
-                            "flex-1 py-3 text-sm font-medium transition-colors",
-                            authMode === "register"
-                              ? "bg-[#C4A962] text-white"
-                              : "bg-white text-[#666] hover:bg-[#FAFAF8]"
-                          )}
-                        >
-                          はじめての方（新規登録）
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => { setAuthMode("login"); setAuthError(null); setAuthPasswordConfirm(""); }}
-                          className={cn(
-                            "flex-1 py-3 text-sm font-medium transition-colors",
-                            authMode === "login"
-                              ? "bg-[#C4A962] text-white"
-                              : "bg-white text-[#666] hover:bg-[#FAFAF8]"
-                          )}
-                        >
-                          会員の方（ログイン）
-                        </button>
+                      <div style={{ background: "#FAFAF8", border: "1px solid #E5E0D8", borderRadius: 12, padding: 16, fontSize: 12, color: "#888", textAlign: "left" }}>
+                        <p style={{ margin: 0, fontWeight: 600, marginBottom: 4 }}>有効化後の手順</p>
+                        <p style={{ margin: 0 }}>① メール内のリンクをクリック</p>
+                        <p style={{ margin: 0 }}>② 再度この予約ページを開く</p>
+                        <p style={{ margin: 0 }}>③「会員の方」からログインして予約を完了</p>
                       </div>
+                      <Button
+                        type="button"
+                        onClick={() => { setVerificationSent(false); setAuthMode("login"); setAuthPassword(""); setAuthPasswordConfirm(""); }}
+                        className="w-full bg-[#C4A962] hover:bg-[#B39952] text-white py-3 text-base"
+                      >
+                        会員の方はこちらからログイン
+                      </Button>
+                      <button
+                        type="button"
+                        onClick={() => { setStep(1); setVerificationSent(false); setFormError(null); setAuthError(null); setError(null); }}
+                        style={{ display: "block", width: "100%", padding: "8px", textAlign: "center", fontSize: 13, color: "#9CA3AF", background: "none", border: "none", cursor: "pointer" }}
+                      >
+                        ← 戻る
+                      </button>
+                    </section>
+                  );
+                }
 
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
-                            メールアドレス <span className="text-red-500">*</span>
-                          </label>
-                          <Input
-                            type="email"
-                            value={customerData.email}
-                            onChange={(e) => setCustomerData((p) => ({ ...p, email: e.target.value }))}
-                            placeholder="customer@example.com"
-                            className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
-                            パスワード
-                            {authMode === "register" && (
-                              <span className="text-[#999] text-xs font-normal ml-1">（6文字以上）</span>
+                return (
+                  <section className="space-y-5">
+                    {/* Booking summary */}
+                    <div style={{ background: "#FAFAF8", border: "1px solid #E5E0D8", borderRadius: 12, padding: 16, fontSize: 13 }}>
+                      <p style={{ color: "#AAAAAA", fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8 }}>
+                        ご予約内容
+                      </p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                        <p style={{ color: "#2C2C2C", margin: 0 }}>
+                          <span style={{ color: "#888" }}>店舗：</span>{selectedLocationObj?.location_name}
+                        </p>
+                        <p style={{ color: "#2C2C2C", margin: 0 }}>
+                          <span style={{ color: "#888" }}>メニュー：</span>
+                          {selectedMenuObj?.name}
+                          {selectedMenuObj?.duration_minutes != null && `（約${selectedMenuObj.duration_minutes}分）`}
+                        </p>
+                        {selectedDate && (
+                          <p style={{ color: "#2C2C2C", margin: 0 }}>
+                            <span style={{ color: "#888" }}>日時：</span>
+                            {formatJapaneseDateTime(selectedDate, selectedTime)}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* ── Not logged in: auth tabs ── */}
+                    {!session && !sessionLoading && (
+                      <div className="space-y-4">
+                        <h2 className="text-base font-semibold text-[#2C2C2C] pb-2 border-b border-[#E5E0D8]">
+                          アカウント
+                        </h2>
+
+                        <div className="flex rounded-lg border border-[#E5E0D8] overflow-hidden">
+                          <button
+                            type="button"
+                            onClick={() => { setAuthMode("register"); setAuthError(null); setAuthPasswordConfirm(""); }}
+                            className={cn(
+                              "flex-1 py-3 text-sm font-medium transition-colors",
+                              authMode === "register" ? "bg-[#C4A962] text-white" : "bg-white text-[#666] hover:bg-[#FAFAF8]"
                             )}
-                            <span className="text-red-500"> *</span>
-                          </label>
-                          <input
-                            type="password"
-                            value={authPassword}
-                            onChange={(e) => setAuthPassword(e.target.value)}
-                            autoComplete={authMode === "register" ? "new-password" : "current-password"}
-                            placeholder="••••••••"
-                            className="w-full h-10 rounded-md border border-[#D5D0C8] bg-[#FAFAF8] px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C4A962]/30 focus:border-[#C4A962]"
-                          />
+                          >
+                            はじめての方（新規登録）
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => { setAuthMode("login"); setAuthError(null); setAuthPasswordConfirm(""); }}
+                            className={cn(
+                              "flex-1 py-3 text-sm font-medium transition-colors",
+                              authMode === "login" ? "bg-[#C4A962] text-white" : "bg-white text-[#666] hover:bg-[#FAFAF8]"
+                            )}
+                          >
+                            会員の方（ログイン）
+                          </button>
                         </div>
-                        {authMode === "register" && (
+
+                        <div className="space-y-3">
                           <div>
                             <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
-                              パスワード（確認） <span className="text-red-500">*</span>
+                              メールアドレス <span className="text-red-500">*</span>
+                            </label>
+                            <Input
+                              type="email"
+                              value={customerData.email}
+                              onChange={(e) => setCustomerData((p) => ({ ...p, email: e.target.value }))}
+                              placeholder="customer@example.com"
+                              className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                              パスワード
+                              {authMode === "register" && (
+                                <span className="text-[#999] text-xs font-normal ml-1">（6文字以上）</span>
+                              )}
+                              <span className="text-red-500"> *</span>
                             </label>
                             <input
                               type="password"
-                              value={authPasswordConfirm}
-                              onChange={(e) => setAuthPasswordConfirm(e.target.value)}
-                              autoComplete="new-password"
+                              value={authPassword}
+                              onChange={(e) => setAuthPassword(e.target.value)}
+                              autoComplete={authMode === "register" ? "new-password" : "current-password"}
                               placeholder="••••••••"
                               className="w-full h-10 rounded-md border border-[#D5D0C8] bg-[#FAFAF8] px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C4A962]/30 focus:border-[#C4A962]"
                             />
                           </div>
+                          {authMode === "register" && (
+                            <div>
+                              <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                                パスワード（確認） <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                type="password"
+                                value={authPasswordConfirm}
+                                onChange={(e) => setAuthPasswordConfirm(e.target.value)}
+                                autoComplete="new-password"
+                                placeholder="••••••••"
+                                className="w-full h-10 rounded-md border border-[#D5D0C8] bg-[#FAFAF8] px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C4A962]/30 focus:border-[#C4A962]"
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        {authError && (
+                          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-3" role="alert">
+                            {authError}
+                          </p>
+                        )}
+
+                        {/* Login-only button for members */}
+                        {authMode === "login" && (
+                          <Button
+                            type="button"
+                            onClick={handleLoginOnly}
+                            disabled={loginLoading}
+                            className="w-full bg-[#C4A962] hover:bg-[#B39952] text-white py-3 text-base"
+                          >
+                            {loginLoading ? "ログイン中..." : "ログインする"}
+                          </Button>
                         )}
                       </div>
+                    )}
 
-                      {authError && (
-                        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-3" role="alert">
-                          {authError}
-                        </p>
+                    {/* ── Logged in ── */}
+                    {session && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555", background: "#F5F3EF", border: "1px solid #E5E0D8", borderRadius: 8, padding: "10px 12px" }}>
+                        <span style={{ color: "#C4A962", fontWeight: 700 }}>✓</span>
+                        <span>ログイン中：{session.user?.email ?? session.user?.id}</span>
+                      </div>
+                    )}
+
+                    {/* ── Customer info (new member form OR logged-in confirmation) ── */}
+                    {(session || authMode === "register") && (
+                      <div className="space-y-4">
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid #E5E0D8", paddingBottom: 8 }}>
+                          <h2 className="text-base font-semibold text-[#2C2C2C]">お客様情報</h2>
+                          {session && isDataComplete && !editingCustomerInfo && (
+                            <button
+                              type="button"
+                              onClick={() => setEditingCustomerInfo(true)}
+                              style={{ fontSize: 11, color: "#9CA3AF", border: "1px solid #D1D5DB", borderRadius: 999, padding: "2px 10px", background: "white", cursor: "pointer" }}
+                            >
+                              変更
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Confirmation card (logged in + data complete + not editing) */}
+                        {session && isDataComplete && !editingCustomerInfo ? (
+                          <div style={{ background: "#FAFAF8", border: "1px solid #E5E0D8", borderRadius: 10, padding: "12px 16px", fontSize: 13 }}>
+                            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                              <div style={{ display: "flex", gap: 8 }}>
+                                <span style={{ color: "#888", minWidth: 80 }}>保護者名</span>
+                                <span style={{ color: "#2C2C2C", fontWeight: 500 }}>
+                                  {customerData.parent_name}
+                                  {customerData.parent_name_kana && <span style={{ color: "#888", fontWeight: 400, marginLeft: 8 }}>{customerData.parent_name_kana}</span>}
+                                </span>
+                              </div>
+                              {customerData.child_name && (
+                                <div style={{ display: "flex", gap: 8 }}>
+                                  <span style={{ color: "#888", minWidth: 80 }}>お子様名</span>
+                                  <span style={{ color: "#2C2C2C", fontWeight: 500 }}>
+                                    {customerData.child_name}
+                                    {customerData.child_name_kana && <span style={{ color: "#888", fontWeight: 400, marginLeft: 8 }}>{customerData.child_name_kana}</span>}
+                                  </span>
+                                </div>
+                              )}
+                              <div style={{ display: "flex", gap: 8 }}>
+                                <span style={{ color: "#888", minWidth: 80 }}>電話番号</span>
+                                <span style={{ color: "#2C2C2C", fontWeight: 500 }}>{customerData.phone}</span>
+                              </div>
+                              <div style={{ display: "flex", gap: 8 }}>
+                                <span style={{ color: "#888", minWidth: 80 }}>住所</span>
+                                <span style={{ color: "#2C2C2C", fontWeight: 500 }}>
+                                  〒{customerData.postal_code}　{customerData.prefecture}{customerData.city}{customerData.address_line}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          /* Edit form */
+                          <div className="space-y-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                                  保護者名 <span className="text-red-500">*</span>
+                                </label>
+                                <Input
+                                  value={customerData.parent_name}
+                                  onChange={(e) => setCustomerData((p) => ({ ...p, parent_name: e.target.value }))}
+                                  placeholder="山田 花子"
+                                  className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                                  お子様名
+                                  <span className="text-[#999] text-xs font-normal ml-1">（任意）</span>
+                                </label>
+                                <Input
+                                  value={customerData.child_name}
+                                  onChange={(e) => setCustomerData((p) => ({ ...p, child_name: e.target.value }))}
+                                  placeholder="山田 太郎"
+                                  className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                                />
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                                  フリガナ（保護者） <span className="text-red-500">*</span>
+                                </label>
+                                <Input
+                                  value={customerData.parent_name_kana}
+                                  onChange={(e) => setCustomerData((p) => ({ ...p, parent_name_kana: e.target.value }))}
+                                  placeholder="ヤマダ ハナコ"
+                                  className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                                  フリガナ（お子様）
+                                  <span className="text-[#999] text-xs font-normal ml-1">（任意）</span>
+                                </label>
+                                <Input
+                                  value={customerData.child_name_kana}
+                                  onChange={(e) => setCustomerData((p) => ({ ...p, child_name_kana: e.target.value }))}
+                                  placeholder="ヤマダ タロウ"
+                                  className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
+                                電話番号 <span className="text-red-500">*</span>
+                              </label>
+                              <Input
+                                type="tel"
+                                value={customerData.phone}
+                                onChange={(e) => setCustomerData((p) => ({ ...p, phone: e.target.value }))}
+                                placeholder="090-1234-5678"
+                                className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
+                              />
+                            </div>
+
+                            {/* Address block */}
+                            <div style={{ border: "1px solid #E5E0D8", borderRadius: 10, padding: "14px 14px 10px", background: "#FAFAF8" }}>
+                              <p className="text-sm font-medium text-[#2C2C2C] mb-3">
+                                住所 <span className="text-red-500">*</span>
+                              </p>
+
+                              {/* Postal code */}
+                              <div className="mb-3">
+                                <label className="block text-xs text-[#888] mb-1.5">郵便番号</label>
+                                <div style={{ display: "flex", gap: 8 }}>
+                                  <Input
+                                    value={customerData.postal_code}
+                                    onChange={(e) => {
+                                      const v = e.target.value.replace(/[^\d]/g, "").slice(0, 7);
+                                      const fmt = v.length > 3 ? `${v.slice(0, 3)}-${v.slice(3)}` : v;
+                                      setCustomerData((p) => ({ ...p, postal_code: fmt }));
+                                      setPostalError(null);
+                                    }}
+                                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handlePostalSearch(); } }}
+                                    placeholder="123-4567"
+                                    maxLength={8}
+                                    className="bg-white border-[#D5D0C8] focus:border-[#C4A962]"
+                                    style={{ width: 130 }}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={handlePostalSearch}
+                                    disabled={postalSearchLoading}
+                                    style={{
+                                      padding: "0 14px",
+                                      fontSize: 12,
+                                      fontWeight: 600,
+                                      color: "white",
+                                      background: postalSearchLoading ? "#D5D0C8" : "#C4A962",
+                                      border: "none",
+                                      borderRadius: 6,
+                                      cursor: postalSearchLoading ? "default" : "pointer",
+                                      whiteSpace: "nowrap",
+                                    }}
+                                  >
+                                    {postalSearchLoading ? "検索中…" : "住所を検索"}
+                                  </button>
+                                </div>
+                                {postalError && (
+                                  <p style={{ fontSize: 11, color: "#EF4444", marginTop: 4 }}>{postalError}</p>
+                                )}
+                              </div>
+
+                              {/* Prefecture */}
+                              <div className="mb-3">
+                                <label className="block text-xs text-[#888] mb-1.5">都道府県</label>
+                                <Input
+                                  value={customerData.prefecture}
+                                  onChange={(e) => setCustomerData((p) => ({ ...p, prefecture: e.target.value }))}
+                                  placeholder="愛知県"
+                                  className="bg-white border-[#D5D0C8] focus:border-[#C4A962]"
+                                />
+                              </div>
+
+                              {/* City */}
+                              <div className="mb-3">
+                                <label className="block text-xs text-[#888] mb-1.5">市区町村・町域</label>
+                                <Input
+                                  value={customerData.city}
+                                  onChange={(e) => setCustomerData((p) => ({ ...p, city: e.target.value }))}
+                                  placeholder="豊川市門前町"
+                                  className="bg-white border-[#D5D0C8] focus:border-[#C4A962]"
+                                />
+                              </div>
+
+                              {/* Address line */}
+                              <div>
+                                <label className="block text-xs text-[#888] mb-1.5">番地・建物名・部屋番号</label>
+                                <Input
+                                  value={customerData.address_line}
+                                  onChange={(e) => setCustomerData((p) => ({ ...p, address_line: e.target.value }))}
+                                  placeholder="1-5 〇〇マンション101号"
+                                  className="bg-white border-[#D5D0C8] focus:border-[#C4A962]"
+                                />
+                              </div>
+                            </div>
+                            {session && editingCustomerInfo && (
+                              <button
+                                type="button"
+                                onClick={() => setEditingCustomerInfo(false)}
+                                style={{ fontSize: 12, color: "#9CA3AF", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                              >
+                                ← キャンセル
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {(formError || error) && (
+                      <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-3" role="alert">
+                        {formError || error}
+                      </p>
+                    )}
+
+                    {/* Submit button — shown for logged-in users or new registrations */}
+                    {(session || authMode === "register") && (
+                      <div style={{ marginTop: 24 }}>
+                        <Button
+                          type="button"
+                          onClick={handleToConfirmation}
+                          className="w-full bg-[#C4A962] hover:bg-[#B39952] text-white py-3 text-base"
+                        >
+                          {session ? "確認画面へ →" : "会員登録して確認へ →"}
+                        </Button>
+                      </div>
+                    )}
+
+                    {/* Back button */}
+                    <button
+                      type="button"
+                      onClick={() => { setStep(1); setFormError(null); setAuthError(null); setError(null); }}
+                      style={{ display: "block", width: "100%", padding: "10px", textAlign: "center", fontSize: 13, color: "#9CA3AF", background: "none", border: "none", cursor: "pointer" }}
+                    >
+                      ← 戻る
+                    </button>
+                  </section>
+                );
+              })()}
+
+              {/* ── STEP 3: Confirmation ── */}
+              {step === 3 && (
+                <section style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                  <div>
+                    <h2 style={{ fontSize: 18, fontWeight: 700, color: "#2C2C2C", margin: 0 }}>ご予約内容の確認</h2>
+                    <p style={{ fontSize: 12, color: "#AAAAAA", marginTop: 6, marginBottom: 0 }}>内容をご確認の上、予約を確定してください。</p>
+                  </div>
+
+                  {/* Booking summary */}
+                  <div style={{ background: "#FAFAF8", border: "1px solid #E5E0D8", borderRadius: 14, padding: "20px 20px 16px", fontSize: 13 }}>
+                    <p style={{ color: "#C4A962", fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 14, margin: "0 0 14px" }}>
+                      ご予約内容
+                    </p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      <div style={{ display: "flex", gap: 12 }}>
+                        <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>店舗</span>
+                        <span style={{ color: "#2C2C2C", fontWeight: 600 }}>{selectedLocationObj?.location_name}</span>
+                      </div>
+                      <div style={{ display: "flex", gap: 12 }}>
+                        <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>メニュー</span>
+                        <span style={{ color: "#2C2C2C", fontWeight: 500 }}>
+                          {selectedMenuObj?.name}
+                          {selectedMenuObj?.duration_minutes != null && <span style={{ color: "#888", fontWeight: 400 }}>（約{selectedMenuObj.duration_minutes}分）</span>}
+                        </span>
+                      </div>
+                      {selectedDate && (
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>日時</span>
+                          <span style={{ color: "#2C2C2C", fontWeight: 600 }}>{formatJapaneseDateTime(selectedDate, selectedTime)}</span>
+                        </div>
                       )}
                     </div>
-                  )}
-
-                  {/* Logged in indicator */}
-                  {session && (
-                    <div className="flex items-center gap-2 text-sm text-[#555] bg-[#F5F3EF] border border-[#E5E0D8] rounded-lg p-3">
-                      <span className="text-[#C4A962] font-bold">✓</span>
-                      <span>ログイン中：{session.user?.email ?? session.user?.id}</span>
-                    </div>
-                  )}
+                  </div>
 
                   {/* Customer info */}
-                  <div className="space-y-4">
-                    <h2 className="text-base font-semibold text-[#2C2C2C] pb-2 border-b border-[#E5E0D8]">
+                  <div style={{ background: "#FAFAF8", border: "1px solid #E5E0D8", borderRadius: 14, padding: "20px 20px 16px", fontSize: 13 }}>
+                    <p style={{ color: "#C4A962", fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 14px" }}>
                       お客様情報
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
-                          保護者名 <span className="text-red-500">*</span>
-                        </label>
-                        <Input
-                          value={customerData.parent_name}
-                          onChange={(e) => setCustomerData((p) => ({ ...p, parent_name: e.target.value }))}
-                          placeholder="山田 花子"
-                          className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
-                        />
+                    </p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                      <div style={{ display: "flex", gap: 12 }}>
+                        <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>保護者名</span>
+                        <span style={{ color: "#2C2C2C", fontWeight: 500 }}>
+                          {customerData.parent_name}
+                          {customerData.parent_name_kana && <span style={{ color: "#888", fontWeight: 400, marginLeft: 8 }}>{customerData.parent_name_kana}</span>}
+                        </span>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
-                          お子様名 <span className="text-red-500">*</span>
-                        </label>
-                        <Input
-                          value={customerData.child_name}
-                          onChange={(e) => setCustomerData((p) => ({ ...p, child_name: e.target.value }))}
-                          placeholder="山田 太郎"
-                          className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
-                        />
+                      {customerData.child_name && (
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>お子様名</span>
+                          <span style={{ color: "#2C2C2C", fontWeight: 500 }}>
+                            {customerData.child_name}
+                            {customerData.child_name_kana && <span style={{ color: "#888", fontWeight: 400, marginLeft: 8 }}>{customerData.child_name_kana}</span>}
+                          </span>
+                        </div>
+                      )}
+                      <div style={{ borderTop: "1px solid #EEE9E0", paddingTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>電話番号</span>
+                          <span style={{ color: "#2C2C2C", fontWeight: 500 }}>{customerData.phone}</span>
+                        </div>
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>メール</span>
+                          <span style={{ color: "#2C2C2C", fontWeight: 500 }}>{session?.user?.email ?? customerData.email}</span>
+                        </div>
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <span style={{ color: "#AAAAAA", minWidth: 72, flexShrink: 0, fontSize: 12 }}>住所</span>
+                          <span style={{ color: "#2C2C2C", fontWeight: 500 }}>
+                            〒{customerData.postal_code}　{customerData.prefecture}{customerData.city}{customerData.address_line}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-[#2C2C2C] mb-1.5">
-                        電話番号 <span className="text-red-500">*</span>
-                      </label>
-                      <Input
-                        type="tel"
-                        value={customerData.phone}
-                        onChange={(e) => setCustomerData((p) => ({ ...p, phone: e.target.value }))}
-                        placeholder="090-1234-5678"
-                        className="bg-[#FAFAF8] border-[#D5D0C8] focus:border-[#C4A962]"
-                      />
                     </div>
                   </div>
 
@@ -907,24 +1278,27 @@ export function PublicReservationPage() {
                     </p>
                   )}
 
-                  <Button
-                    type="button"
-                    onClick={handleSubmit}
-                    disabled={submitLoading}
-                    className="w-full bg-[#C4A962] hover:bg-[#B39952] text-white py-3 text-base"
-                  >
-                    {submitLoading
-                      ? "処理中..."
-                      : session
-                      ? "予約を確定する"
-                      : authMode === "register"
-                      ? "会員登録して予約する"
-                      : "ログインして予約する"}
-                  </Button>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 8 }}>
+                    <Button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={submitLoading}
+                      className="w-full bg-[#C4A962] hover:bg-[#B39952] text-white py-3 text-base"
+                    >
+                      {submitLoading ? "処理中..." : "予約を確定する"}
+                    </Button>
+                    <p className="text-xs text-[#AAAAAA] text-center" style={{ margin: 0 }}>
+                      ご予約確認メールをお送りします。
+                    </p>
+                  </div>
 
-                  <p className="text-xs text-[#AAAAAA] text-center">
-                    ご予約確認メールをお送りします。
-                  </p>
+                  <button
+                    type="button"
+                    onClick={() => { setStep(2); setFormError(null); setAuthError(null); setError(null); }}
+                    style={{ display: "block", width: "100%", padding: "12px", textAlign: "center", fontSize: 13, color: "#9CA3AF", background: "none", border: "none", cursor: "pointer" }}
+                  >
+                    ← 戻って修正する
+                  </button>
                 </section>
               )}
             </div>

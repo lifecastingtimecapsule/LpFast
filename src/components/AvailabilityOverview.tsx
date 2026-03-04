@@ -208,10 +208,12 @@ export function AvailabilityOverview({ locations, availabilityByLocation, settin
                   const status = getStatus(day, avail, settings, allWeekSlots);
                   const isToday = i === 0;
                   const dow = day.getDay();
-                  const dowColor = dow === 0 ? "#F87171" : dow === 6 ? "#60A5FA" : "#9CA3AF";
+                  const dowColor = dow === 0 ? "#F87171" : "#9CA3AF";
+                  const isClickable = onDateSelect && status !== "past" && status !== "closed" && status !== "×";
                   return (
                     <div
                       key={i}
+                      onClick={isClickable ? () => onDateSelect!(loc.location_id, day) : undefined}
                       style={{
                         display: "flex",
                         flexDirection: "column",
@@ -220,7 +222,15 @@ export function AvailabilityOverview({ locations, availabilityByLocation, settin
                         gap: 2,
                         borderRight: i < 6 ? "1px solid #E5E0D8" : undefined,
                         background: isToday ? "#FFFBF0" : undefined,
+                        cursor: isClickable ? "pointer" : undefined,
+                        transition: "background 0.15s",
                       }}
+                      onMouseEnter={isClickable ? (e) => {
+                        (e.currentTarget as HTMLDivElement).style.background = "#F0EDE6";
+                      } : undefined}
+                      onMouseLeave={isClickable ? (e) => {
+                        (e.currentTarget as HTMLDivElement).style.background = isToday ? "#FFFBF0" : "";
+                      } : undefined}
                     >
                       <span style={{ fontSize: 10, fontWeight: 500, color: dowColor }}>{DAY_LABELS[dow]}</span>
                       <span style={{ fontSize: 11, fontWeight: 500, color: isToday ? "#C4A962" : "#2C2C2C" }}>
@@ -265,7 +275,7 @@ export function AvailabilityOverview({ locations, availabilityByLocation, settin
                   {/* Day headers */}
                   <div style={grid7}>
                     {DAY_LABELS.map((d, i) => (
-                      <div key={d} style={{ textAlign: "center", fontSize: 10, fontWeight: 500, paddingBottom: 6, color: i === 0 ? "#F87171" : i === 6 ? "#60A5FA" : "#9CA3AF" }}>
+                      <div key={d} style={{ textAlign: "center", fontSize: 10, fontWeight: 500, paddingBottom: 6, color: i === 0 ? "#F87171" : "#9CA3AF" }}>
                         {d}
                       </div>
                     ))}
